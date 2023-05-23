@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75d61cf678ff31fe82d4b547fff7227b",
+    "content-hash": "b4faaae3977f54effe0c94f85a394475",
     "packages": [
         {
             "name": "brick/math",
@@ -3100,6 +3100,58 @@
                 "source": "https://github.com/rollbar/rollbar-php/tree/v4.0.1"
             },
             "time": "2023-04-28T20:01:46+00:00"
+        },
+        {
+            "name": "rollbar/rollbar-laravel",
+            "version": "v1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rollbar/rollbar-php-laravel.git",
+                "reference": "c397b7026b8c55c96d1c0ee6fef14fd32f0bc414"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rollbar/rollbar-php-laravel/zipball/c397b7026b8c55c96d1c0ee6fef14fd32f0bc414",
+                "reference": "c397b7026b8c55c96d1c0ee6fef14fd32f0bc414",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "rollbar/rollbar": "*"
+            },
+            "require-dev": {
+                "mockery/mockery": "*",
+                "orchestra/testbench": "2.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jenssegers\\Rollbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jens Segers",
+                    "homepage": "http://jenssegers.be"
+                }
+            ],
+            "description": "Rollbar error monitoring integration for Laravel projects",
+            "keywords": [
+                "error",
+                "laravel",
+                "logging",
+                "monitoring",
+                "rollbar"
+            ],
+            "support": {
+                "issues": "https://github.com/rollbar/rollbar-php-laravel/issues",
+                "source": "https://github.com/rollbar/rollbar-php-laravel/tree/v1.3.2"
+            },
+            "time": "2014-05-28T11:24:32+00:00"
         },
         {
             "name": "symfony/console",

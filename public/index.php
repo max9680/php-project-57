@@ -2,6 +2,8 @@
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
+use \Rollbar\Rollbar;
+use \Rollbar\Payload\Level;
 
 define('LARAVEL_START', microtime(true));
 
@@ -53,3 +55,15 @@ $response = $kernel->handle(
 )->send();
 
 $kernel->terminate($request, $response);
+
+Rollbar::init(
+    array(
+        'access_token' => '2d1e01372fb844d68767c0ab1e998a3e',
+        'environment' => 'production'
+    )
+);
+
+\Log::debug('Here is some debug information');
+
+// Rollbar::log(Level::info(), 'Test info message');
+throw new Exception('Test exception');
