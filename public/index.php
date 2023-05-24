@@ -66,4 +66,4 @@ Rollbar::init(
 \Log::debug('Here is some debug information');
 
 // Rollbar::log(Level::info(), 'Test info message');
-throw new Exception('Test exception');
+// throw new Exception('Test exception');
