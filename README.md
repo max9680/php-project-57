@@ -4,5 +4,4 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/163d3ae939bf61c8a711/maintainability)](https://codeclimate.com/github/max9680/php-project-57/maintainability)
 
 ### Deployment's address
-[https://php-project-57-production-2b7a.up.railway.app/](https://php-project-57-production-2b7a.up.railway.app/){:target="_blank"}
-<a href="https://php-project-57-production-2b7a.up.railway.app/" target="_blank">https://php-project-57-production-2b7a.up.railway.app/</a>
+[https://php-project-57-production-2b7a.up.railway.app/](https://php-project-57-production-2b7a.up.railway.app/)
