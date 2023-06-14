@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+
+    flash('Message')->important();
+
     return view('welcome');
 });
 
