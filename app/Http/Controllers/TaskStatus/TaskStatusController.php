@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TaskStatus;
 
 use App\Http\Controllers\Controller;
+use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 
 class TaskStatusController extends Controller
@@ -14,8 +15,9 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        dd(11111111111);
-        //
+        $taskStatuses = TaskStatus::all();
+
+        return view('taskCategory.index', compact('taskStatuses'));
     }
 
     /**
