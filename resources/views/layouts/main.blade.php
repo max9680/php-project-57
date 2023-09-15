@@ -6,14 +6,14 @@
 
     @vite('resources/css/app.css')
 
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    {{--<link rel="dns-prefetch" href="//fonts.gstatic.com">--}}
+    {{--<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">--}}
 
     <title>Менеджер задач</title>
 
 </head>
 
-<body class="antialiased">
+<body>
 <header class="fixed w-full">
     <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900 shadow-md">
         <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
