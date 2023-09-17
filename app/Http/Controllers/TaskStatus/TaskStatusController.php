@@ -17,7 +17,9 @@ class TaskStatusController extends Controller
     {
         $taskStatuses = TaskStatus::all();
 
-        return view('taskCategory.index', compact('taskStatuses'));
+        flash('Статус создан')->success();
+
+        return view('taskStatus.index', compact('taskStatuses'));
     }
 
     /**
@@ -27,7 +29,7 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        //
+        return view('taskStatus.create');
     }
 
     /**
@@ -38,7 +40,11 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = request()->validate([
+            'name' => 'required|string',
+        ]);
+
+        dd($data);
     }
 
     /**
