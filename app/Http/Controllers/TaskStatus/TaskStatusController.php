@@ -17,8 +17,6 @@ class TaskStatusController extends Controller
     {
         $taskStatuses = TaskStatus::all();
 
-        flash('Статус создан')->success();
-
         return view('taskStatus.index', compact('taskStatuses'));
     }
 

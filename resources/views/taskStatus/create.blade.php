@@ -10,7 +10,7 @@
                 {!! Form::label("name", "Имя") !!}
             </div>
             <div class="mt-2">
-                {!! Form::text('name', old('name'), ['class' => 'rounded border-gray-300 w-1/3']) !!}
+                {!! Form::text('name', old('name'), ['class' => 'rounded border-gray-300 w-1/3', 'value' => old('name')]) !!}
             </div>
             @error('name')
             <div class="text-rose-600">
