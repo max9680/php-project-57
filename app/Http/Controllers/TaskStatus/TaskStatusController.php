@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\TaskStatus;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskStatus\StoreRequest;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 
@@ -36,13 +37,13 @@ class TaskStatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $data = request()->validate([
-            'name' => 'required|string',
-        ]);
+        $data = $request->validated();
 
-        dd($data);
+        TaskStatus::create($data);
+
+        return redirect()->route('taskStatus.index');
     }
 
     /**
