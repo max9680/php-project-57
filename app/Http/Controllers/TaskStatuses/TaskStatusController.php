@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\TaskStatus;
+namespace App\Http\Controllers\TaskStatuses;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStatus\StoreRequest;
@@ -43,7 +43,9 @@ class TaskStatusController extends Controller
 
         TaskStatus::create($data);
 
-        return redirect()->route('taskStatus.index');
+        flash('Статус успешно создан')->success();
+
+        return redirect()->route('task_statuses.index');
     }
 
     /**
@@ -65,7 +67,7 @@ class TaskStatusController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd('edit');
     }
 
     /**
@@ -88,6 +90,6 @@ class TaskStatusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd('destroy');
     }
 }
