@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TaskStatuses\TaskStatusController;
+use App\Http\Controllers\TaskStatus\TaskStatusController;
 use Illuminate\Support\Facades\Route;
 
 /*

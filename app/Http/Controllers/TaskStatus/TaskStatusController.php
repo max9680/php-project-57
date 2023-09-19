@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\TaskStatuses;
+namespace App\Http\Controllers\TaskStatus;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStatus\StoreRequest;
