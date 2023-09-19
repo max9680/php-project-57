@@ -9,4 +9,6 @@ class TaskStatus extends Model
 {
     use HasFactory;
 
+    protected $guarded = false;
+
 }
