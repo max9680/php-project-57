@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\TaskStatus;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskStatus\StoreRequest;
+use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 
 class TaskStatusController extends Controller
@@ -23,9 +25,13 @@ class TaskStatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $taskStatus = TaskStatus::create($data);
+
+        return response()->json($taskStatus, 201);
     }
 
     /**

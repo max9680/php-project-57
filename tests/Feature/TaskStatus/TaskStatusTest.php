@@ -14,6 +14,12 @@ class TaskStatusTest extends TestCase
     public function testStore(): void
     {
         $body = TaskStatus::factory()->make()->toArray();
+
+        $response = $this->postJson(route('api.task_statuses.store'), $body);
+
+        $response->assertCreated();
+
+        $this->assertDatabaseHas('task_statuses', $body);
     }
 
     protected function setUp(): void
