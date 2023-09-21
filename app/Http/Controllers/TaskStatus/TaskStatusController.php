@@ -45,7 +45,7 @@ class TaskStatusController extends Controller
 
         flash('Статус успешно создан')->success();
 
-//        return redirect()->route('task_statuses.index');
+        return redirect()->route('task_statuses.index');
     }
 
     /**

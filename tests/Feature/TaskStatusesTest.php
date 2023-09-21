@@ -35,7 +35,7 @@ class TaskStatusesTest extends TestCase
 
         $res = $this->post('/task_statuses', $data);
 
-        $res->assertOk();
+        $res->assertRedirectToRoute('task_statuses.index');
 
 //        $res->assertContent('Статус успешно создан');
 
@@ -44,9 +44,10 @@ class TaskStatusesTest extends TestCase
         $this->assertEquals($data['name'], $taskStatus->name);
     }
 
+    /** @test */
     public function a_task_can_not_be_created_with_empty_name()
     {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
 
         $data = [
             'name' => '',
@@ -54,6 +55,9 @@ class TaskStatusesTest extends TestCase
 
         $res = $this->post('/task_statuses', $data);
 
-        $res->assertRedirectToRoute('task_statuses.create');
+        $res->assertSessionHasErrors([
+            'name' => 'Это обязательное поле'
+        ]);
+
     }
 }
