@@ -43,7 +43,7 @@ class TaskStatusController extends Controller
 
         TaskStatus::create($data);
 
-        return redirect()->route('taskStatus.index');
+//        return redirect()->route('taskStatus.index');
     }
 
     /**

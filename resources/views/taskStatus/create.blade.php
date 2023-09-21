@@ -5,7 +5,7 @@
     <div class="grid col-span-full">
         <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">Создать статус</h1>
         <div>
-            {!! Form::open(['route' => 'taskStatus.store']) !!}
+            {!! Form::open(['route' => 'task_statuses.store']) !!}
             <div>
                 {!! Form::label("name", "Имя") !!}
             </div>
