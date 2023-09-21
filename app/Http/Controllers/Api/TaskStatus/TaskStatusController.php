@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\TaskStatus;
+namespace App\Http\Controllers\Api\TaskStatus;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStatus\StoreRequest;
@@ -16,19 +16,7 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        $taskStatuses = TaskStatus::all();
-
-        return view('taskStatus.index', compact('taskStatuses'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('taskStatus.create');
+        dd('api.index');
     }
 
     /**
@@ -41,12 +29,9 @@ class TaskStatusController extends Controller
     {
         $data = $request->validated();
 
-        TaskStatus::create($data);
+        $taskStatus = TaskStatus::create($data);
 
-
-        flash('Статус успешно создан')->success();
-
-        return redirect()->route('task_statuses.index');
+        return response()->json($taskStatus, 201);
     }
 
     /**
@@ -58,17 +43,6 @@ class TaskStatusController extends Controller
     public function show($id)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        dd('edit');
     }
 
     /**
@@ -91,6 +65,6 @@ class TaskStatusController extends Controller
      */
     public function destroy($id)
     {
-        dd('destroy');
+        //
     }
 }
