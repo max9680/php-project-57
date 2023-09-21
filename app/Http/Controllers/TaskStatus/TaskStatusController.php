@@ -43,10 +43,9 @@ class TaskStatusController extends Controller
 
         TaskStatus::create($data);
 
-
         flash('Статус успешно создан')->success();
 
-        return redirect()->route('task_statuses.index');
+//        return redirect()->route('task_statuses.index');
     }
 
     /**

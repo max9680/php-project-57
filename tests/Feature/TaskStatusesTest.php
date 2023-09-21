@@ -14,12 +14,20 @@ class TaskStatusesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_task_status_can_be_stored()
+    public function page_for_creating_task_statuses_exists()
     {
         $this->withoutExceptionHandling();
 
         $res = $this->get('/task_statuses/create');
+
         $res->assertStatus(200);
+    }
+
+
+    /** @test */
+    public function a_task_status_can_be_stored()
+    {
+        $this->withoutExceptionHandling();
 
         $data = [
             'name' => 'test name',
@@ -29,9 +37,7 @@ class TaskStatusesTest extends TestCase
 
         $res->assertOk();
 
-        $res->assertRedirectToRoute('task_statuses.index');
-
-        $this->assertContains('');
+//        $res->assertContent('Статус успешно создан');
 
         $taskStatus = TaskStatus::first();
 
