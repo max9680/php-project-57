@@ -4,6 +4,7 @@ namespace App\Http\Controllers\TaskStatus;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStatus\StoreRequest;
+use App\Http\Requests\TaskStatus\UpdateRequest;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 
@@ -77,9 +78,14 @@ class TaskStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, TaskStatus $taskStatus)
     {
-        //
+        $data = $request->validated();
+
+        $taskStatus->update($data);
+
+        return redirect()->route('task_statuses.index');
+
     }
 
     /**

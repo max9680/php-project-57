@@ -6,9 +6,6 @@
 
     @vite('resources/css/app.css')
 
-    {{--<link rel="dns-prefetch" href="//fonts.gstatic.com">--}}
-    {{--<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">--}}
-
     <title>Менеджер задач</title>
 
 </head>

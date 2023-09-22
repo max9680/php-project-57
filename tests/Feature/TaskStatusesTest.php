@@ -7,6 +7,8 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Testing\File;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class TaskStatusesTest extends TestCase
@@ -37,18 +39,14 @@ class TaskStatusesTest extends TestCase
 
         $res->assertRedirectToRoute('task_statuses.index');
 
-//        $res->assertContent('Статус успешно создан');
-
         $taskStatus = TaskStatus::first();
 
         $this->assertEquals($data['name'], $taskStatus->name);
     }
 
     /** @test */
-    public function a_task_can_not_be_created_with_empty_name()
+    public function atttibute_name_is_required_for_task_status()
     {
-//        $this->withoutExceptionHandling();
-
         $data = [
             'name' => '',
         ];
@@ -60,4 +58,39 @@ class TaskStatusesTest extends TestCase
         ]);
 
     }
+
+    /** @test */
+    public function page_for_update_the_task_status_exists ()
+    {
+        $this->withoutExceptionHandling();
+
+        $taskStatus = TaskStatus::factory()->create();
+
+        $res = $this->get('/task_statuses/' . $taskStatus->id);
+
+        $res->assertStatus(200);
+    }
+
+    /** @test */
+    public function a_task_status_can_be_updated()
+    {
+        $this->withoutExceptionHandling();
+
+        $taskStatus = TaskStatus::factory()->create();
+
+        $data = [
+            'name' => 'updated',
+        ];
+
+        $res = $this->patch('/task_statuses/' . $taskStatus->id, $data);
+
+        $res->assertRedirectToRoute('task_statuses.index');
+
+        $updatedTaskStatus = TaskStatus::first();
+
+        $this->assertEquals($updatedTaskStatus->name, $data['name']);
+
+        $this->assertEquals($taskStatus->id, $updatedTaskStatus->id);
+    }
+
 }
