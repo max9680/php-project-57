@@ -6,7 +6,7 @@
     <div class="grid col-span-full">
         <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">Изменение статуса</h1>
         <div>
-            {!! Form::open(['route' => ['task_statuses.update', $taskStatus->id]]) !!}
+            {!! Form::open(['route' => ['task_statuses.update', $taskStatus], 'method' => 'patch']) !!}
             <div>
                 {!! Form::label("name", "Имя") !!}
             </div>
