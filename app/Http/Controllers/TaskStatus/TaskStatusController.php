@@ -66,9 +66,9 @@ class TaskStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TaskStatus $taskStatus)
     {
-        dd('edit');
+        return view('taskStatus.edit', compact('taskStatus'));
     }
 
     /**
