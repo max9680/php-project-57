@@ -93,4 +93,21 @@ class TaskStatusesTest extends TestCase
         $this->assertEquals($taskStatus->id, $updatedTaskStatus->id);
     }
 
+    /** @test */
+    public function response_for_route_task_status_is_view_task_status_index()
+    {
+        $this->withoutExceptionHandling();
+
+        $taskStatuses = TaskStatus::factory(10)->create();
+
+        $res = $this->get('/task_statuses');
+
+        $res->assertViewIs('taskStatus.index');
+
+        $res->assertSeeText('Статусы');
+
+        $names = $taskStatuses->pluck('name')->toArray();
+
+        $res->assertSeeText($names);
+    }
 }
