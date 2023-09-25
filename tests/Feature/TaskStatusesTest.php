@@ -72,10 +72,33 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function a_task_status_can_be_updated()
+    public function a_task_status_can_be_updated_by_auth_user()
     {
         $this->withoutExceptionHandling();
 
+        $user = User::factory()->create();
+
+        $taskStatus = TaskStatus::factory()->create();
+
+        $data = [
+            'name' => 'updated',
+        ];
+
+        $res = $this->actingAs($user)->patch('/task_statuses/' . $taskStatus->id, $data);
+
+        $res->assertRedirectToRoute('task_statuses.index');
+
+        $updatedTaskStatus = TaskStatus::first();
+
+        $this->assertEquals($updatedTaskStatus->name, $data['name']);
+
+        $this->assertEquals($taskStatus->id, $updatedTaskStatus->id);
+
+    }
+
+    /** @test */
+    public function a_task_status_can_be_updated_only_auth_user()
+    {
         $taskStatus = TaskStatus::factory()->create();
 
         $data = [
@@ -84,11 +107,11 @@ class TaskStatusesTest extends TestCase
 
         $res = $this->patch('/task_statuses/' . $taskStatus->id, $data);
 
-        $res->assertRedirectToRoute('task_statuses.index');
+        $res->assertRedirectToRoute('login');
 
         $updatedTaskStatus = TaskStatus::first();
 
-        $this->assertEquals($updatedTaskStatus->name, $data['name']);
+        $this->assertNotEquals($updatedTaskStatus->name, $data['name']);
 
         $this->assertEquals($taskStatus->id, $updatedTaskStatus->id);
 
