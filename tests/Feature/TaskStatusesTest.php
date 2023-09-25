@@ -124,10 +124,8 @@ class TaskStatusesTest extends TestCase
 
         $res = $this->delete('/task_statuses/' . $taskStatus->id);
 
-        $res->assertOK();
-
         $this->assertDatabaseCount('task_statuses', 9);
 
-//        $res->assertRedirect('taskStatus.index');
+        $res->assertRedirectToRoute('task_statuses.index');
     }
 }

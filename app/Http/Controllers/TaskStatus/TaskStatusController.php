@@ -57,7 +57,7 @@ class TaskStatusController extends Controller
      */
     public function show($id)
     {
-        dd('show');
+//        dd('show');
     }
 
     /**
@@ -94,11 +94,9 @@ class TaskStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TaskStatus $taskStatus)
     {
-//        $taskStatus->delete();
-
-        dd('asfddfs');
+        $taskStatus->delete();
 
         return redirect()->route('task_statuses.index');
     }

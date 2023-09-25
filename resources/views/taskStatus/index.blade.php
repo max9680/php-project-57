@@ -28,7 +28,7 @@
                     <td>{{ $taskStatus->name }}</td>
                     <td>{{ $taskStatus->created_at }}</td>
                     <td>
-                        <a data-confirm="Вы уверены?" data-method="delete" class="text-red-600 hover:text-red-900" href="{{ route('task_statuses.destroy', $taskStatus->id) }}">Удалить</a>
+                        <a data-method="delete" data-confirm="Вы уверены?" class="text-red-600 hover:text-red-900" href="{{ route('task_statuses.destroy', $taskStatus->id) }}">Удалить</a>
                         <a class="text-blue-600 hover:text-blue-900" href="{{ route('task_statuses.edit', $taskStatus->id) }}">Изменить</a>
                     </td>
                 </tr>
