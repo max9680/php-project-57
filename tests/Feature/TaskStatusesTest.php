@@ -140,6 +140,24 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        $user = User::factory()->create();
+
+        TaskStatus::factory(10)->create();
+
+        $this->assertDatabaseCount('task_statuses', 10);
+
+        $taskStatus = TaskStatus::where('id', 1)->first();
+
+        $res = $this->actingAs($user)->delete('/task_statuses/' . $taskStatus->id);
+
+        $this->assertDatabaseCount('task_statuses', 9);
+
+        $res->assertRedirectToRoute('task_statuses.index');
+    }
+
+    /** @test */
+    public function task_status_can_be_deleted_by_only_auth_user()
+    {
         TaskStatus::factory(10)->create();
 
         $this->assertDatabaseCount('task_statuses', 10);
@@ -148,8 +166,8 @@ class TaskStatusesTest extends TestCase
 
         $res = $this->delete('/task_statuses/' . $taskStatus->id);
 
-        $this->assertDatabaseCount('task_statuses', 9);
+        $res->assertRedirectToRoute('login');
 
-        $res->assertRedirectToRoute('task_statuses.index');
+        $this->assertDatabaseCount('task_statuses', 10);
     }
 }
