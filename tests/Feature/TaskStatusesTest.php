@@ -91,6 +91,7 @@ class TaskStatusesTest extends TestCase
         $this->assertEquals($updatedTaskStatus->name, $data['name']);
 
         $this->assertEquals($taskStatus->id, $updatedTaskStatus->id);
+
     }
 
     /** @test */

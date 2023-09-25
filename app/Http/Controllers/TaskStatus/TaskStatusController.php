@@ -57,7 +57,7 @@ class TaskStatusController extends Controller
      */
     public function show($id)
     {
-//        dd('show');
+        //
     }
 
     /**
@@ -84,6 +84,8 @@ class TaskStatusController extends Controller
 
         $taskStatus->update($data);
 
+        flash('Статус успешно изменён')->success();
+
         return redirect()->route('task_statuses.index');
 
     }
@@ -97,6 +99,8 @@ class TaskStatusController extends Controller
     public function destroy(TaskStatus $taskStatus)
     {
         $taskStatus->delete();
+
+        flash('Статус успешно удалён')->success();
 
         return redirect()->route('task_statuses.index');
     }
