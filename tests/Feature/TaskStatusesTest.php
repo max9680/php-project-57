@@ -94,7 +94,7 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function response_for_route_task_status_is_view_task_status_index()
+    public function response_for_route_task_status_index_is_view_task_status_index()
     {
         $this->withoutExceptionHandling();
 
@@ -109,5 +109,25 @@ class TaskStatusesTest extends TestCase
         $names = $taskStatuses->pluck('name')->toArray();
 
         $res->assertSeeText($names);
+    }
+
+    /** @test */
+    public function task_status_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+
+        TaskStatus::factory(10)->create();
+
+        $this->assertDatabaseCount('task_statuses', 10);
+
+        $taskStatus = TaskStatus::where('id', 1)->first();
+
+        $res = $this->delete('/task_statuses/' . $taskStatus->id);
+
+        $res->assertOK();
+
+        $this->assertDatabaseCount('task_statuses', 9);
+
+//        $res->assertRedirect('taskStatus.index');
     }
 }

@@ -57,7 +57,7 @@ class TaskStatusController extends Controller
      */
     public function show($id)
     {
-        //
+        dd('show');
     }
 
     /**
@@ -96,6 +96,10 @@ class TaskStatusController extends Controller
      */
     public function destroy($id)
     {
-        dd('destroy');
+//        $taskStatus->delete();
+
+        dd('asfddfs');
+
+        return redirect()->route('task_statuses.index');
     }
 }
