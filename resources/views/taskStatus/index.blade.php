@@ -17,7 +17,9 @@
                 <th>ID</th>
                 <th>Имя</th>
                 <th>Дата создания</th>
-                <th>Действия</th>
+                @auth
+                    <th>Действия</th>
+                @endauth
             </tr>
             </thead>
             <tbody>
@@ -27,10 +29,12 @@
                     <td>{{ $taskStatus->id }}</td>
                     <td>{{ $taskStatus->name }}</td>
                     <td>{{ $taskStatus->created_at }}</td>
-                    <td>
-                        <a data-method="delete" data-confirm="Вы уверены?" class="text-red-600 hover:text-red-900" href="{{ route('task_statuses.destroy', $taskStatus->id) }}">Удалить</a>
-                        <a class="text-blue-600 hover:text-blue-900" href="{{ route('task_statuses.edit', $taskStatus->id) }}">Изменить</a>
-                    </td>
+                    @auth
+                        <td>
+                            <a data-method="delete" data-confirm="Вы уверены?" class="text-red-600 hover:text-red-900" href="{{ route('task_statuses.destroy', $taskStatus->id) }}">Удалить</a>
+                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('task_statuses.edit', $taskStatus->id) }}">Изменить</a>
+                        </td>
+                    @endauth
                 </tr>
             @endforeach
 
