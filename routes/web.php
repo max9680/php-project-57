@@ -36,6 +36,12 @@ Route::resource('task_statuses', TaskStatusController::class);
 Route::get('/task_statuses', [TaskStatusController::class, 'index'])->name('task_statuses.index');
 Route::get('/task_statuses/create', [TaskStatusController::class, 'create'])->name('task_statuses.create');
 Route::post('/task_statuses', [TaskStatusController::class, 'store'])->name('task_statuses.store');
-Route::get('/task_statuses/{task_status}/edit', [TaskStatusController::class, 'edit'])->name('task_statuses.edit')->middleware('auth');
-Route::patch('/task_statuses/{task_status}', [TaskStatusController::class, 'update'])->name('task_statuses.update')->middleware('auth');
-Route::delete('/task_statuses/{task_status}', [TaskStatusController::class, 'destroy'])->name('task_statuses.destroy')->middleware('auth');
+Route::get('/task_statuses/{task_status}/edit', [TaskStatusController::class, 'edit'])
+    ->name('task_statuses.edit')
+    ->middleware('auth');
+Route::patch('/task_statuses/{task_status}', [TaskStatusController::class, 'update'])
+    ->name('task_statuses.update')
+    ->middleware('auth');
+Route::delete('/task_statuses/{task_status}', [TaskStatusController::class, 'destroy'])
+    ->name('task_statuses.destroy')
+    ->middleware('auth');
