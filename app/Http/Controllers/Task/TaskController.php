@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Task;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\StoreRequest;
 use App\Models\Task;
+use App\Models\TaskStatus;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -26,7 +28,12 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('task.create');
+        $taskStatusNames = TaskStatus::all()->pluck('name')->all();
+        $userNames = User::all()->pluck('name')->all();
+
+//        dd($taskStatusNames);
+
+        return view('task.create', compact('taskStatusNames','userNames'));
     }
 
     /**

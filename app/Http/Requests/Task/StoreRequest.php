@@ -31,4 +31,11 @@ class StoreRequest extends FormRequest
             'assigned_to_id' => 'nullable|exists:App\Models\User,id',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Это обязательное поле',
+        ];
+    }
 }

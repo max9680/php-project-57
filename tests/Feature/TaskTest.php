@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -45,5 +46,30 @@ class TaskTest extends TestCase
         $res->assertRedirectToRoute('task.index');
 
         $this->assertDatabaseCount('tasks', 1);
+
+        $task = Task::first();
+
+        $this->assertEquals($data['name'], $task->name);
+    }
+
+    /** @test */
+    public function attribut_name_required_for_task()
+    {
+        $status = TaskStatus::factory()->create();
+        $user = User::factory()->create();
+
+        $data = [
+            'name' => '',
+            'description' => 'many words in description',
+            'status_id' => $status->id,
+            'created_by_id' => $user->id,
+            'assigned_to_id' => null,
+        ];
+
+        $res = $this->post('/task', $data);
+
+        $res->assertSessionHasErrors([
+            'name' => 'Это обязательное поле',
+        ]);
     }
 }
