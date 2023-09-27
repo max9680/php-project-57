@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\TaskStatus;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,6 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $statusNames = [
+            ['name' => 'новая'],
+            ['name' => 'завершена'],
+            ['name' => 'выполняется'],
+            ['name' => 'в архиве'],
+            ];
+
+        foreach ($statusNames as $statusName) {
+            TaskStatus::create($statusName);
+        }
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
