@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\TaskStatus\TaskStatusController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,10 +32,12 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::resource('task_statuses', TaskStatusController::class);
+//Route::resource('task_statuses', TaskStatusController::class);
 
 Route::get('/task_statuses', [TaskStatusController::class, 'index'])->name('task_statuses.index');
-Route::get('/task_statuses/create', [TaskStatusController::class, 'create'])->name('task_statuses.create');
+Route::get('/task_statuses/create', [TaskStatusController::class, 'create'])
+    ->name('task_statuses.create')
+    ->middleware('auth');
 Route::post('/task_statuses', [TaskStatusController::class, 'store'])->name('task_statuses.store');
 Route::get('/task_statuses/{task_status}/edit', [TaskStatusController::class, 'edit'])
     ->name('task_statuses.edit')
@@ -45,3 +48,7 @@ Route::patch('/task_statuses/{task_status}', [TaskStatusController::class, 'upda
 Route::delete('/task_statuses/{task_status}', [TaskStatusController::class, 'destroy'])
     ->name('task_statuses.destroy')
     ->middleware('auth');
+
+//Route::resource('task', TaskController::class);
+
+Route::get('/task/create', [TaskController::class, 'create']);

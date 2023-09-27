@@ -20,7 +20,9 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $res = $this->get('/task_statuses/create');
+        $user = User::factory()->create();
+
+        $res = $this->actingAs($user)->get('/task_statuses/create');
 
         $res->assertStatus(200);
     }
