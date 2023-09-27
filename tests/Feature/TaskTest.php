@@ -42,6 +42,8 @@ class TaskTest extends TestCase
 
         $res = $this->post('/task', $data);
 
+        $res->assertRedirectToRoute('task.index');
+
         $this->assertDatabaseCount('tasks', 1);
     }
 }

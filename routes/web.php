@@ -51,4 +51,5 @@ Route::delete('/task_statuses/{task_status}', [TaskStatusController::class, 'des
 
 //Route::resource('task', TaskController::class);
 
-Route::get('/task/create', [TaskController::class, 'create']);
+Route::get('/task/create', [TaskController::class, 'create'])->name('task.create');
+Route::post('/task', [TaskController::class, 'store'])->name('task.store');
