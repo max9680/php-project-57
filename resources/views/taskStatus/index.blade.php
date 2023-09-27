@@ -31,7 +31,7 @@
                 <tr class="border-b border-dashed text-left">
                     <td>{{ $taskStatus->id }}</td>
                     <td>{{ $taskStatus->name }}</td>
-                    <td>{{ $taskStatus->created_at }}</td>
+                    <td>{{ $taskStatus->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
                             <a data-method="delete" data-confirm="Вы уверены?" class="text-red-600 hover:text-red-900" href="{{ route('task_statuses.destroy', $taskStatus->id) }}">Удалить</a>
