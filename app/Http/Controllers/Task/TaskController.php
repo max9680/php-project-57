@@ -28,12 +28,12 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $taskStatusNames = TaskStatus::all()->pluck('name')->all();
-        $userNames = User::all()->pluck('name')->all();
+        $taskStatuses = TaskStatus::select('id', 'name')->get()->pluck('name','id');
+        $users = User::select('id', 'name')->get()->pluck('name', 'id');
 
 //        dd($taskStatusNames);
 
-        return view('task.create', compact('taskStatusNames','userNames'));
+        return view('task.create', compact('taskStatuses','users'));
     }
 
     /**
@@ -42,9 +42,10 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request, )
     {
         $data = $request->validated();
+        $data['created_by_id'] = auth()->user()->id;
 
         Task::create($data);
 

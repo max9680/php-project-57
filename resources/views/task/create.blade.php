@@ -6,7 +6,7 @@
         <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">Создать задачу</h1>
         <div>
             {!! Form::open(['route' => 'task.store']) !!}
-            <div>
+            <div class="mt-2">
                 {!! Form::label("name", "Имя") !!}
             </div>
             <div class="mt-2">
@@ -18,7 +18,7 @@
             </div>
             @enderror
 
-            <div>
+            <div class="mt-2">
                 {!! Form::label("description", "Описание") !!}
             </div>
             <div class="mt-2">
@@ -31,11 +31,11 @@
             </div>
             @enderror
 
-            <div>
+            <div class="mt-2">
                 {!! Form::label("status_id", "Статус") !!}
             </div>
             <div class="mt-2">
-                {{ Form::select('status_id', $taskStatusNames, null, ['class' => 'rounded border-gray-300 w-1/3', 'placeholder' => '----------']) }}
+                {{ Form::select('status_id', $taskStatuses, null, ['class' => 'rounded border-gray-300 w-1/3', 'placeholder' => '----------']) }}
 
             </div>
             @error('status_id')
@@ -44,11 +44,11 @@
             </div>
             @enderror
 
-            <div>
-                {!! Form::label("status_id", "Статус") !!}
+            <div class="mt-2">
+                {!! Form::label("status_id", "Исполнитель") !!}
             </div>
             <div class="mt-2">
-                {{ Form::select('assigned_to_id', $userNames, null, ['class' => 'rounded border-gray-300 w-1/3', 'placeholder' => '----------']) }}
+                {{ Form::select('assigned_to_id', $users, null, ['class' => 'rounded border-gray-300 w-1/3', 'placeholder' => '----------']) }}
 
             </div>
             @error('assigned_to_id')

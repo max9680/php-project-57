@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => '',
-            'status_id' => 'exists:App\Models\taskStatus,id',
+            'status_id' => 'required|exists:App\Models\TaskStatus,id',
             'created_by_id' => 'exists:App\Models\User,id',
             'assigned_to_id' => 'nullable|exists:App\Models\User,id',
         ];
@@ -36,6 +36,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name.required' => 'Это обязательное поле',
+            'status_id.required' => 'Это обязательное поле',
         ];
     }
 }
