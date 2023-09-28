@@ -51,6 +51,8 @@ Route::delete('/task_statuses/{task_status}', [TaskStatusController::class, 'des
 
 //Route::resource('task', TaskController::class);
 
-Route::get('/task/create', [TaskController::class, 'create'])->name('task.create');
-Route::post('/task', [TaskController::class, 'store'])->name('task.store');
+Route::get('/task/create', [TaskController::class, 'create'])->name('task.create')
+    ->middleware('auth');;
+Route::post('/task', [TaskController::class, 'store'])->name('task.store')
+    ->middleware('auth');;
 Route::get('/task', [TaskController::class, 'index'])->name('task.index');
