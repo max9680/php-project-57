@@ -20,7 +20,7 @@ class TaskTest extends TestCase
 
         $user = User::factory()->create();
 
-        $res = $this->actingAs($user)->get('/task/create');
+        $res = $this->actingAs($user)->get('/tasks/create');
 
         $res->assertStatus(200);
 
@@ -92,5 +92,17 @@ class TaskTest extends TestCase
         $res->assertSessionHasErrors([
             'name' => 'Это обязательное поле',
         ]);
+    }
+
+    /** @test */
+    public function page_task_index_exist()
+    {
+        $this->withoutExceptionHandling();
+
+        $res = $this->get('/tasks');
+
+        $res->assertStatus(200);
+
+        $res->assertSeeText('Создать задачу');
     }
 }

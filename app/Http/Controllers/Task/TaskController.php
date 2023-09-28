@@ -33,7 +33,7 @@ class TaskController extends Controller
 
 //        dd($taskStatusNames);
 
-        return view('task.create', compact('taskStatuses','users'));
+        return view('tasks.create', compact('taskStatuses','users'));
     }
 
     /**
@@ -49,7 +49,7 @@ class TaskController extends Controller
 
         Task::create($data);
 
-        return redirect()->route('task.index');
+        return redirect()->route('tasks.index');
     }
 
     /**
