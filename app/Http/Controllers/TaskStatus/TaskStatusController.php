@@ -87,7 +87,6 @@ class TaskStatusController extends Controller
         flash('Статус успешно изменён')->success();
 
         return redirect()->route('task_statuses.index');
-
     }
 
     /**
