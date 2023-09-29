@@ -43,9 +43,9 @@ class TaskTest extends TestCase
             'assigned_to_id' => null,
         ];
 
-        $res = $this->actingAs($user)->post('/task', $data);
+        $res = $this->actingAs($user)->post('/tasks', $data);
 
-        $res->assertRedirectToRoute('task.index');
+        $res->assertRedirectToRoute('tasks.index');
 
         $this->assertDatabaseCount('tasks', 1);
 
@@ -68,7 +68,7 @@ class TaskTest extends TestCase
             'assigned_to_id' => null,
         ];
 
-        $res = $this->post('/task', $data);
+        $res = $this->post('/tasks', $data);
 
         $res->assertRedirectToRoute('login');
     }
@@ -87,7 +87,7 @@ class TaskTest extends TestCase
             'assigned_to_id' => null,
         ];
 
-        $res = $this->actingAs($user)->post('/task', $data);
+        $res = $this->actingAs($user)->post('/tasks', $data);
 
         $res->assertSessionHasErrors([
             'name' => 'Это обязательное поле',

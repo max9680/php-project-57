@@ -18,7 +18,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::all();
+
+        return view('task.index', compact('tasks'));
     }
 
     /**
@@ -33,7 +35,7 @@ class TaskController extends Controller
 
 //        dd($taskStatusNames);
 
-        return view('tasks.create', compact('taskStatuses', 'users'));
+        return view('task.create', compact('taskStatuses', 'users'));
     }
 
     /**
