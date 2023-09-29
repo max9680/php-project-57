@@ -45,13 +45,13 @@
 
 
         @if (flash()->message)
-            <div class="{{ flash()->class }}">
+            @if (flash()->class === 'success')
+            <div class="mb-4 rounded-lg bg-success-100 px-6 py-5 text-base text-success-700">
                 {{ flash()->message }}
             </div>
+            @endif
         @endif
 
-
-            <div class="mb-4 rounded-lg bg-success-100 px-6 py-5 text-base text-success-700">Стили CSS</div>
     @yield('content')
 
     </div>
