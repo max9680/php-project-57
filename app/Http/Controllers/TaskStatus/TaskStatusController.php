@@ -44,7 +44,8 @@ class TaskStatusController extends Controller
 
         TaskStatus::create($data);
 
-        flash('Статус успешно создан')->success();
+//        flash('Статус успешно создан')->success();
+        flash('My message', 'mb-4 rounded-lg bg-success-100 px-6 py-5 text-base text-success-700');
 
         return redirect()->route('task_statuses.index');
     }

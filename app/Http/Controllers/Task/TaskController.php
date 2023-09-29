@@ -98,4 +98,15 @@ class TaskController extends Controller
     {
         //
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function test()
+    {
+
+        return view('task.test');
+    }
 }

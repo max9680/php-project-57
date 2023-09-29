@@ -56,3 +56,6 @@ Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.crea
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store')
     ->middleware('auth');
 Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+
+
+Route::get('/test', [TaskController::class, 'test'])->name('tasks.test');
