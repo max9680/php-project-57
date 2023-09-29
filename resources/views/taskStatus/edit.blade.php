@@ -11,7 +11,7 @@
                 {!! Form::label("name", "Имя") !!}
             </div>
             <div class="mt-2">
-                {!! Form::text('name', $taskStatus->name, ['class' => 'rounded border border-gray-300 w-1/3', 'value' => old('name')]) !!}
+                {!! Form::text('name', $taskStatus->name, ['class' => 'rounded border border-gray-300 w-1/3 p-2', 'value' => old('name')]) !!}
             </div>
             @error('name')
             <div class="text-rose-600">
