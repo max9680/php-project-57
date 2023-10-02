@@ -143,4 +143,49 @@ class TaskTest extends TestCase
 
         $res->assertSeeText($task->description);
     }
+
+    /** @test */
+    public function page_for_update_task_exists()
+    {
+        $this->withoutExceptionHandling();
+
+        User::factory(5)->create();
+
+        TaskStatus::factory(5)->create();
+
+        Task::factory(10)->create();
+
+        $task = Task::get()->random();
+
+        $res = $this->get('/tasks/' . $task->id . '/edit');
+
+        $res->assertViewIs('task.edit');
+    }
+
+    /** @test */
+    public function a_task_can_be_update_by_auth_user()
+    {
+        $this->withoutExceptionHandling();
+
+        User::factory(5)->create();
+
+        TaskStatus::factory(5)->create();
+
+        Task::factory(10)->create();
+
+        $task = Task::get()->random();
+
+        $data = [
+            'name' => 'updated Name',
+            'description' => 'updatedDescription',
+            'status_id' => TaskStatus::get()->random()->id,
+            'assigned_to_id' => User::get()->random()->id,
+        ];
+
+        $res = $this->patch('/tasks/' . $task->id, $data );
+
+        $res->assertRedirectToRoute('tasks.index');
+
+
+    }
 }

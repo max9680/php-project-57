@@ -25,7 +25,11 @@
                     <td><a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.show', $task->id) }}">{{ $task->status->name }}</a></td>
                     <td>{{ $task->name }}</td>
                     <td>{{ $task->created_by_user->name }}</td>
-                    <td>{{ $task->assigned_to_user->name }}</td>
+                    @if ($task->assigned_to_user == null)
+                        <td></td>
+                    @else
+                        <td>{{ $task->assigned_to_user->name }}</td>
+                    @endif
                     <td>{{ $task->created_at->format('d.m.Y') }}</td>
                 </tr>
             @endforeach

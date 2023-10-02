@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Task\UpdateRequest;
 use App\Http\Requests\Task\StoreRequest;
 use App\Models\Task;
 use App\Models\TaskStatus;
@@ -73,7 +74,10 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        $taskStatuses = TaskStatus::all();
+        $users = User::all();
+
+        return view('task.edit', compact('task', 'taskStatuses', 'users'));
     }
 
     /**
@@ -83,9 +87,14 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(UpdateRequest $request, Task $task)
     {
-        //
+        dd($request);
+        $data = $request->validated();
+
+        $task->update($data);
+
+        return redirect()->route('tasks.index');
     }
 
     /**
