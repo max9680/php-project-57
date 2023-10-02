@@ -66,9 +66,11 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        $user = User::factory()->create();
+
         $taskStatus = TaskStatus::factory()->create();
 
-        $res = $this->get('/task_statuses/' . $taskStatus->id);
+        $res = $this->actingAs($user)->get('/task_statuses/' . $taskStatus->id . '/edit');
 
         $res->assertStatus(200);
     }
