@@ -22,7 +22,7 @@
             @foreach($tasks as $task)
                 <tr class="border-b border-dashed text-left">
                     <td>{{ $task->id }}</td>
-                    <td>{{ $task->status->name }}</td>
+                    <td><a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.show', $task->id) }}">{{ $task->status->name }}</a></td>
                     <td>{{ $task->name }}</td>
                     <td>{{ $task->created_by_user->name }}</td>
                     <td>{{ $task->assigned_to_user->name }}</td>

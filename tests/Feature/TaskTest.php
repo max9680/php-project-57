@@ -134,5 +134,10 @@ class TaskTest extends TestCase
         $res = $this->get('/tasks/' . $task->id);
 
         $res->assertOk();
+
+        $res->assertViewIs('task.show');
+
+        $res->assertSeeText('Просмотр задачи:');
+        $res->assertSeeText($task->name);
     }
 }
