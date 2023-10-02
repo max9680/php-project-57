@@ -95,14 +95,27 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function page_task_index_exist()
+    public function page_task_index_exist_and_display_all_tasks()
     {
         $this->withoutExceptionHandling();
+
+        User::factory(5)->create();
+
+        TaskStatus::factory(5)->create();
+
+        $tasks = Task::factory(10)->create();
 
         $res = $this->get('/tasks');
 
         $res->assertStatus(200);
 
-        $res->assertSeeText('Создать задачу');
+        $res->assertSeeText('Задачи');
+
+        $res->assertViewIs('task.index');
+
+        $names = $tasks->pluck('name')->toArray();
+//        dd($names);
+
+        $res->assertSeeText($names);
     }
 }
