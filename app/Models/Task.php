@@ -9,4 +9,19 @@ class Task extends Model
 {
     use HasFactory;
     protected $guarded = false;
+
+    public function status()
+    {
+        return $this->belongsTo(TaskStatus::class, 'status_id', 'id');
+    }
+
+    public function created_by_user()
+    {
+        return $this->belongsTo(User::class, 'created_by_id', 'id');
+    }
+
+    public function assigned_to_user()
+    {
+        return $this->belongsTo(User::class, 'assigned_to_id', 'id');
+    }
 }

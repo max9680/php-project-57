@@ -19,8 +19,8 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            'name' => fake()->word,
-            'description' => fake()->sentence(random_int(4, 10)),
+            'name' => fake()->sentence(random_int(1, 6)),
+            'description' => fake()->sentence(random_int(6, 15)),
             'status_id' => TaskStatus::get()->random()->id,
             'created_by_id' => User::get()->random()->id,
             'assigned_to_id' => User::get()->random()->id,
