@@ -28,16 +28,4 @@ class StoreRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'name.required' => 'Это обязательное поле',
-            'name.unique' => 'Статус с таким именем уже существует',
-        ];
-    }
 }
