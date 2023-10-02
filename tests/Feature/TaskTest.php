@@ -114,8 +114,25 @@ class TaskTest extends TestCase
         $res->assertViewIs('task.index');
 
         $names = $tasks->pluck('name')->toArray();
-//        dd($names);
 
         $res->assertSeeText($names);
+    }
+
+    /** @test */
+    public function page_task_view_exists_and_display_all_properties()
+    {
+        $this->withoutExceptionHandling();
+
+        User::factory(5)->create();
+
+        TaskStatus::factory(5)->create();
+
+        Task::factory(10)->create();
+
+        $task = Task::get()->random();
+
+        $res = $this->get('/tasks/' . $task->id);
+
+        $res->assertOk();
     }
 }
