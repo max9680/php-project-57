@@ -35,7 +35,7 @@
                 {!! Form::label("status_id", "Статус") !!}
             </div>
             <div class="mt-2">
-                {{ Form::select('status_id', $taskStatuses->pluck('name'), $task->status->name, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => $task->status->name]) }}
+                {{ Form::select('status_id', $taskStatuses->pluck('name', 'id'), $task->status->id, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => $task->status->name]) }}
 
             </div>
             @error('status_id')
@@ -49,9 +49,9 @@
             </div>
             <div class="mt-2">
                 @if ($task->assigned_to_user == null)
-                    {{ Form::select('assigned_to_id', $users->pluck('name'), null, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => '----------']) }}
+                    {{ Form::select('assigned_to_id', $users, null, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => '----------']) }}
                 @else
-                    {{ Form::select('assigned_to_id', $users->pluck('name'), null, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => $task->assigned_to_user->name]) }}
+                    {{ Form::select('assigned_to_id', $users, $task->assigned_to_user->id, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => '----------']) }}
                 @endif
 
 

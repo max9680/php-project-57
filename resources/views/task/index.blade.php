@@ -20,6 +20,9 @@
                 <th>Автор</th>
                 <th>Исполнитель</th>
                 <th>Дата создания</th>
+                @auth
+                    <th>Действия</th>
+                @endauth
             </tr>
             </thead>
             <tbody>
@@ -36,6 +39,11 @@
                         <td>{{ $task->assigned_to_user->name }}</td>
                     @endif
                     <td>{{ $task->created_at->format('d.m.Y') }}</td>
+                    @auth
+                        <td>
+                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">Изменить</a>
+                        </td>
+                    @endauth
                 </tr>
             @endforeach
 

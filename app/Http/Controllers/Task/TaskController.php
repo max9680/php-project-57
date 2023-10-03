@@ -52,6 +52,8 @@ class TaskController extends Controller
 
         Task::create($data);
 
+        flash(__('messages.task.created'), 'success');
+
         return redirect()->route('tasks.index');
     }
 
@@ -75,7 +77,7 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $taskStatuses = TaskStatus::all();
-        $users = User::all();
+        $users = User::all()->pluck('name', 'id');
 
         return view('task.edit', compact('task', 'taskStatuses', 'users'));
     }
@@ -93,6 +95,8 @@ class TaskController extends Controller
         $data = $request->validated();
 
         $task->update($data);
+
+        flash(__('messages.task.updated'), 'success');
 
         return redirect()->route('tasks.index');
     }
