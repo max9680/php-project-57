@@ -39,6 +39,9 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Туманова Мария Леонидовна'],
             ['name' => 'Богданов Степан Алексеевич'],
             ))->create();
+
+        \App\Models\Task::factory(18)->create();
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
