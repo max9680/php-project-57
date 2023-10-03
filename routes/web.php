@@ -61,6 +61,8 @@ Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.e
     ->middleware('auth');
 Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update')
     ->middleware('auth');
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])
+    ->name('tasks.destroy');
 
 
 Route::get('/test', [TaskController::class, 'test'])->name('tasks.test');

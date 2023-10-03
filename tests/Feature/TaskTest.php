@@ -119,7 +119,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function page_task_view_exists_and_display_all_properties()
+    public function page_task_show_exists_and_display_all_properties()
     {
         $this->withoutExceptionHandling();
 
@@ -221,5 +221,27 @@ class TaskTest extends TestCase
         $res = $this->patch('/tasks/' . $task->id, $data );
 
         $res->assertRedirectToRoute('login');
+    }
+
+    /** @test */
+    public function task_can_be_deleted()
+    {
+        $this->withoutExceptionHandling();
+
+        User::factory(5)->create();
+
+        TaskStatus::factory(5)->create();
+
+        Task::factory(10)->create();
+
+        $task = Task::get()->random();
+
+        $this->assertDatabaseCount('tasks', 10);
+
+        $res = $this->delete('/tasks/' . $task->id);
+
+        $this->assertDatabaseCount('tasks', 9);
+
+        $res->assertRedirectToRoute('tasks.index');
     }
 }
