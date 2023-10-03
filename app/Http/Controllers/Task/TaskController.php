@@ -89,7 +89,7 @@ class TaskController extends Controller
      */
     public function update(UpdateRequest $request, Task $task)
     {
-        dd($request);
+//        dd($request);
         $data = $request->validated();
 
         $task->update($data);
