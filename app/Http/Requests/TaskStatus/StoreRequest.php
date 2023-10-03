@@ -27,5 +27,4 @@ class StoreRequest extends FormRequest
             'name' => 'required|unique:App\Models\TaskStatus|string',
         ];
     }
-
 }
