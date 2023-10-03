@@ -155,9 +155,11 @@ class TaskTest extends TestCase
 
         Task::factory(10)->create();
 
+        $user = User::get()->random();
+
         $task = Task::get()->random();
 
-        $res = $this->get('/tasks/' . $task->id . '/edit');
+        $res = $this->actingAs($user)->get('/tasks/' . $task->id . '/edit');
 
         $res->assertViewIs('task.edit');
     }
@@ -175,6 +177,40 @@ class TaskTest extends TestCase
 
         $task = Task::get()->random();
 
+        $user = User::get()->random();
+
+        $data = [
+            'name' => 'updated Name',
+            'description' => 'updatedDescription',
+            'status_id' => TaskStatus::get()->random()->id,
+            'assigned_to_id' => User::get()->random()->id,
+        ];
+
+        $res = $this->actingAs($user)->patch('/tasks/' . $task->id, $data );
+
+        $res->assertRedirectToRoute('tasks.index');
+
+        $updatedTask = Task::where('id', $task->id)->first();
+
+        $this->assertEquals($updatedTask->id, $task->id);
+
+        $this->assertEquals($updatedTask->name, $data['name']);
+        $this->assertEquals($updatedTask->description, $data['description']);
+
+//        dd($updatedTask);
+    }
+
+    /** @test */
+    public function a_task_can_be_update_by_only_auth_user()
+    {
+        User::factory(5)->create();
+
+        TaskStatus::factory(5)->create();
+
+        Task::factory(10)->create();
+
+        $task = Task::get()->random();
+
         $data = [
             'name' => 'updated Name',
             'description' => 'updatedDescription',
@@ -184,8 +220,6 @@ class TaskTest extends TestCase
 
         $res = $this->patch('/tasks/' . $task->id, $data );
 
-        $res->assertRedirectToRoute('tasks.index');
-
-
+        $res->assertRedirectToRoute('login');
     }
 }
