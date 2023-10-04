@@ -6,9 +6,11 @@
         <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">Задачи</h1>
 
         <div class="ml-auto">
-            <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
-            Создать задачу
-            </a>
+            @auth
+                <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
+                Создать задачу
+                </a>
+                @endauth
         </div>
 
         <table class="mt-4">

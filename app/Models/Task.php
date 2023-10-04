@@ -18,11 +18,13 @@ class Task extends Model
 
     public function created_by_user()
     {
-        return $this->belongsTo(User::class, 'created_by_id', 'id');
+//        return $this->belongsTo(User::class, 'created_by_id', 'id');
+        return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function assigned_to_user()
     {
-        return $this->belongsTo(User::class, 'assigned_to_id', 'id');
+//        return $this->belongsTo(User::class, 'assigned_to_id', 'id');
+        return $this->hasOne(User::class, 'id', 'assigned_to_id');
     }
 }
