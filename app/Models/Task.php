@@ -12,7 +12,8 @@ class Task extends Model
 
     public function status()
     {
-        return $this->belongsTo(TaskStatus::class, 'status_id', 'id');
+//        return $this->belongsTo(TaskStatus::class, 'status_id', 'id');
+        return $this->hasOne(TaskStatus::class, 'id', 'status_id');
     }
 
     public function created_by_user()
