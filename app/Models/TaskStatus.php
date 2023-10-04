@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TaskStatus extends Model
 {
@@ -11,4 +12,8 @@ class TaskStatus extends Model
 
     protected $guarded = false;
 
+    public function task(): BelongsTo
+    {
+        return $this->belongsTo(Task::class, 'status_id', 'id');
+    }
 }

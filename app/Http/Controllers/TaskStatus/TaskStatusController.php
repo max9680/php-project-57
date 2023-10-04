@@ -5,6 +5,7 @@ namespace App\Http\Controllers\TaskStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStatus\StoreRequest;
 use App\Http\Requests\TaskStatus\UpdateRequest;
+use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 
@@ -98,9 +99,18 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        $taskStatus->delete();
+        $tasks = Task::where('status_id', $taskStatus->id)->first();
 
-        flash(__('messages.status.deleted'), 'success');
+        if ($tasks == null) {
+
+            $taskStatus->delete();
+
+            flash(__('messages.status.deleted'), 'success');
+
+        } else {
+
+            flash(__('messages.status.deleted.error'), 'failure');
+        };
 
         return redirect()->route('task_statuses.index');
     }

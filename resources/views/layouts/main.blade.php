@@ -50,6 +50,12 @@
                 {{ flash()->message }}
             </div>
             @endif
+
+            @if (flash()->class === 'failure')
+                <div class="mb-4 rounded-lg bg-danger-100 px-6 py-5 text-base text-danger-700">
+                    {{ flash()->message }}
+                </div>
+            @endif
         @endif
 
     @yield('content')
