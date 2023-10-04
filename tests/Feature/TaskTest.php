@@ -227,19 +227,25 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        User::factory(5)->create();
+        $status = TaskStatus::factory()->create();
+        $user = User::factory()->create();
 
-        TaskStatus::factory(5)->create();
+        $data = [
+            'name' => 'first task',
+            'description' => 'many words in description',
+            'status_id' => $status->id,
+            'assigned_to_id' => $user->id,
+        ];
 
-        Task::factory(10)->create();
+        $this->actingAs($user)->post('/tasks', $data);
 
-        $task = Task::get()->random();
+        $this->assertDatabaseCount('tasks', 1);
 
-        $this->assertDatabaseCount('tasks', 10);
+        $task = Task::first();
 
-        $res = $this->delete('/tasks/' . $task->id);
+        $res = $this->actingAs($user)->delete('/tasks/' . $task->id);
 
-        $this->assertDatabaseCount('tasks', 9);
+        $this->assertDatabaseCount('tasks', 0);
 
         $res->assertRedirectToRoute('tasks.index');
     }
@@ -247,8 +253,6 @@ class TaskTest extends TestCase
     /** @test */
     public function task_can_be_deleted_by_only_owner()
     {
-        $this->withoutExceptionHandling();
-
         $status = TaskStatus::factory()->create();
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
