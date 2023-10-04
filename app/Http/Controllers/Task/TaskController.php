@@ -108,6 +108,10 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+//        dd(auth()->user());
+
+        $res = $this->authorize('delete', $task);
+
         $task->delete();
 
         flash(__('messages.task.deleted'), 'success');

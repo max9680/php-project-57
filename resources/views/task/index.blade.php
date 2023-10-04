@@ -41,7 +41,9 @@
                     <td>{{ $task->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
-                            <a data-method="delete" data-confirm="Вы уверены?" class="text-red-600 hover:text-red-900" href="{{ route('tasks.destroy', $task->id) }}">Удалить</a>
+                            @can('delete', $task)
+                                <a data-method="delete" data-confirm="Вы уверены?" class="text-red-600 hover:text-red-900" href="{{ route('tasks.destroy', $task->id) }}">Удалить</a>
+                            @endcan
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">Изменить</a>
                         </td>
                     @endauth
