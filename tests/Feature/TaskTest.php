@@ -39,7 +39,6 @@ class TaskTest extends TestCase
             'name' => 'first task',
             'description' => 'many words in description',
             'status_id' => $status->id,
-//            'created_by_id' => $user->id,
             'assigned_to_id' => null,
         ];
 
@@ -243,5 +242,45 @@ class TaskTest extends TestCase
         $this->assertDatabaseCount('tasks', 9);
 
         $res->assertRedirectToRoute('tasks.index');
+    }
+
+    /** @test */
+    public function task_can_be_deleted_by_only_owner()
+    {
+        $this->withoutExceptionHandling();
+
+        $status = TaskStatus::factory()->create();
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $data1 = [
+            'name' => 'first task',
+            'description' => 'many words in description',
+            'status_id' => $status->id,
+            'assigned_to_id' => $user2->id,
+        ];
+
+        $data2 = [
+            'name' => 'second task',
+            'description' => 'many words in description',
+            'status_id' => $status->id,
+            'assigned_to_id' => null,
+        ];
+
+        $this->actingAs($user1)->post('/tasks', $data1);
+        $this->actingAs($user2)->post('/tasks', $data2);
+
+        $this->assertDatabaseCount('tasks', 2);
+
+        $task1 = Task::where('name', 'first task')->first();
+        $task2 = Task::where('name', 'second task')->first();
+
+        $this->actingAs($user1)->delete('/tasks/' . $task1->id);
+
+        $this->assertDatabaseCount('tasks', 1);
+
+        $this->actingAs($user1)->delete('/tasks/' . $task2->id);
+
+        $this->assertDatabaseCount('tasks', 1);
     }
 }
