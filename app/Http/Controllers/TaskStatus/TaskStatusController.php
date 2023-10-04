@@ -99,9 +99,8 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        $tasks = Task::where('status_id', $taskStatus->id)->first();
 
-        if ($tasks == null) {
+        if ($taskStatus->tasks->toArray() == null) {
 
             $taskStatus->delete();
 

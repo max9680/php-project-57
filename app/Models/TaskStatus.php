@@ -12,8 +12,8 @@ class TaskStatus extends Model
 
     protected $guarded = false;
 
-    public function task(): BelongsTo
+    public function tasks()
     {
-        return $this->belongsTo(Task::class, 'status_id', 'id');
+        return $this->hasMany(Task::class, 'status_id', 'id');
     }
 }
