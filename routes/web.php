@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Tag\TagController;
 use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\TaskStatus\TaskStatusController;
 use Illuminate\Support\Facades\Route;
@@ -64,5 +65,8 @@ Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.up
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])
     ->name('tasks.destroy');
 
+
+Route::post('/tags', [TagController::class, 'store'])->name('tasks.store');
+Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
 
 Route::get('/test', [TaskController::class, 'test'])->name('tasks.test');
