@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Tag\TagController;
+use App\Http\Controllers\Label\LabelController;
 use App\Http\Controllers\Task\TaskController;
 use App\Http\Controllers\TaskStatus\TaskStatusController;
 use Illuminate\Support\Facades\Route;
@@ -66,7 +66,16 @@ Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])
     ->name('tasks.destroy');
 
 
-Route::post('/tags', [TagController::class, 'store'])->name('tasks.store');
-Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+Route::post('/labels', [LabelController::class, 'store'])->name('labels.store')
+    ->middleware('auth');
+Route::get('/labels', [LabelController::class, 'index'])->name('labels.index');
+Route::get('/labels/create', [LabelController::class, 'create'])->name('labels.create')
+    ->middleware('auth');
+Route::get('/labels/{label}/edit', [LabelController::class, 'edit'])->name('labels.edit')
+    ->middleware('auth');
+Route::delete('/labels/{label}', [LabelController::class, 'destroy'])->name('labels.destroy')
+    ->middleware('auth');
+Route::patch('/labels/{label}', [LabelController::class, 'update'])->name('labels.update')
+    ->middleware('auth');
 
 Route::get('/test', [TaskController::class, 'test'])->name('tasks.test');

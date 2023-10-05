@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tag>
  */
-class TagFactory extends Factory
+class LabelFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' =>fake()->word(),
+            'description' => fake()->sentence(random_int(6, 15)),
         ];
     }
 }

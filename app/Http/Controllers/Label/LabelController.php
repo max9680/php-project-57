@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Tag;
+namespace App\Http\Controllers\Label;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tag\StoreRequest;
-use App\Models\Tag;
+use App\Http\Requests\Label\StoreRequest;
+use App\Http\Requests\Label\UpdateRequest;
+use App\Models\Label;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class LabelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $labels = Label::all();
+
+        return view('label.index', compact('labels'));
     }
 
     /**
@@ -26,7 +29,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('label.create');
     }
 
     /**
@@ -39,11 +42,11 @@ class TagController extends Controller
     {
         $data = $request->validated();
 
-        Tag::create($data);
+        Label::create($data);
 
-        flash(__('messages.tag.created'), 'success');
+        flash(__('messages.label.created'), 'success');
 
-        return redirect()->route('tags.index');
+        return redirect()->route('labels.index');
     }
 
     /**
@@ -63,9 +66,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Label $label)
     {
-        //
+        return view('label.edit', compact('label'));
     }
 
     /**
@@ -75,9 +78,15 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Label $label)
     {
-        //
+        $data = $request->validated();
+
+        $label->update($data);
+
+        flash(__('messages.label.modified'), 'success');
+
+        return redirect()->route('labels.index');
     }
 
     /**
@@ -86,8 +95,12 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Label $label)
     {
-        //
+        $label->delete();
+
+        flash(__('messages.label.deleted'), 'success');
+
+        return redirect()->route('labels.index');
     }
 }
