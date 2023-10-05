@@ -99,15 +99,11 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-
         if ($taskStatus->tasks->toArray() == null) {
-
             $taskStatus->delete();
 
             flash(__('messages.status.deleted'), 'success');
-
         } else {
-
             flash(__('messages.status.deleted.error'), 'failure');
         };
 
