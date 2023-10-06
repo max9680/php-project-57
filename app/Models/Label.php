@@ -9,4 +9,9 @@ class Label extends Model
 {
     use HasFactory;
     protected $guarded = false;
+
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'label_tasks', 'label_id', 'task_id');
+    }
 }

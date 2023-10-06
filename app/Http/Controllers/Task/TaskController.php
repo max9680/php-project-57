@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Task;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\UpdateRequest;
 use App\Http\Requests\Task\StoreRequest;
+use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -65,7 +66,15 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        return view('task.show', compact('task'));
+        $labels = $task->labels;
+
+//        $label = Label::find(4);
+//
+//        $tasks = $label->tasks;
+//
+//        dd($tasks);
+
+        return view('task.show', compact('task', 'labels'));
     }
 
     /**
