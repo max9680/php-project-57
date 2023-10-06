@@ -22,4 +22,5 @@ return [
     'label.created' => 'Метка успешно создана',
     'label.modified' => 'Метка успешно изменена',
     'label.deleted' => 'Метка успешно удалена',
+    'label.deleted.error' => 'Не удалось удалить метку',
 ];

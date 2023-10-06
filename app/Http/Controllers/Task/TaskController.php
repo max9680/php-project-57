@@ -68,12 +68,6 @@ class TaskController extends Controller
     {
         $labels = $task->labels;
 
-//        $label = Label::find(4);
-//
-//        $tasks = $label->tasks;
-//
-//        dd($tasks);
-
         return view('task.show', compact('task', 'labels'));
     }
 
