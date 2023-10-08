@@ -30,7 +30,7 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        return view('taskStatus.create', compact('labels'));
+        return view('taskStatus.create');
     }
 
     /**

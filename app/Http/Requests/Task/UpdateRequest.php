@@ -29,6 +29,7 @@ class UpdateRequest extends FormRequest
             'description' => '',
             'status_id' => 'required|exists:App\Models\TaskStatus,id',
             'assigned_to_id' => 'nullable|exists:App\Models\User,id',
+            'labels' => '',
         ];
     }
 

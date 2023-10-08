@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
@@ -40,6 +41,7 @@ class TaskTest extends TestCase
             'description' => 'many words in description',
             'status_id' => $status->id,
             'assigned_to_id' => null,
+            'labels' => [],
         ];
 
         $res = $this->actingAs($user)->post('/tasks', $data);
@@ -183,6 +185,7 @@ class TaskTest extends TestCase
             'description' => 'updatedDescription',
             'status_id' => TaskStatus::get()->random()->id,
             'assigned_to_id' => User::get()->random()->id,
+            'labels' => [],
         ];
 
         $res = $this->actingAs($user)->patch('/tasks/' . $task->id, $data );
@@ -235,6 +238,7 @@ class TaskTest extends TestCase
             'description' => 'many words in description',
             'status_id' => $status->id,
             'assigned_to_id' => $user->id,
+            'labels' => [],
         ];
 
         $this->actingAs($user)->post('/tasks', $data);
@@ -262,6 +266,7 @@ class TaskTest extends TestCase
             'description' => 'many words in description',
             'status_id' => $status->id,
             'assigned_to_id' => $user2->id,
+            'labels' => [],
         ];
 
         $data2 = [
@@ -269,6 +274,7 @@ class TaskTest extends TestCase
             'description' => 'many words in description',
             'status_id' => $status->id,
             'assigned_to_id' => null,
+            'labels' => [],
         ];
 
         $this->actingAs($user1)->post('/tasks', $data1);

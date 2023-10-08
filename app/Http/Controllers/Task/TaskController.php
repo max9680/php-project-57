@@ -57,8 +57,6 @@ class TaskController extends Controller
         unset($data['labels']);
         $labels = array_filter($labels);
 
-//        dd($data, $labels);
-
         $task = Task::create($data);
 
         $task->labels()->attach($labels);
@@ -108,7 +106,13 @@ class TaskController extends Controller
     {
         $data = $request->validated();
 
+        $labels = $data['labels'];
+        unset($data['labels']);
+        $labels = array_filter($labels);
+
         $task->update($data);
+
+        $task->labels()->sync($labels);
 
         flash(__('messages.task.updated'), 'success');
 
@@ -123,25 +127,12 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-//        dd(auth()->user());
-
-        $res = $this->authorize('delete', $task);
+        $this->authorize('delete', $task);
 
         $task->delete();
 
         flash(__('messages.task.deleted'), 'success');
 
         return redirect()->route('tasks.index');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function test()
-    {
-
-        return view('task.test');
     }
 }
