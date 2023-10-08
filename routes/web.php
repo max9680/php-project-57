@@ -77,5 +77,3 @@ Route::delete('/labels/{label}', [LabelController::class, 'destroy'])->name('lab
     ->middleware('auth');
 Route::patch('/labels/{label}', [LabelController::class, 'update'])->name('labels.update')
     ->middleware('auth');
-
-Route::get('/test', [TaskController::class, 'test'])->name('tasks.test');

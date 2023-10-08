@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:tasks,name,'.$this->task->id,
+            'name' => 'required|unique:tasks,name,' . $this->task->id,
             'description' => '',
             'status_id' => 'required|exists:App\Models\TaskStatus,id',
             'assigned_to_id' => 'nullable|exists:App\Models\User,id',
