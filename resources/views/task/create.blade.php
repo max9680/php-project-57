@@ -49,7 +49,6 @@
             </div>
             <div class="mt-2">
                 {{ Form::select('assigned_to_id', $users, null, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => '----------']) }}
-
             </div>
             @error('assigned_to_id')
             <div class="text-rose-600">

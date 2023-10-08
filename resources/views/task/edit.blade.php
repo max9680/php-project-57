@@ -45,7 +45,7 @@
             @enderror
 
             <div class="mt-2">
-                {!! Form::label("status_id", "Исполнитель") !!}
+                {!! Form::label("assigned_to_id", "Исполнитель") !!}
             </div>
             <div class="mt-2">
                 @if ($task->assigned_to_user == null)
@@ -53,20 +53,18 @@
                 @else
                     {{ Form::select('assigned_to_id', $users, $task->assigned_to_user->id, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => '----------']) }}
                 @endif
-
-
-            </div>
             @error('assigned_to_id')
             <div class="text-rose-600">
                 {{ $message }}
             </div>
             @enderror
+            </div>
 
             <div class="mt-2">
-                {!! Form::label("label", "Метки") !!}
+                {!! Form::label("labels", "Метки") !!}
             </div>
             <div class="mt-2">
-                {{ Form::select('assigned_to_id', $labels, null, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'multiple' => true) }}
+                {{ Form::select('labels[]', $labels, $taskLabels, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'multiple' => true, 'placeholder' => '']) }}
             </div>
 
             <div class="mt-2">

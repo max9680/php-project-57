@@ -11,6 +11,8 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\LabelTask;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class TaskController extends Controller
 {
@@ -59,12 +61,7 @@ class TaskController extends Controller
 
         $task = Task::create($data);
 
-        foreach ($labels as $label) {
-            LabelTask::firstOrCreate([
-                'label_id' => $label,
-                'task_id' => $task->id,
-                ]);
-        }
+        $task->labels()->attach($labels);
 
         flash(__('messages.task.created'), 'success');
 
@@ -94,9 +91,10 @@ class TaskController extends Controller
     {
         $taskStatuses = TaskStatus::all();
         $users = User::all()->pluck('name', 'id');
-        $labels = $task->labels;
+        $taskLabels = $task->labels;
+        $labels = Label::all()->pluck('name', 'id');
 
-        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels'));
+        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels', 'taskLabels'));
     }
 
     /**
@@ -106,7 +104,7 @@ class TaskController extends Controller
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, Task $task)
+    public function update(updateRequest $request, Task $task)
     {
         $data = $request->validated();
 
