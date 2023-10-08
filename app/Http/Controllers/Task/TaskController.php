@@ -9,6 +9,7 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\LabelTask;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -34,10 +35,9 @@ class TaskController extends Controller
     {
         $taskStatuses = TaskStatus::select('id', 'name')->get()->pluck('name', 'id');
         $users = User::select('id', 'name')->get()->pluck('name', 'id');
+        $labels = Label::all()->pluck('name', 'id');
 
-//        dd($taskStatusNames);
-
-        return view('task.create', compact('taskStatuses', 'users'));
+        return view('task.create', compact('taskStatuses', 'users', 'labels'));
     }
 
     /**
@@ -51,7 +51,20 @@ class TaskController extends Controller
         $data = $request->validated();
         $data['created_by_id'] = auth()->user()->id;
 
-        Task::create($data);
+        $labels = $data['labels'];
+        unset($data['labels']);
+        $labels = array_filter($labels);
+
+//        dd($data, $labels);
+
+        $task = Task::create($data);
+
+        foreach ($labels as $label) {
+            LabelTask::firstOrCreate([
+                'label_id' => $label,
+                'task_id' => $task->id,
+                ]);
+        }
 
         flash(__('messages.task.created'), 'success');
 
@@ -81,8 +94,9 @@ class TaskController extends Controller
     {
         $taskStatuses = TaskStatus::all();
         $users = User::all()->pluck('name', 'id');
+        $labels = $task->labels;
 
-        return view('task.edit', compact('task', 'taskStatuses', 'users'));
+        return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels'));
     }
 
     /**

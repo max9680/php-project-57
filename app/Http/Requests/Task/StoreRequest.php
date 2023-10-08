@@ -24,11 +24,12 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:tasks',
             'description' => '',
             'status_id' => 'required|exists:App\Models\TaskStatus,id',
             'created_by_id' => 'exists:App\Models\User,id',
             'assigned_to_id' => 'nullable|exists:App\Models\User,id',
+            'labels' => '',
         ];
     }
 

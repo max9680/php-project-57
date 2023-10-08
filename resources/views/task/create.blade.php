@@ -58,6 +58,13 @@
             @enderror
 
             <div class="mt-2">
+                {!! Form::label("labels", "Метки") !!}
+            </div>
+            <div class="mt-2">
+                {{ Form::select('labels[]', $labels, null, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'multiple' => true, 'placeholder' => '']) }}
+            </div>
+
+            <div class="mt-2">
                 {!! Form::submit('Создать', ['class' => 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded']) !!}
             </div>
             {!! Form::close() !!}
