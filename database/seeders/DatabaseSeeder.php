@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -68,6 +69,14 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Найти чудо', 'description' => 'Чудо-чудное, диво-дивное.'],
             ['name' => 'Исправить ошибку в самой длинной строке', 'description' => 'Самая длинная строка находится в Тридевятом Царстве'],
             ))->create();
+
+        $tasks = Task::all();
+
+        foreach ($tasks as $task) {
+            \App\Models\LabelTask::factory()->state([
+                'task_id' => $task->id,
+            ])->create();
+        }
 
         // \App\Models\User::factory(10)->create();
 
