@@ -30,7 +30,7 @@ class TaskController extends Controller
 
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters('status_id', 'created_by_id', 'assigned_to_id')
-            ->paginate(4)
+            ->paginate(15)
             ->appends(request()->query());
 
         return view('task.index', [
