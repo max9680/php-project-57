@@ -26,7 +26,7 @@ class TaskController extends Controller
     public function index()
     {
         $users = User::all()->pluck('name', 'id');
-        $taskStatuses = TaskStatus::all()->pluck('name','id');
+        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
 
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters('status_id', 'created_by_id', 'assigned_to_id')
