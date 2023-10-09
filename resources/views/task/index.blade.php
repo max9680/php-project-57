@@ -11,9 +11,14 @@
                 <div class="flex">
 
                     <div>
-                        {{ Form::select('filter[status_id]', $taskStatuses, null, ['class' => 'rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Статус']) }}
+                        @if ($activeFilter['status_id'] == null)
+                            {{ Form::select('filter[status_id]', $taskStatuses, null, ['class' => 'rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Статус']) }}
+                        @else
+                            {{ Form::select('filter[status_id]', $taskStatuses, $taskStatuses[$activeFilter['status_id']], ['class' => 'rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Статус']) }}
+                        @endif
                     </div>
 
+                    <div>{{ $taskStatuses[$activeFilter['status_id']] }}</div>
                     <div>
                         {{ Form::select('filter[created_by_id]', $users, null, ['class' => 'ml-2 rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Автор']) }}
                     </div>

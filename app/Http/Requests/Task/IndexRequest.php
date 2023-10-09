@@ -24,11 +24,9 @@ class IndexRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => '',
-            'status_id' => '',
-            'created_by_id' => '',
-            'assigned_to_id' => '',
-            'labels' => '',
+            'filter[status_id]' => '',
+            'filter[created_by_id]' => '',
+            'filter[assigned_to_id]' => '',
         ];
     }
 

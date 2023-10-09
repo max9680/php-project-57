@@ -14,6 +14,7 @@ use App\Models\LabelTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
 {
@@ -27,11 +28,26 @@ class TaskController extends Controller
 //        $data = $request->validated();
 //        dd($data);
 
-        $tasks = Task::all();
+//        $tasks = Task::all();
         $users = User::all()->pluck('name', 'id');
         $taskStatuses = TaskStatus::all()->pluck('name','id');
 
-        return view('task.index', compact('tasks', 'users', 'taskStatuses'));
+        $tasks = QueryBuilder::for(Task::class)
+            ->allowedFilters('status_id', 'created_by_id', 'assigned_to_id')
+            ->paginate()
+            ->appends(request()->query());
+//            ->get();
+
+        return view('task.index', [
+            'tasks' => $tasks,
+            'users' => $users,
+            'taskStatuses' => $taskStatuses,
+            'activeFilter' => request()->get('filter') ?? [
+                    'status_id' => '',
+                    'assigned_to_id' => '',
+                    'created_by_id' => ''
+                ]
+            ]);
     }
 
     /**
