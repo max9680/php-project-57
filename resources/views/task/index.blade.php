@@ -11,7 +11,7 @@
                 <div class="flex">
 
                     <div>
-                        @if ($activeFilter['status_id'] == null)
+                        @if (!isset($activeFilter['status_id']))
                             {{ Form::select('filter[status_id]', $taskStatuses, null, ['class' => 'rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Статус']) }}
                         @else
                             {{ Form::select('filter[status_id]', $taskStatuses, $activeFilter['status_id'], ['class' => 'rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Статус']) }}
@@ -19,7 +19,7 @@
                     </div>
 
                     <div>
-                        @if ($activeFilter['created_by_id'] == null)
+                        @if (!isset($activeFilter['created_by_id']))
                             {{ Form::select('filter[created_by_id]', $users, null, ['class' => 'ml-2 rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Автор']) }}
                         @else
                             {{ Form::select('filter[created_by_id]', $users, $activeFilter['created_by_id'], ['class' => 'ml-2 rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Автор']) }}
@@ -27,7 +27,7 @@
                     </div>
 
                     <div>
-                        @if ($activeFilter['assigned_to_id'] == null)
+                        @if (!isset($activeFilter['assigned_to_id']))
                             {{ Form::select('filter[assigned_to_id]', $users, null, ['class' => 'ml-2 rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Исполнитель']) }}
                         @else
                             {{ Form::select('filter[assigned_to_id]', $users, $activeFilter['assigned_to_id'], ['class' => 'ml-2 rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Исполнитель']) }}
@@ -92,6 +92,8 @@
 
             </tbody>
         </table>
+
+        {{ $tasks->links() }}
     </div>
 
 @endsection

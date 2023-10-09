@@ -23,20 +23,15 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(IndexRequest $request)
+    public function index()
     {
-//        $data = $request->validated();
-//        dd($data);
-
-//        $tasks = Task::all();
         $users = User::all()->pluck('name', 'id');
         $taskStatuses = TaskStatus::all()->pluck('name','id');
 
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters('status_id', 'created_by_id', 'assigned_to_id')
-            ->paginate()
+            ->paginate(4)
             ->appends(request()->query());
-//            ->get();
 
         return view('task.index', [
             'tasks' => $tasks,
