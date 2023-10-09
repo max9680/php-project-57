@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Task\IndexRequest;
 use App\Http\Requests\Task\UpdateRequest;
 use App\Http\Requests\Task\StoreRequest;
 use App\Models\Label;
@@ -21,11 +22,16 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        $tasks = Task::all();
+//        $data = $request->validated();
+//        dd($data);
 
-        return view('task.index', compact('tasks'));
+        $tasks = Task::all();
+        $users = User::all()->pluck('name', 'id');
+        $taskStatuses = TaskStatus::all()->pluck('name','id');
+
+        return view('task.index', compact('tasks', 'users', 'taskStatuses'));
     }
 
     /**

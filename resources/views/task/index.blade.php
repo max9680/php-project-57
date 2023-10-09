@@ -5,12 +5,38 @@
     <div class="grid col-span-full">
         <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">Задачи</h1>
 
+        <div class="w-full flex items-center">
+            <div>
+                {!! Form::open(['route' => ['tasks.index'], 'method' => 'get']) !!}
+                <div class="flex">
+
+                    <div>
+                        {{ Form::select('filter[status_id]', $taskStatuses, null, ['class' => 'rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Статус']) }}
+                    </div>
+
+                    <div>
+                        {{ Form::select('filter[created_by_id]', $users, null, ['class' => 'ml-2 rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Автор']) }}
+                    </div>
+
+                    <div>
+                        {{ Form::select('filter[assigned_to_id]', $users, null, ['class' => 'ml-2 rounded border border-gray-300 p-2 bg-white', 'placeholder' => 'Исполнитель']) }}
+                    </div>
+
+                    <div>
+                        <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2" type="submit" value="Применить">
+                    </div>
+
+                </div>
+                {!! Form::close() !!}
+            </div>
+
         <div class="ml-auto">
             @auth
                 <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
                 Создать задачу
                 </a>
                 @endauth
+        </div>
         </div>
 
         <table class="mt-4">
