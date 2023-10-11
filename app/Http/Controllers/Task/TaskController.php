@@ -3,17 +3,12 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Task\IndexRequest;
 use App\Http\Requests\Task\UpdateRequest;
 use App\Http\Requests\Task\StoreRequest;
 use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
-use App\Models\LabelTask;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
