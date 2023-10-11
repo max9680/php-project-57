@@ -25,6 +25,8 @@ class TaskController extends Controller
      */
     public function index()
     {
+        \Log::debug('Test debug message');
+
         $users = User::all()->pluck('name', 'id');
         $taskStatuses = TaskStatus::all()->pluck('name', 'id');
 
