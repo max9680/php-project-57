@@ -35,7 +35,7 @@
                 {!! Form::label("status_id", "Статус") !!}
             </div>
             <div class="mt-2">
-                {{ Form::select('status_id', $taskStatuses->pluck('name', 'id'), $task->status->id, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => $task->status->name]) }}
+                {{ Form::select('status_id', $taskStatuses->pluck('name', 'id'), $task->status->id, ['class' => 'rounded border border-gray-300 w-1/3 p-2 bg-white', 'placeholder' => '----------']) }}
 
             </div>
             @error('status_id')
