@@ -24,5 +24,7 @@ $ make install
 
 Connect DB 
 
+Define environment variables
+
 $ make start
 ```

@@ -8,9 +8,11 @@ lint-fix:
 
 install:
 		composer install
+		cp .env.example .env
+		php artisan key:gen --ansi
 
 test:
-		./vendor/bin/phpunit tests
+		php artisan test
 
 start:
 	php artisan migrate:refresh --seed --force && php artisan serve
