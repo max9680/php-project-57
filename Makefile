@@ -10,6 +10,8 @@ install:
 		composer install
 		cp .env.example .env
 		php artisan key:gen --ansi
+		npm ci
+		npm run build
 
 test:
 		php artisan test
