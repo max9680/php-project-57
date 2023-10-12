@@ -11,7 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravelcollective/html": "^6.4",
-        "rollbar/rollbar-laravel": "*",
+        "rollbar/rollbar-laravel": "^1.3",
         "spatie/laravel-flash": "^1.9",
         "spatie/laravel-query-builder": "^5.6"
     },
