@@ -16,5 +16,8 @@ install:
 test:
 		php artisan test
 
+test-coverage:
+		composer exec --verbose php artisan test -- --coverage-clover build/logs/clover.xml --whitelist src
+
 start:
 	php artisan migrate:refresh --seed --force && php artisan serve
