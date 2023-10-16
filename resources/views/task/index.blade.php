@@ -93,7 +93,7 @@
             </tbody>
         </table>
 
-        {{ $tasks->links() }}
+        {{--{{ $tasks->links() }}--}}
     </div>
 
 @endsection
