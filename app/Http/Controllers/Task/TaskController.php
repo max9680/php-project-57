@@ -9,6 +9,7 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskController extends Controller
@@ -25,10 +26,20 @@ class TaskController extends Controller
         $users = User::all()->pluck('name', 'id');
         $taskStatuses = TaskStatus::all()->pluck('name', 'id');
 
+//        $tasks = QueryBuilder::for(Task::class)
+//            ->allowedFilters('status_id', 'created_by_id', 'assigned_to_id')
+//            ->paginate('15')
+//            ->appends(request()->query());
+
         $tasks = QueryBuilder::for(Task::class)
-            ->allowedFilters('status_id', 'created_by_id', 'assigned_to_id')
-            ->paginate('15')
-            ->appends(request()->query());
+            ->allowedFilters([
+                'name',
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id'),
+            ])
+            ->orderBy('id')
+            ->paginate(10);
 
         return view('task.index', [
             'tasks' => $tasks,
