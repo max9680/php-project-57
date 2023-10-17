@@ -26,11 +26,6 @@ class TaskController extends Controller
         $users = User::all()->pluck('name', 'id');
         $taskStatuses = TaskStatus::all()->pluck('name', 'id');
 
-//        $tasks = QueryBuilder::for(Task::class)
-//            ->allowedFilters('status_id', 'created_by_id', 'assigned_to_id')
-//            ->paginate('15')
-//            ->appends(request()->query());
-
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
                 'name',
@@ -154,6 +149,7 @@ class TaskController extends Controller
     {
         $this->authorize('delete', $task);
 
+        $task->labels()->detach();
         $task->delete();
 
         flash(__('messages.task.deleted'), 'success');
