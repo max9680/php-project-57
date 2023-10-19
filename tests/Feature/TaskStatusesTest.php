@@ -22,7 +22,7 @@ class TaskStatusesTest extends TestCase
 
         $user = User::factory()->create();
 
-        $res = $this->actingAs($user)->get('/task_statuses/create');
+        $res = $this->actingAs($user)->get(route('task_statuses.create'));
 
         $res->assertStatus(200);
     }
@@ -37,7 +37,7 @@ class TaskStatusesTest extends TestCase
             'name' => 'test name',
         ];
 
-        $res = $this->post('/task_statuses', $data);
+        $res = $this->post(route('task_statuses.store', $data));
 
         $res->assertRedirectToRoute('task_statuses.index');
 
@@ -53,7 +53,7 @@ class TaskStatusesTest extends TestCase
             'name' => '',
         ];
 
-        $res = $this->post('/task_statuses', $data);
+        $res = $this->post(route('task_statuses.store', $data));
 
         $res->assertSessionHasErrors([
             'name' => 'Это обязательное поле'
@@ -70,7 +70,7 @@ class TaskStatusesTest extends TestCase
 
         $taskStatus = TaskStatus::factory()->create();
 
-        $res = $this->actingAs($user)->get('/task_statuses/' . $taskStatus->id . '/edit');
+        $res = $this->actingAs($user)->get(route('task_statuses.edit', $taskStatus->id));
 
         $res->assertStatus(200);
     }
@@ -88,7 +88,7 @@ class TaskStatusesTest extends TestCase
             'name' => 'updated',
         ];
 
-        $res = $this->actingAs($user)->patch('/task_statuses/' . $taskStatus->id, $data);
+        $res = $this->actingAs($user)->patch(route('task_statuses.update', $taskStatus->id), $data);
 
         $res->assertRedirectToRoute('task_statuses.index');
 
@@ -109,7 +109,7 @@ class TaskStatusesTest extends TestCase
             'name' => 'updated',
         ];
 
-        $res = $this->patch('/task_statuses/' . $taskStatus->id, $data);
+        $res = $this->patch(route('task_statuses.update', $taskStatus->id), $data);
 
         $res->assertRedirectToRoute('login');
 
@@ -128,7 +128,7 @@ class TaskStatusesTest extends TestCase
 
         $taskStatuses = TaskStatus::factory(10)->create();
 
-        $res = $this->get('/task_statuses');
+        $res = $this->get(route('task_statuses.index'));
 
         $res->assertViewIs('taskStatus.index');
 
@@ -152,7 +152,7 @@ class TaskStatusesTest extends TestCase
 
         $taskStatus = TaskStatus::where('id', 1)->first();
 
-        $res = $this->actingAs($user)->delete('/task_statuses/' . $taskStatus->id);
+        $res = $this->actingAs($user)->delete(route('task_statuses.destroy', $taskStatus->id));
 
         $this->assertDatabaseCount('task_statuses', 9);
 
@@ -168,7 +168,7 @@ class TaskStatusesTest extends TestCase
 
         $taskStatus = TaskStatus::where('id', 1)->first();
 
-        $res = $this->delete('/task_statuses/' . $taskStatus->id);
+        $res = $this->delete(route('task_statuses.destroy', $taskStatus->id));
 
         $res->assertRedirectToRoute('login');
 

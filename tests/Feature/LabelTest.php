@@ -24,7 +24,7 @@ class LabelTest extends TestCase
             'description' => 'Какая-то ошибка в коде или проблема с функциональностью',
         ];
 
-        $this->actingAs($user)->post('/labels', $data);
+        $this->actingAs($user)->post(route('labels.store', $data));
 
         $label = Label::first();
 
@@ -38,7 +38,7 @@ class LabelTest extends TestCase
 
         Label::factory(5)->create();
 
-        $res = $this->get('/labels');
+        $res = $this->get(route('labels.index'));
 
         $res->assertStatus(200);
 
@@ -56,7 +56,7 @@ class LabelTest extends TestCase
 
         $user = User::factory()->create();
 
-        $res = $this->actingAs($user)->get('/labels/create');
+        $res = $this->actingAs($user)->get(route('labels.create'));
 
         $res->assertStatus(200);
 
@@ -74,7 +74,7 @@ class LabelTest extends TestCase
 
         $label = Label::where('id', random_int(1, 5))->first();
 
-        $res = $this->actingAs($user)->get('/labels/' . $label->id . '/edit');
+        $res = $this->actingAs($user)->get(route('labels.edit', $label->id));
 
         $res->assertStatus(200);
 
@@ -95,7 +95,7 @@ class LabelTest extends TestCase
             'description' => 'Edited description',
         ];
 
-        $res = $this->actingAs($user)->patch('/labels/' . $label->id, $newData);
+        $res = $this->actingAs($user)->patch(route('labels.update', $label->id), $newData);
 
         $res->assertRedirectToRoute('labels.index');
 
@@ -116,7 +116,7 @@ class LabelTest extends TestCase
 
         $this->assertDatabaseCount('labels', 1);
 
-        $res = $this->actingAs($user)->delete('/labels/' . $label->id);
+        $res = $this->actingAs($user)->delete(route('labels.destroy', $label->id));
 
         $res->assertRedirectToRoute('labels.index');
 
@@ -135,7 +135,7 @@ class LabelTest extends TestCase
             'description' => 'Edited description',
         ];
 
-        $res = $this->patch('/labels/' . $label->id, $newData);
+        $res = $this->patch(route('labels.update', $label->id), $newData);
 
         $res->assertRedirectToRoute('login');
 
@@ -144,7 +144,7 @@ class LabelTest extends TestCase
         $this->assertNotEquals($labelFromDB->name, $newData['name']);
         $this->assertNotEquals($labelFromDB->description, $newData['description']);
 
-        $res = $this->actingAs($user)->patch('/labels/' . $label->id, $newData);
+        $res = $this->actingAs($user)->patch(route('labels.update', $label->id), $newData);
 
         $res->assertRedirectToRoute('labels.index');
 
@@ -163,11 +163,11 @@ class LabelTest extends TestCase
 
         $this->assertDatabaseCount('labels', 1);
 
-        $this->delete('/labels/' . $label->id);
+        $this->delete(route('labels.destroy', $label->id));
 
         $this->assertDatabaseCount('labels', 1);
 
-        $res = $this->actingAs($user)->delete('/labels/' . $label->id);
+        $res = $this->actingAs($user)->delete(route('labels.destroy', $label->id));
 
         $res->assertRedirectToRoute('labels.index');
 

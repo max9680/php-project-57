@@ -68,18 +68,22 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRequest $request,)
+    public function store(StoreRequest $request)
     {
         $data = $request->validated();
         $data['created_by_id'] = auth()->user()->id;
 
-        $labels = $data['labels'];
-        unset($data['labels']);
-        $labels = array_filter($labels);
+        if (isset($data['labels'])) {
+            $labels = $data['labels'];
+            unset($data['labels']);
+            $labels = array_filter($labels);
+        }
 
         $task = Task::create($data);
 
-        $task->labels()->attach($labels);
+        if (isset($labels)) {
+            $task->labels()->attach($labels);
+        }
 
         flash(__('messages.task.created'), 'success');
 
@@ -126,9 +130,13 @@ class TaskController extends Controller
     {
         $data = $request->validated();
 
-        $labels = $data['labels'];
-        unset($data['labels']);
-        $labels = array_filter($labels);
+        if (isset($data['labels'])) {
+            $labels = $data['labels'];
+            unset($data['labels']);
+            $labels = array_filter($labels);
+        } else {
+            $labels = [];
+        }
 
         $task->update($data);
 

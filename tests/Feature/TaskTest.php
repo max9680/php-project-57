@@ -21,7 +21,7 @@ class TaskTest extends TestCase
 
         $user = User::factory()->create();
 
-        $res = $this->actingAs($user)->get('/tasks/create');
+        $res = $this->actingAs($user)->get(route('tasks.create'));
 
         $res->assertStatus(200);
 
@@ -44,7 +44,7 @@ class TaskTest extends TestCase
             'labels' => [],
         ];
 
-        $res = $this->actingAs($user)->post('/tasks', $data);
+        $res = $this->actingAs($user)->post(route('tasks.store', $data));
 
         $res->assertRedirectToRoute('tasks.index');
 
@@ -69,7 +69,7 @@ class TaskTest extends TestCase
             'assigned_to_id' => null,
         ];
 
-        $res = $this->post('/tasks', $data);
+        $res = $this->post(route('tasks.store', $data));
 
         $res->assertRedirectToRoute('login');
     }
@@ -88,7 +88,7 @@ class TaskTest extends TestCase
             'assigned_to_id' => null,
         ];
 
-        $res = $this->actingAs($user)->post('/tasks', $data);
+        $res = $this->actingAs($user)->post(route('tasks.store', $data));
 
         $res->assertSessionHasErrors([
             'name' => 'Это обязательное поле',
@@ -106,7 +106,7 @@ class TaskTest extends TestCase
 
         $tasks = Task::factory(10)->create();
 
-        $res = $this->get('/tasks');
+        $res = $this->get(route('tasks.index'));
 
         $res->assertStatus(200);
 
@@ -132,7 +132,7 @@ class TaskTest extends TestCase
 
         $task = Task::get()->random();
 
-        $res = $this->get('/tasks/' . $task->id);
+        $res = $this->get(route('tasks.show', $task->id));
 
         $res->assertOk();
 
@@ -160,7 +160,7 @@ class TaskTest extends TestCase
 
         $task = Task::get()->random();
 
-        $res = $this->actingAs($user)->get('/tasks/' . $task->id . '/edit');
+        $res = $this->actingAs($user)->get(route('tasks.edit', $task->id));
 
         $res->assertViewIs('task.edit');
     }
@@ -188,7 +188,7 @@ class TaskTest extends TestCase
             'labels' => [],
         ];
 
-        $res = $this->actingAs($user)->patch('/tasks/' . $task->id, $data );
+        $res = $this->actingAs($user)->patch(route('tasks.update', $task->id), $data);
 
         $res->assertRedirectToRoute('tasks.index');
 
@@ -199,7 +199,6 @@ class TaskTest extends TestCase
         $this->assertEquals($updatedTask->name, $data['name']);
         $this->assertEquals($updatedTask->description, $data['description']);
 
-//        dd($updatedTask);
     }
 
     /** @test */
@@ -220,7 +219,7 @@ class TaskTest extends TestCase
             'assigned_to_id' => User::get()->random()->id,
         ];
 
-        $res = $this->patch('/tasks/' . $task->id, $data );
+        $res = $this->patch(route('tasks.update', $task->id), $data);
 
         $res->assertRedirectToRoute('login');
     }
@@ -241,13 +240,13 @@ class TaskTest extends TestCase
             'labels' => [],
         ];
 
-        $this->actingAs($user)->post('/tasks', $data);
+        $this->actingAs($user)->post(route('tasks.store', $data));
 
         $this->assertDatabaseCount('tasks', 1);
 
         $task = Task::first();
 
-        $res = $this->actingAs($user)->delete('/tasks/' . $task->id);
+        $res = $this->actingAs($user)->delete(route('tasks.destroy', $task->id));
 
         $this->assertDatabaseCount('tasks', 0);
 
@@ -277,19 +276,19 @@ class TaskTest extends TestCase
             'labels' => [],
         ];
 
-        $this->actingAs($user1)->post('/tasks', $data1);
-        $this->actingAs($user2)->post('/tasks', $data2);
+        $this->actingAs($user1)->post(route('tasks.store', $data1));
+        $this->actingAs($user2)->post(route('tasks.store', $data2));
 
         $this->assertDatabaseCount('tasks', 2);
 
         $task1 = Task::where('name', 'first task')->first();
         $task2 = Task::where('name', 'second task')->first();
 
-        $this->actingAs($user1)->delete('/tasks/' . $task1->id);
+        $this->actingAs($user1)->delete(route('tasks.destroy', $task1->id));
 
         $this->assertDatabaseCount('tasks', 1);
 
-        $this->actingAs($user1)->delete('/tasks/' . $task2->id);
+        $this->actingAs($user1)->delete(route('tasks.destroy', $task2->id));
 
         $this->assertDatabaseCount('tasks', 1);
     }
