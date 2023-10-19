@@ -13,7 +13,7 @@ class LabelTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_label_can_be_stored()
+    public function testStore()
     {
         $this->withoutExceptionHandling();
 
@@ -32,7 +32,7 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function page_label_index_exists_and_display_name_and_description_for_all_labels()
+    public function testIndex_page_exists()
     {
         $this->withoutExceptionHandling();
 
@@ -50,7 +50,7 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function page_for_create_label_exists()
+    public function testCreate_page_exists()
     {
         $this->withoutExceptionHandling();
 
@@ -64,7 +64,7 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function page_for_update_label_exists()
+    public function testUpdate_page_exists()
     {
         $this->withoutExceptionHandling();
 
@@ -82,7 +82,7 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function a_label_can_be_update_by_auth_user()
+    public function testUpdate()
     {
         $this->withoutExceptionHandling();
 
@@ -106,7 +106,7 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function a_label_can_be_deleted_by_auth_user()
+    public function testDelete()
     {
         $this->withoutExceptionHandling();
 
@@ -124,7 +124,7 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function a_label_can_be_update_by_only_auth_user()
+    public function testUpdate_by_only_auth_user()
     {
         $user = User::factory()->create();
 
@@ -155,7 +155,7 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function a_label_can_be_delete_by_only_auth_user()
+    public function testDelete_by_only_auth_user()
     {
         $user = User::factory()->create();
 

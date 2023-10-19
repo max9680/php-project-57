@@ -16,7 +16,7 @@ class TaskStatusesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function page_for_creating_task_statuses_exists()
+    public function testCreate_page_exists()
     {
         $this->withoutExceptionHandling();
 
@@ -29,7 +29,7 @@ class TaskStatusesTest extends TestCase
 
 
     /** @test */
-    public function a_task_status_can_be_stored()
+    public function testStore()
     {
         $this->withoutExceptionHandling();
 
@@ -47,7 +47,7 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function atttibute_name_is_required_for_task_status()
+    public function testStore_name_require()
     {
         $data = [
             'name' => '',
@@ -62,7 +62,7 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function page_for_update_the_task_status_exists ()
+    public function testUpdate_page_exists ()
     {
         $this->withoutExceptionHandling();
 
@@ -76,7 +76,7 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function a_task_status_can_be_updated_by_auth_user()
+    public function testUpdate()
     {
         $this->withoutExceptionHandling();
 
@@ -101,7 +101,7 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function a_task_status_can_be_updated_only_auth_user()
+    public function testUpdate_by_only_auth_user()
     {
         $taskStatus = TaskStatus::factory()->create();
 
@@ -122,7 +122,7 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function response_for_route_task_status_index_is_view_task_status_index()
+    public function testIndex()
     {
         $this->withoutExceptionHandling();
 
@@ -140,7 +140,7 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function task_status_can_be_deleted()
+    public function testDelete()
     {
         $this->withoutExceptionHandling();
 
@@ -160,7 +160,7 @@ class TaskStatusesTest extends TestCase
     }
 
     /** @test */
-    public function task_status_can_be_deleted_by_only_auth_user()
+    public function testDelete_by_only_auth_user()
     {
         TaskStatus::factory(10)->create();
 

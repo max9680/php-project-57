@@ -15,7 +15,7 @@ class TaskTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function page_for_creating_task_exist()
+    public function testCreate_page_exists()
     {
         $this->withoutExceptionHandling();
 
@@ -29,7 +29,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function a_task_can_be_stored_by_auth_user()
+    public function testStore()
     {
         $this->withoutExceptionHandling();
 
@@ -56,7 +56,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function a_task_can_be_stored_by_only_auth_user()
+    public function testStore_by_only_auth_user()
     {
         $status = TaskStatus::factory()->create();
         $user = User::factory()->create();
@@ -75,7 +75,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function attribut_name_required_for_task()
+    public function testStore_name_require()
     {
         $status = TaskStatus::factory()->create();
         $user = User::factory()->create();
@@ -96,7 +96,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function page_task_index_exist_and_display_all_tasks()
+    public function testIndex_page_exists()
     {
         $this->withoutExceptionHandling();
 
@@ -120,7 +120,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function page_task_show_exists_and_display_all_properties()
+    public function testShow_page_exists()
     {
         $this->withoutExceptionHandling();
 
@@ -146,7 +146,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function page_for_update_task_exists()
+    public function testUpdate_page_exists()
     {
         $this->withoutExceptionHandling();
 
@@ -166,7 +166,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function a_task_can_be_update_by_auth_user()
+    public function testUpdate()
     {
         $this->withoutExceptionHandling();
 
@@ -203,7 +203,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function a_task_can_be_update_by_only_auth_user()
+    public function testUpdate_by_only_auth_user()
     {
         User::factory(5)->create();
 
@@ -226,7 +226,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function task_can_be_deleted()
+    public function testDelete()
     {
         $this->withoutExceptionHandling();
 
@@ -255,7 +255,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function task_can_be_deleted_by_only_owner()
+    public function testDelete_by_only_owner()
     {
         $status = TaskStatus::factory()->create();
         $user1 = User::factory()->create();
