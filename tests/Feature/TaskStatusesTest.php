@@ -41,9 +41,9 @@ class TaskStatusesTest extends TestCase
 
         $res->assertRedirectToRoute('task_statuses.index');
 
-        $taskStatus = TaskStatus::first();
-
-        $this->assertEquals($data['name'], $taskStatus->name);
+        $this->assertDatabaseHas('task_statuses', [
+            'name' => $data['name'],
+        ]);
     }
 
     /** @test */
@@ -92,12 +92,10 @@ class TaskStatusesTest extends TestCase
 
         $res->assertRedirectToRoute('task_statuses.index');
 
-        $updatedTaskStatus = TaskStatus::first();
-
-        $this->assertEquals($updatedTaskStatus->name, $data['name']);
-
-        $this->assertEquals($taskStatus->id, $updatedTaskStatus->id);
-
+        $this->assertDatabaseHas('task_statuses', [
+            'name' => $data['name'],
+            'id' => $taskStatus->id,
+        ]);
     }
 
     /** @test */

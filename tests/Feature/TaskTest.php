@@ -50,9 +50,9 @@ class TaskTest extends TestCase
 
         $this->assertDatabaseCount('tasks', 1);
 
-        $task = Task::first();
-
-        $this->assertEquals($data['name'], $task->name);
+        $this->assertDatabaseHas('tasks', [
+            'name' => $data['name'],
+        ]);
     }
 
     /** @test */
