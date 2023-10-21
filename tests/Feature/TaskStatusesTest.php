@@ -13,7 +13,6 @@ use Tests\TestCase;
 
 class TaskStatusesTest extends TestCase
 {
-    use RefreshDatabase;
 
     /** @test */
     public function testCreate_page_exists()
