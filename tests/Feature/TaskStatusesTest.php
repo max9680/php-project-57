@@ -32,11 +32,13 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        $user = User::factory()->create();
+
         $data = [
             'name' => 'test name',
         ];
 
-        $res = $this->post(route('task_statuses.store', $data));
+        $res = $this->actingAs($user)->post(route('task_statuses.store', $data));
 
         $res->assertRedirectToRoute('task_statuses.index');
 
@@ -48,11 +50,13 @@ class TaskStatusesTest extends TestCase
     /** @test */
     public function testStore_name_require()
     {
+        $user = User::factory()->create();
+
         $data = [
             'name' => '',
         ];
 
-        $res = $this->post(route('task_statuses.store', $data));
+        $res = $this->actingAs($user)->post(route('task_statuses.store', $data));
 
         $res->assertSessionHasErrors([
             'name' => 'Это обязательное поле'
