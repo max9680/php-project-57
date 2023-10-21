@@ -26,9 +26,9 @@ class LabelTest extends TestCase
 
         $this->actingAs($user)->post(route('labels.store', $data));
 
-        $label = Label::first();
-
-        $this->assertEquals($data['name'], $label->name);
+        $this->assertDatabaseHas('labels', [
+            'name' => $data['name'],
+        ]);
     }
 
     /** @test */
