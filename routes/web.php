@@ -59,4 +59,3 @@ Route::resource('labels', LabelController::class)->except([
 Route::resource('labels', LabelController::class)->only([
     'index'
 ]);
-
