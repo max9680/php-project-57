@@ -8,20 +8,28 @@ use Tests\TestCase;
 
 class LabelTest extends TestCase
 {
+    protected $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+    }
 
     /** @test */
     public function testStore()
     {
-        $this->withoutExceptionHandling();
+        parent::setUp();
 
-        $user = User::factory()->create();
+        $this->withoutExceptionHandling();
 
         $data = [
             'name' => 'ошибка',
             'description' => 'Какая-то ошибка в коде или проблема с функциональностью',
         ];
 
-        $this->actingAs($user)->post(route('labels.store', $data));
+        $this->actingAs($this->user)->post(route('labels.store', $data));
 
         $this->assertDatabaseHas('labels', [
             'name' => $data['name'],
@@ -51,9 +59,7 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
-
-        $res = $this->actingAs($user)->get(route('labels.create'));
+        $res = $this->actingAs($this->user)->get(route('labels.create'));
 
         $res->assertStatus(200);
 
@@ -65,13 +71,11 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
-
         Label::factory(5)->create();
 
         $label = Label::where('id', random_int(1, 5))->first();
 
-        $res = $this->actingAs($user)->get(route('labels.edit', $label->id));
+        $res = $this->actingAs($this->user)->get(route('labels.edit', $label->id));
 
         $res->assertStatus(200);
 
@@ -83,8 +87,6 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
-
         $label = Label::factory()->create();
 
         $newData = [
@@ -92,7 +94,7 @@ class LabelTest extends TestCase
             'description' => 'Edited description',
         ];
 
-        $res = $this->actingAs($user)->patch(route('labels.update', $label->id), $newData);
+        $res = $this->actingAs($this->user)->patch(route('labels.update', $label->id), $newData);
 
         $res->assertRedirectToRoute('labels.index');
 
@@ -107,13 +109,11 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
-
         $label = Label::factory()->create();
 
         $this->assertDatabaseCount('labels', 1);
 
-        $res = $this->actingAs($user)->delete(route('labels.destroy', $label->id));
+        $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
 
         $res->assertRedirectToRoute('labels.index');
 
@@ -123,8 +123,6 @@ class LabelTest extends TestCase
     /** @test */
     public function testUpdate_by_only_auth_user()
     {
-        $user = User::factory()->create();
-
         $label = Label::factory()->create();
 
         $newData = [
@@ -141,7 +139,7 @@ class LabelTest extends TestCase
         $this->assertNotEquals($labelFromDB->name, $newData['name']);
         $this->assertNotEquals($labelFromDB->description, $newData['description']);
 
-        $res = $this->actingAs($user)->patch(route('labels.update', $label->id), $newData);
+        $res = $this->actingAs($this->user)->patch(route('labels.update', $label->id), $newData);
 
         $res->assertRedirectToRoute('labels.index');
 
@@ -154,8 +152,6 @@ class LabelTest extends TestCase
     /** @test */
     public function testDelete_by_only_auth_user()
     {
-        $user = User::factory()->create();
-
         $label = Label::factory()->create();
 
         $this->assertDatabaseCount('labels', 1);
@@ -164,7 +160,7 @@ class LabelTest extends TestCase
 
         $this->assertDatabaseCount('labels', 1);
 
-        $res = $this->actingAs($user)->delete(route('labels.destroy', $label->id));
+        $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
 
         $res->assertRedirectToRoute('labels.index');
 
