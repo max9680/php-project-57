@@ -45,7 +45,6 @@ class TaskStatusController extends Controller
 
         TaskStatus::create($data);
 
-//        flash('Статус успешно создан')->success();
         flash(__('messages.status.created'), 'success');
 
         return redirect()->route('task_statuses.index');
