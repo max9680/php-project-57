@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Фролов Филипп Данилович'],
             ['name' => 'Туманова Мария Леонидовна'],
             ['name' => 'Богданов Степан Алексеевич'],
-            ))->create();
+        ))->create();
 
         \App\Models\Label::factory(4)->state(new Sequence(
             ['name' => 'ошибка', 'description' => 'Какая-то ошибка в коде или проблема с функциональностью'],
@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'дубликат', 'description' => 'Повтор другой задачи'],
             ['name' => 'доработка', 'description' => 'Новая фича, которую нужно запилить'],
 
-            ))->create();
+        ))->create();
 
         \App\Models\Task::factory(18)->state(new Sequence(
             ['name' => 'Исправить ошибку в какой-нибудь строке', 'description' => 'Я тут ошибку нашёл, надо бы её исправить и так далее и так далее'],
@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Съесть еще этих прекрасных французских булочек', 'description' => ''],
             ['name' => 'Найти чудо', 'description' => 'Чудо-чудное, диво-дивное.'],
             ['name' => 'Исправить ошибку в самой длинной строке', 'description' => 'Самая длинная строка находится в Тридевятом Царстве'],
-            ))->create();
+        ))->create();
 
         $tasks = Task::all();
 
@@ -77,12 +77,5 @@ class DatabaseSeeder extends Seeder
                 'task_id' => $task->id,
             ])->create();
         }
-
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }
