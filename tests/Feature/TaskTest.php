@@ -185,12 +185,13 @@ class TaskTest extends TestCase
         $user2 = User::where('id', 2)->first();
 
         $data1 = Task::factory()->make()->toArray();
-        unset($data1['created_by_id']);
-        $data2 = Task::factory()->make()->toArray();
-        unset($data2['created_by_id']);
+        $data1['created_by_id'] = $user1->id;
 
-        $this->actingAs($user1)->post(route('tasks.store', $data1));
-        $this->actingAs($user2)->post(route('tasks.store', $data2));
+        $data2 = Task::factory()->make()->toArray();
+        $data2['created_by_id'] = $user2->id;
+
+        Task::create($data1);
+        Task::create($data2);
 
         $this->assertDatabaseCount('tasks', 5);
 
