@@ -20,8 +20,6 @@ class LabelTest extends TestCase
     /** @test */
     public function testStore()
     {
-        parent::setUp();
-
         $this->withoutExceptionHandling();
 
         $data = [
