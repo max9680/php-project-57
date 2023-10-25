@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Task extends Model
 {
     use HasFactory;
+
     protected $guarded = false;
 
     public function status(): HasOne
