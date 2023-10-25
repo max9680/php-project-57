@@ -13,8 +13,7 @@ use Tests\TestCase;
 class TaskTest extends TestCase
 {
 
-    /** @test */
-    public function testCreate_page_exists()
+    public function testCreatePageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -27,7 +26,6 @@ class TaskTest extends TestCase
         $res->assertSeeText('Создать задачу');
     }
 
-    /** @test */
     public function testStore()
     {
         $this->withoutExceptionHandling();
@@ -54,8 +52,7 @@ class TaskTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function testStore_by_only_auth_user()
+    public function testStoreByOnlyAuthUser()
     {
         $status = TaskStatus::factory()->create();
         $user = User::factory()->create();
@@ -73,8 +70,7 @@ class TaskTest extends TestCase
         $res->assertRedirectToRoute('login');
     }
 
-    /** @test */
-    public function testStore_name_require()
+    public function testStoreNameRequire()
     {
         $status = TaskStatus::factory()->create();
         $user = User::factory()->create();
@@ -94,8 +90,7 @@ class TaskTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function testIndex_page_exists()
+    public function testIndexPageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -118,8 +113,7 @@ class TaskTest extends TestCase
         $res->assertSeeText($names);
     }
 
-    /** @test */
-    public function testShow_page_exists()
+    public function testShowPageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -144,8 +138,7 @@ class TaskTest extends TestCase
         $res->assertSeeText($task->description);
     }
 
-    /** @test */
-    public function testUpdate_page_exists()
+    public function testUpdatePageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -164,7 +157,6 @@ class TaskTest extends TestCase
         $res->assertViewIs('task.edit');
     }
 
-    /** @test */
     public function testUpdate()
     {
         $this->withoutExceptionHandling();
@@ -200,8 +192,7 @@ class TaskTest extends TestCase
 
     }
 
-    /** @test */
-    public function testUpdate_by_only_auth_user()
+    public function testUpdateByOnlyAuthUser()
     {
         User::factory(5)->create();
 
@@ -223,7 +214,6 @@ class TaskTest extends TestCase
         $res->assertRedirectToRoute('login');
     }
 
-    /** @test */
     public function testDelete()
     {
         $this->withoutExceptionHandling();
@@ -252,8 +242,7 @@ class TaskTest extends TestCase
         $res->assertRedirectToRoute('tasks.index');
     }
 
-    /** @test */
-    public function testDelete_by_only_owner()
+    public function testDeleteByOnlyOwner()
     {
         $status = TaskStatus::factory()->create();
         $user1 = User::factory()->create();

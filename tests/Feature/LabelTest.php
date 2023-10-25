@@ -17,7 +17,6 @@ class LabelTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    /** @test */
     public function testStore()
     {
         $this->withoutExceptionHandling();
@@ -34,8 +33,7 @@ class LabelTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function testIndex_page_exists()
+    public function testIndexPageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -52,8 +50,7 @@ class LabelTest extends TestCase
         $res->assertSeeText($names);
     }
 
-    /** @test */
-    public function testCreate_page_exists()
+    public function testCreatePageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -64,8 +61,7 @@ class LabelTest extends TestCase
         $res->assertSeeText('Создать метку');
     }
 
-    /** @test */
-    public function testUpdate_page_exists()
+    public function testUpdatePageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -80,7 +76,6 @@ class LabelTest extends TestCase
         $res->assertSeeText('Изменение метки');
     }
 
-    /** @test */
     public function testUpdate()
     {
         $this->withoutExceptionHandling();
@@ -102,7 +97,6 @@ class LabelTest extends TestCase
         $this->assertEquals($updatedLabel->description, $newData['description']);
     }
 
-    /** @test */
     public function testDelete()
     {
         $this->withoutExceptionHandling();
@@ -118,8 +112,7 @@ class LabelTest extends TestCase
         $this->assertDatabaseCount('labels', 0);
     }
 
-    /** @test */
-    public function testUpdate_by_only_auth_user()
+    public function testUpdateByOnlyAuthUser()
     {
         $label = Label::factory()->create();
 
@@ -147,8 +140,7 @@ class LabelTest extends TestCase
         $this->assertEquals($updatedLabel->description, $newData['description']);
     }
 
-    /** @test */
-    public function testDelete_by_only_auth_user()
+    public function testDeleteByOnlyAuthUser()
     {
         $label = Label::factory()->create();
 

@@ -14,8 +14,7 @@ use Tests\TestCase;
 class TaskStatusesTest extends TestCase
 {
 
-    /** @test */
-    public function testCreate_page_exists()
+    public function testCreatePageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -26,8 +25,6 @@ class TaskStatusesTest extends TestCase
         $res->assertStatus(200);
     }
 
-
-    /** @test */
     public function testStore()
     {
         $this->withoutExceptionHandling();
@@ -47,8 +44,7 @@ class TaskStatusesTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function testStore_name_require()
+    public function testStoreNameRequire()
     {
         $user = User::factory()->create();
 
@@ -64,8 +60,7 @@ class TaskStatusesTest extends TestCase
 
     }
 
-    /** @test */
-    public function testUpdate_page_exists ()
+    public function testUpdatePageExists ()
     {
         $this->withoutExceptionHandling();
 
@@ -78,7 +73,6 @@ class TaskStatusesTest extends TestCase
         $res->assertStatus(200);
     }
 
-    /** @test */
     public function testUpdate()
     {
         $this->withoutExceptionHandling();
@@ -101,8 +95,7 @@ class TaskStatusesTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function testUpdate_by_only_auth_user()
+    public function testUpdateByOnlyAuthUser()
     {
         $taskStatus = TaskStatus::factory()->create();
 
@@ -122,7 +115,6 @@ class TaskStatusesTest extends TestCase
 
     }
 
-    /** @test */
     public function testIndex()
     {
         $this->withoutExceptionHandling();
@@ -140,7 +132,6 @@ class TaskStatusesTest extends TestCase
         $res->assertSeeText($names);
     }
 
-    /** @test */
     public function testDelete()
     {
         $this->withoutExceptionHandling();
@@ -160,8 +151,7 @@ class TaskStatusesTest extends TestCase
         $res->assertRedirectToRoute('task_statuses.index');
     }
 
-    /** @test */
-    public function testDelete_by_only_auth_user()
+    public function testDeleteByOnlyAuthUser()
     {
         TaskStatus::factory(10)->create();
 
