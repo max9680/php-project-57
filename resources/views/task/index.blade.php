@@ -72,7 +72,7 @@
                     <td>{{ $task->id }}</td>
                     <td>{{ $task->status->name }}</td>
                     <td><a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.show', $task->id) }}">{{ $task->name }}</a></td>
-                    <td>{{ $task->created_by_user->name }}</td>
+                    <td>{{ $task->createdByUser->name }}</td>
                     @if ($task->assigned_to_user == null)
                         <td></td>
                     @else
