@@ -28,4 +28,11 @@ class StoreRequest extends FormRequest
             'description' => '',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'Метка с таким именем уже существует',
+        ];
+    }
 }

@@ -27,4 +27,11 @@ class StoreRequest extends FormRequest
             'name' => 'required|unique:App\Models\TaskStatus|string',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'Статус с таким именем уже существует',
+        ];
+    }
 }

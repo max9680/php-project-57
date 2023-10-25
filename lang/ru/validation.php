@@ -28,19 +28,12 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-        'name' => [
-            'unique' => 'Статус с таким именем уже существует',
-        ],
         'password' => [
             'min' => [
                 'string' => 'Пароль должен иметь длину не менее :min символов',
             ],
             'confirmed' => 'Пароль и подтверждение не совпадают',
         ],
-
     ],
 
     /*

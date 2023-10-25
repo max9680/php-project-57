@@ -28,4 +28,11 @@ class UpdateRequest extends FormRequest
             'description' => '',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.unique' => 'Статус с таким именем уже существует',
+        ];
+    }
 }
