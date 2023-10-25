@@ -37,6 +37,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name.required' => 'Это обязательное поле',
+            'name.unique' => 'Задача с таким именем уже существует',
             'status_id.required' => 'Это обязательное поле',
         ];
     }
