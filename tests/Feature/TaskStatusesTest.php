@@ -33,6 +33,7 @@ class TaskStatusesTest extends TestCase
         $this->withoutExceptionHandling();
 
         $data = TaskStatus::factory()->make()->toArray();
+        $data['name'] = fake()->word(9);
 
         $res = $this->actingAs($this->user)->post(route('task_statuses.store', $data));
 
@@ -77,6 +78,8 @@ class TaskStatusesTest extends TestCase
 
         $data = TaskStatus::factory()->make()->toArray();
 
+        $data['name'] = fake()->word(9);
+
         $res = $this->actingAs($this->user)->patch(route('task_statuses.update', $taskStatus->id), $data);
 
         $res->assertRedirectToRoute('task_statuses.index');
@@ -92,6 +95,7 @@ class TaskStatusesTest extends TestCase
     public function testUpdateByOnlyAuthUser()
     {
         $data = TaskStatus::factory()->make()->toArray();
+        $data['name'] = fake()->word(9);
 
         $taskStatus = TaskStatus::all()->first();
 
