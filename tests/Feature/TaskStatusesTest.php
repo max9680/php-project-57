@@ -13,7 +13,6 @@ use Tests\TestCase;
 
 class TaskStatusesTest extends TestCase
 {
-
     public function testCreatePageExists()
     {
         $this->withoutExceptionHandling();
@@ -57,10 +56,9 @@ class TaskStatusesTest extends TestCase
         $res->assertSessionHasErrors([
             'name' => 'Это обязательное поле'
         ]);
-
     }
 
-    public function testUpdatePageExists ()
+    public function testUpdatePageExists()
     {
         $this->withoutExceptionHandling();
 
@@ -112,7 +110,6 @@ class TaskStatusesTest extends TestCase
         $this->assertNotEquals($updatedTaskStatus->name, $data['name']);
 
         $this->assertEquals($taskStatus->id, $updatedTaskStatus->id);
-
     }
 
     public function testIndex()

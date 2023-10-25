@@ -1,10 +1,10 @@
 PORT ?= 8000
 
 lint:
-		composer exec --verbose phpcs -- --standard=PSR12 routes/web.php app/Http
+		composer exec --verbose phpcs -- --standard=PSR12 routes/web.php app/Http tests
 
 lint-fix:
-		composer exec --verbose phpcbf -- --standard=PSR12 routes/web.php app/Http
+		composer exec --verbose phpcbf -- --standard=PSR12 routes/web.php app/Http tests
 
 install:
 		composer install

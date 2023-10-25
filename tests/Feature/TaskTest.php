@@ -12,7 +12,6 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-
     public function testCreatePageExists()
     {
         $this->withoutExceptionHandling();
@@ -189,7 +188,6 @@ class TaskTest extends TestCase
 
         $this->assertEquals($updatedTask->name, $data['name']);
         $this->assertEquals($updatedTask->description, $data['description']);
-
     }
 
     public function testUpdateByOnlyAuthUser()
