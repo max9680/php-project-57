@@ -33,7 +33,7 @@
             @enderror
 
             <div class="mt-2">
-                {!! Form::submit('Изменить', ['class' => 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded']) !!}
+                {!! Form::submit('Обновить', ['class' => 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded']) !!}
             </div>
             {!! Form::close() !!}
         </div>
