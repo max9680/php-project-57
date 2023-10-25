@@ -45,6 +45,8 @@ class TaskTest extends TestCase
 
         $res->assertRedirectToRoute('tasks.index');
 
+        $res->assertSessionHasNoErrors();
+
         $this->assertDatabaseCount('tasks', 4);
 
         $this->assertDatabaseHas('tasks', [
@@ -139,6 +141,8 @@ class TaskTest extends TestCase
 
         $res->assertRedirectToRoute('tasks.index');
 
+        $res->assertSessionHasNoErrors();
+
         $updatedTask = Task::where('id', $task->id)->first();
 
         $this->assertEquals($updatedTask->id, $task->id);
@@ -173,6 +177,8 @@ class TaskTest extends TestCase
         $task = Task::where('created_by_id', $this->user->id)->first();
 
         $res = $this->actingAs($this->user)->delete(route('tasks.destroy', $task->id));
+
+        $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseCount('tasks', 3);
 

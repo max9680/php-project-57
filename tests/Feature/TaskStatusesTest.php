@@ -38,6 +38,8 @@ class TaskStatusesTest extends TestCase
 
         $res->assertRedirectToRoute('task_statuses.index');
 
+        $res->assertSessionHasNoErrors();
+
         $this->assertDatabaseHas('task_statuses', [
             'name' => $data['name'],
         ]);
@@ -78,6 +80,8 @@ class TaskStatusesTest extends TestCase
         $res = $this->actingAs($this->user)->patch(route('task_statuses.update', $taskStatus->id), $data);
 
         $res->assertRedirectToRoute('task_statuses.index');
+
+        $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('task_statuses', [
             'name' => $data['name'],
@@ -129,9 +133,11 @@ class TaskStatusesTest extends TestCase
 
         $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus->id));
 
-        $this->assertDatabaseCount('task_statuses', 2);
-
         $res->assertRedirectToRoute('task_statuses.index');
+
+        $res->assertSessionHasNoErrors();
+
+        $this->assertDatabaseCount('task_statuses', 2);
     }
 
     public function testDeleteByOnlyAuthUser()

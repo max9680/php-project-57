@@ -25,7 +25,11 @@ class LabelTest extends TestCase
 
         $data = Label::factory()->make()->toArray();
 
-        $this->actingAs($this->user)->post(route('labels.store', $data));
+        $res = $this->actingAs($this->user)->post(route('labels.store', $data));
+
+        $res->assertRedirectToRoute('labels.index');
+
+        $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('labels', [
             'name' => $data['name'],
@@ -83,6 +87,8 @@ class LabelTest extends TestCase
 
         $res->assertRedirectToRoute('labels.index');
 
+        $res->assertSessionHasNoErrors();
+
         $updatedLabel = Label::where('id', $label->id)->first();
 
         $this->assertEquals($updatedLabel->name, $newData['name']);
@@ -100,6 +106,8 @@ class LabelTest extends TestCase
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
 
         $res->assertRedirectToRoute('labels.index');
+
+        $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseCount('labels', 4);
     }
