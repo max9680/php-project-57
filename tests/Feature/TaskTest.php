@@ -2,23 +2,33 @@
 
 namespace Tests\Feature;
 
-use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
+    protected $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+
+        User::factory(3)->create();
+
+        TaskStatus::factory(3)->create();
+
+        Task::factory(3)->create();
+    }
+
     public function testCreatePageExists()
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
-
-        $res = $this->actingAs($user)->get(route('tasks.create'));
+        $res = $this->actingAs($this->user)->get(route('tasks.create'));
 
         $res->assertStatus(200);
 
@@ -29,17 +39,13 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        TaskStatus::factory(4)->create();
-
-        $user = User::factory()->create();
-
         $data = Task::factory()->make()->toArray();
 
-        $res = $this->actingAs($user)->post(route('tasks.store', $data));
+        $res = $this->actingAs($this->user)->post(route('tasks.store', $data));
 
         $res->assertRedirectToRoute('tasks.index');
 
-        $this->assertDatabaseCount('tasks', 1);
+        $this->assertDatabaseCount('tasks', 4);
 
         $this->assertDatabaseHas('tasks', [
             'name' => $data['name'],
@@ -48,9 +54,6 @@ class TaskTest extends TestCase
 
     public function testStoreByOnlyAuthUser()
     {
-        TaskStatus::factory(4)->create();
-        User::factory(2)->create();
-
         $data = Task::factory()->make()->toArray();
 
         $res = $this->post(route('tasks.store', $data));
@@ -60,14 +63,11 @@ class TaskTest extends TestCase
 
     public function testStoreNameRequire()
     {
-        TaskStatus::factory(4)->create();
-        $user = User::factory()->create();
-
         $data = Task::factory()->make()->toArray();
 
         $data['name'] = '';
 
-        $res = $this->actingAs($user)->post(route('tasks.store', $data));
+        $res = $this->actingAs($this->user)->post(route('tasks.store', $data));
 
         $res->assertSessionHasErrors([
             'name' => 'Это обязательное поле',
@@ -78,12 +78,6 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        User::factory(5)->create();
-
-        TaskStatus::factory(5)->create();
-
-        $tasks = Task::factory(10)->create();
-
         $res = $this->get(route('tasks.index'));
 
         $res->assertStatus(200);
@@ -91,6 +85,8 @@ class TaskTest extends TestCase
         $res->assertSeeText('Задачи');
 
         $res->assertViewIs('task.index');
+
+        $tasks = Task::all();
 
         $names = $tasks->pluck('name')->toArray();
 
@@ -100,12 +96,6 @@ class TaskTest extends TestCase
     public function testShowPageExists()
     {
         $this->withoutExceptionHandling();
-
-        User::factory(5)->create();
-
-        TaskStatus::factory(5)->create();
-
-        Task::factory(10)->create();
 
         $task = Task::get()->random();
 
@@ -126,12 +116,6 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        User::factory(5)->create();
-
-        TaskStatus::factory(5)->create();
-
-        Task::factory(10)->create();
-
         $user = User::get()->random();
 
         $task = Task::get()->random();
@@ -144,12 +128,6 @@ class TaskTest extends TestCase
     public function testUpdate()
     {
         $this->withoutExceptionHandling();
-
-        User::factory(5)->create();
-
-        TaskStatus::factory(5)->create();
-
-        Task::factory(10)->create();
 
         $task = Task::get()->random();
 
@@ -171,12 +149,6 @@ class TaskTest extends TestCase
 
     public function testUpdateByOnlyAuthUser()
     {
-        User::factory(5)->create();
-
-        TaskStatus::factory(5)->create();
-
-        Task::factory(10)->create();
-
         $task = Task::get()->random();
 
         $data = Task::factory()->make()->toArray();
@@ -190,29 +162,27 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        TaskStatus::factory(4)->create();
-        $user = User::factory()->create();
-
         $data = Task::factory()->make()->toArray();
 
-        $this->actingAs($user)->post(route('tasks.store', $data));
+        $this->assertDatabaseCount('tasks', 3);
 
-        $this->assertDatabaseCount('tasks', 1);
+        $this->actingAs($this->user)->post(route('tasks.store', $data));
 
-        $task = Task::first();
+        $this->assertDatabaseCount('tasks', 4);
 
-        $res = $this->actingAs($user)->delete(route('tasks.destroy', $task->id));
+        $task = Task::where('created_by_id', $this->user->id)->first();
 
-        $this->assertDatabaseCount('tasks', 0);
+        $res = $this->actingAs($this->user)->delete(route('tasks.destroy', $task->id));
+
+        $this->assertDatabaseCount('tasks', 3);
 
         $res->assertRedirectToRoute('tasks.index');
     }
 
     public function testDeleteByOnlyOwner()
     {
-        TaskStatus::factory(3)->create();
-        $user1 = User::factory()->create();
-        $user2 = User::factory()->create();
+        $user1 = User::where('id', 1)->first();
+        $user2 = User::where('id', 2)->first();
 
         $data1 = Task::factory()->make()->toArray();
         unset($data1['created_by_id']);
@@ -222,17 +192,17 @@ class TaskTest extends TestCase
         $this->actingAs($user1)->post(route('tasks.store', $data1));
         $this->actingAs($user2)->post(route('tasks.store', $data2));
 
-        $this->assertDatabaseCount('tasks', 2);
+        $this->assertDatabaseCount('tasks', 5);
 
         $task1 = Task::where('created_by_id', $user1->id)->first();
         $task2 = Task::where('created_by_id', $user2->id)->first();
 
         $this->actingAs($user1)->delete(route('tasks.destroy', $task1->id));
 
-        $this->assertDatabaseCount('tasks', 1);
+        $this->assertDatabaseCount('tasks', 4);
 
         $this->actingAs($user1)->delete(route('tasks.destroy', $task2->id));
 
-        $this->assertDatabaseCount('tasks', 1);
+        $this->assertDatabaseCount('tasks', 4);
     }
 }

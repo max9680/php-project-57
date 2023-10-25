@@ -2,24 +2,28 @@
 
 namespace Tests\Feature;
 
-use App\Http\Requests\TaskStatus\StoreRequest;
 use App\Models\TaskStatus;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\Testing\File;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class TaskStatusesTest extends TestCase
 {
+    protected $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+
+        TaskStatus::factory(3)->create();
+    }
+
     public function testCreatePageExists()
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
-
-        $res = $this->actingAs($user)->get(route('task_statuses.create'));
+        $res = $this->actingAs($this->user)->get(route('task_statuses.create'));
 
         $res->assertStatus(200);
     }
@@ -28,11 +32,9 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
-
         $data = TaskStatus::factory()->make()->toArray();
 
-        $res = $this->actingAs($user)->post(route('task_statuses.store', $data));
+        $res = $this->actingAs($this->user)->post(route('task_statuses.store', $data));
 
         $res->assertRedirectToRoute('task_statuses.index');
 
@@ -43,13 +45,11 @@ class TaskStatusesTest extends TestCase
 
     public function testStoreNameRequire()
     {
-        $user = User::factory()->create();
-
         $data = [
             'name' => '',
         ];
 
-        $res = $this->actingAs($user)->post(route('task_statuses.store', $data));
+        $res = $this->actingAs($this->user)->post(route('task_statuses.store', $data));
 
         $res->assertSessionHasErrors([
             'name' => 'Это обязательное поле'
@@ -60,11 +60,9 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
+        $taskStatus = TaskStatus::all()->first();
 
-        $taskStatus = TaskStatus::factory()->create();
-
-        $res = $this->actingAs($user)->get(route('task_statuses.edit', $taskStatus->id));
+        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', $taskStatus->id));
 
         $res->assertStatus(200);
     }
@@ -73,13 +71,11 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
-
-        $taskStatus = TaskStatus::factory()->create();
+        $taskStatus = TaskStatus::all()->first();
 
         $data = TaskStatus::factory()->make()->toArray();
 
-        $res = $this->actingAs($user)->patch(route('task_statuses.update', $taskStatus->id), $data);
+        $res = $this->actingAs($this->user)->patch(route('task_statuses.update', $taskStatus->id), $data);
 
         $res->assertRedirectToRoute('task_statuses.index');
 
@@ -91,15 +87,15 @@ class TaskStatusesTest extends TestCase
 
     public function testUpdateByOnlyAuthUser()
     {
-        $taskStatus = TaskStatus::factory()->create();
-
         $data = TaskStatus::factory()->make()->toArray();
+
+        $taskStatus = TaskStatus::all()->first();
 
         $res = $this->patch(route('task_statuses.update', $taskStatus->id), $data);
 
         $res->assertRedirectToRoute('login');
 
-        $updatedTaskStatus = TaskStatus::first();
+        $updatedTaskStatus = TaskStatus::where('id', $taskStatus->id)->first();
 
         $this->assertNotEquals($updatedTaskStatus->name, $data['name']);
 
@@ -110,13 +106,13 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $taskStatuses = TaskStatus::factory(10)->create();
-
         $res = $this->get(route('task_statuses.index'));
 
         $res->assertViewIs('taskStatus.index');
 
         $res->assertSeeText('Статусы');
+
+        $taskStatuses = TaskStatus::all();
 
         $names = $taskStatuses->pluck('name')->toArray();
 
@@ -127,33 +123,33 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::factory()->create();
+        $this->assertDatabaseCount('task_statuses', 3);
 
-        TaskStatus::factory(10)->create();
+        $taskStatus = TaskStatus::all()->first();
 
-        $this->assertDatabaseCount('task_statuses', 10);
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus->id));
 
-        $taskStatus = TaskStatus::where('id', 1)->first();
-
-        $res = $this->actingAs($user)->delete(route('task_statuses.destroy', $taskStatus->id));
-
-        $this->assertDatabaseCount('task_statuses', 9);
+        $this->assertDatabaseCount('task_statuses', 2);
 
         $res->assertRedirectToRoute('task_statuses.index');
     }
 
     public function testDeleteByOnlyAuthUser()
     {
-        TaskStatus::factory(10)->create();
+        $this->assertDatabaseCount('task_statuses', 3);
 
-        $this->assertDatabaseCount('task_statuses', 10);
-
-        $taskStatus = TaskStatus::where('id', 1)->first();
+        $taskStatus = TaskStatus::all()->first();
 
         $res = $this->delete(route('task_statuses.destroy', $taskStatus->id));
 
         $res->assertRedirectToRoute('login');
 
-        $this->assertDatabaseCount('task_statuses', 10);
+        $this->assertDatabaseCount('task_statuses', 3);
+
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus->id));
+
+        $res->assertRedirectToRoute('task_statuses.index');
+
+        $this->assertDatabaseCount('task_statuses', 2);
     }
 }

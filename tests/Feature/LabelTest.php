@@ -15,6 +15,8 @@ class LabelTest extends TestCase
         parent::setUp();
 
         $this->user = User::factory()->create();
+
+        Label::factory(5)->create();
     }
 
     public function testStore()
@@ -33,8 +35,6 @@ class LabelTest extends TestCase
     public function testIndexPageExists()
     {
         $this->withoutExceptionHandling();
-
-        Label::factory(5)->create();
 
         $res = $this->get(route('labels.index'));
 
@@ -62,8 +62,6 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        Label::factory(5)->create();
-
         $label = Label::where('id', random_int(1, 5))->first();
 
         $res = $this->actingAs($this->user)->get(route('labels.edit', $label->id));
@@ -77,7 +75,7 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $label = Label::factory()->create();
+        $label = Label::all()->first();
 
         $newData = Label::factory()->make()->toArray();
 
@@ -95,20 +93,20 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $label = Label::factory()->create();
+        $this->assertDatabaseCount('labels', 5);
 
-        $this->assertDatabaseCount('labels', 1);
+        $label = Label::all()->first();
 
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
 
         $res->assertRedirectToRoute('labels.index');
 
-        $this->assertDatabaseCount('labels', 0);
+        $this->assertDatabaseCount('labels', 4);
     }
 
     public function testUpdateByOnlyAuthUser()
     {
-        $label = Label::factory()->create();
+        $label = Label::all()->first();
 
         $newData = Label::factory()->make()->toArray();
 
@@ -133,18 +131,18 @@ class LabelTest extends TestCase
 
     public function testDeleteByOnlyAuthUser()
     {
-        $label = Label::factory()->create();
+        $this->assertDatabaseCount('labels', 5);
 
-        $this->assertDatabaseCount('labels', 1);
+        $label = Label::all()->first();
 
         $this->delete(route('labels.destroy', $label->id));
 
-        $this->assertDatabaseCount('labels', 1);
+        $this->assertDatabaseCount('labels', 5);
 
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
 
         $res->assertRedirectToRoute('labels.index');
 
-        $this->assertDatabaseCount('labels', 0);
+        $this->assertDatabaseCount('labels', 4);
     }
 }
