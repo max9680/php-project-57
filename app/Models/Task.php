@@ -13,19 +13,16 @@ class Task extends Model
 
     public function status(): HasOne
     {
-//        return $this->belongsTo(TaskStatus::class, 'status_id', 'id');
         return $this->hasOne(TaskStatus::class, 'id', 'status_id');
     }
 
     public function created_by_user(): HasOne
     {
-//        return $this->belongsTo(User::class, 'created_by_id', 'id');
         return $this->hasOne(User::class, 'id', 'created_by_id');
     }
 
     public function assigned_to_user(): HasOne
     {
-//        return $this->belongsTo(User::class, 'assigned_to_id', 'id');
         return $this->hasOne(User::class, 'id', 'assigned_to_id');
     }
 
