@@ -20,6 +20,6 @@ class LabelSeeder extends Seeder
             ['name' => 'документация', 'description' => 'Задача которая касается документации'],
             ['name' => 'дубликат', 'description' => 'Повтор другой задачи'],
             ['name' => 'доработка', 'description' => 'Новая фича, которую нужно запилить'],
-            ))->create();
+        ))->create();
     }
 }
