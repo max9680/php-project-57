@@ -21,10 +21,7 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $data = [
-            'name' => 'ошибка',
-            'description' => 'Какая-то ошибка в коде или проблема с функциональностью',
-        ];
+        $data = Label::factory()->make()->toArray();
 
         $this->actingAs($this->user)->post(route('labels.store', $data));
 
@@ -82,10 +79,7 @@ class LabelTest extends TestCase
 
         $label = Label::factory()->create();
 
-        $newData = [
-            'name' => 'edited',
-            'description' => 'Edited description',
-        ];
+        $newData = Label::factory()->make()->toArray();
 
         $res = $this->actingAs($this->user)->patch(route('labels.update', $label->id), $newData);
 
@@ -116,10 +110,7 @@ class LabelTest extends TestCase
     {
         $label = Label::factory()->create();
 
-        $newData = [
-            'name' => 'edited',
-            'description' => 'Edited description',
-        ];
+        $newData = Label::factory()->make()->toArray();
 
         $res = $this->patch(route('labels.update', $label->id), $newData);
 

@@ -30,9 +30,7 @@ class TaskStatusesTest extends TestCase
 
         $user = User::factory()->create();
 
-        $data = [
-            'name' => 'test name',
-        ];
+        $data = TaskStatus::factory()->make()->toArray();
 
         $res = $this->actingAs($user)->post(route('task_statuses.store', $data));
 
@@ -79,9 +77,7 @@ class TaskStatusesTest extends TestCase
 
         $taskStatus = TaskStatus::factory()->create();
 
-        $data = [
-            'name' => 'updated',
-        ];
+        $data = TaskStatus::factory()->make()->toArray();
 
         $res = $this->actingAs($user)->patch(route('task_statuses.update', $taskStatus->id), $data);
 
@@ -97,9 +93,7 @@ class TaskStatusesTest extends TestCase
     {
         $taskStatus = TaskStatus::factory()->create();
 
-        $data = [
-            'name' => 'updated',
-        ];
+        $data = TaskStatus::factory()->make()->toArray();
 
         $res = $this->patch(route('task_statuses.update', $taskStatus->id), $data);
 

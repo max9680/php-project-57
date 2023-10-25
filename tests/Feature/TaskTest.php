@@ -29,16 +29,11 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $status = TaskStatus::factory()->create();
+        TaskStatus::factory(4)->create();
+
         $user = User::factory()->create();
 
-        $data = [
-            'name' => 'first task',
-            'description' => 'many words in description',
-            'status_id' => $status->id,
-            'assigned_to_id' => null,
-            'labels' => [],
-        ];
+        $data = Task::factory()->make()->toArray();
 
         $res = $this->actingAs($user)->post(route('tasks.store', $data));
 
@@ -53,16 +48,10 @@ class TaskTest extends TestCase
 
     public function testStoreByOnlyAuthUser()
     {
-        $status = TaskStatus::factory()->create();
-        $user = User::factory()->create();
+        TaskStatus::factory(4)->create();
+        User::factory(2)->create();
 
-        $data = [
-            'name' => 'first task',
-            'description' => 'many words in description',
-            'status_id' => $status->id,
-            'created_by_id' => $user->id,
-            'assigned_to_id' => null,
-        ];
+        $data = Task::factory()->make()->toArray();
 
         $res = $this->post(route('tasks.store', $data));
 
@@ -71,16 +60,12 @@ class TaskTest extends TestCase
 
     public function testStoreNameRequire()
     {
-        $status = TaskStatus::factory()->create();
+        TaskStatus::factory(4)->create();
         $user = User::factory()->create();
 
-        $data = [
-            'name' => '',
-            'description' => 'many words in description',
-            'status_id' => $status->id,
-            'created_by_id' => $user->id,
-            'assigned_to_id' => null,
-        ];
+        $data = Task::factory()->make()->toArray();
+
+        $data['name'] = '';
 
         $res = $this->actingAs($user)->post(route('tasks.store', $data));
 
@@ -170,13 +155,7 @@ class TaskTest extends TestCase
 
         $user = User::get()->random();
 
-        $data = [
-            'name' => 'updated Name',
-            'description' => 'updatedDescription',
-            'status_id' => TaskStatus::get()->random()->id,
-            'assigned_to_id' => User::get()->random()->id,
-            'labels' => [],
-        ];
+        $data = Task::factory()->make()->toArray();
 
         $res = $this->actingAs($user)->patch(route('tasks.update', $task->id), $data);
 
@@ -200,12 +179,7 @@ class TaskTest extends TestCase
 
         $task = Task::get()->random();
 
-        $data = [
-            'name' => 'updated Name',
-            'description' => 'updatedDescription',
-            'status_id' => TaskStatus::get()->random()->id,
-            'assigned_to_id' => User::get()->random()->id,
-        ];
+        $data = Task::factory()->make()->toArray();
 
         $res = $this->patch(route('tasks.update', $task->id), $data);
 
@@ -216,16 +190,10 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $status = TaskStatus::factory()->create();
+        TaskStatus::factory(4)->create();
         $user = User::factory()->create();
 
-        $data = [
-            'name' => 'first task',
-            'description' => 'many words in description',
-            'status_id' => $status->id,
-            'assigned_to_id' => $user->id,
-            'labels' => [],
-        ];
+        $data = Task::factory()->make()->toArray();
 
         $this->actingAs($user)->post(route('tasks.store', $data));
 
@@ -242,33 +210,22 @@ class TaskTest extends TestCase
 
     public function testDeleteByOnlyOwner()
     {
-        $status = TaskStatus::factory()->create();
+        TaskStatus::factory(3)->create();
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        $data1 = [
-            'name' => 'first task',
-            'description' => 'many words in description',
-            'status_id' => $status->id,
-            'assigned_to_id' => $user2->id,
-            'labels' => [],
-        ];
-
-        $data2 = [
-            'name' => 'second task',
-            'description' => 'many words in description',
-            'status_id' => $status->id,
-            'assigned_to_id' => null,
-            'labels' => [],
-        ];
+        $data1 = Task::factory()->make()->toArray();
+        unset($data1['created_by_id']);
+        $data2 = Task::factory()->make()->toArray();
+        unset($data2['created_by_id']);
 
         $this->actingAs($user1)->post(route('tasks.store', $data1));
         $this->actingAs($user2)->post(route('tasks.store', $data2));
 
         $this->assertDatabaseCount('tasks', 2);
 
-        $task1 = Task::where('name', 'first task')->first();
-        $task2 = Task::where('name', 'second task')->first();
+        $task1 = Task::where('created_by_id', $user1->id)->first();
+        $task2 = Task::where('created_by_id', $user2->id)->first();
 
         $this->actingAs($user1)->delete(route('tasks.destroy', $task1->id));
 
