@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Tests\TestCase;
@@ -33,7 +34,6 @@ class TaskStatusesTest extends TestCase
         $this->withoutExceptionHandling();
 
         $data = TaskStatus::factory()->make()->toArray();
-        $data['name'] = fake()->word(9);
 
         $res = $this->actingAs($this->user)->post(route('task_statuses.store', $data));
 
@@ -78,8 +78,6 @@ class TaskStatusesTest extends TestCase
 
         $data = TaskStatus::factory()->make()->toArray();
 
-        $data['name'] = fake()->word(9);
-
         $res = $this->actingAs($this->user)->patch(route('task_statuses.update', $taskStatus->id), $data);
 
         $res->assertRedirectToRoute('task_statuses.index');
@@ -95,7 +93,6 @@ class TaskStatusesTest extends TestCase
     public function testUpdateByOnlyAuthUser()
     {
         $data = TaskStatus::factory()->make()->toArray();
-        $data['name'] = fake()->word(9);
 
         $taskStatus = TaskStatus::all()->first();
 
@@ -159,6 +156,35 @@ class TaskStatusesTest extends TestCase
         $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus->id));
 
         $res->assertRedirectToRoute('task_statuses.index');
+
+        $this->assertDatabaseCount('task_statuses', 2);
+    }
+
+    public function testDeleteWhenLinkExists()
+    {
+        $taskStatus1 = TaskStatus::where('id', 1)->first();
+        $taskStatus2 = TaskStatus::where('id', 2)->first();
+
+        $data = Task::factory()->make()->toArray();
+
+        $data['status_id'] = $taskStatus1->id;
+
+        $task = Task::create($data);
+
+        $this->assertDatabaseCount('task_statuses', 3);
+
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus1->id));
+
+        $this->assertDatabaseCount('task_statuses', 3);
+
+        $res->assertSessionHasNoErrors();
+
+        $task->status_id = $taskStatus2->id;
+        $task->save();
+
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus1->id));
+
+        $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseCount('task_statuses', 2);
     }
