@@ -24,7 +24,6 @@ class LabelTest extends TestCase
         $this->withoutExceptionHandling();
 
         $data = Label::factory()->make()->toArray();
-        $data['name'] = fake()->word(9);
 
         $res = $this->actingAs($this->user)->post(route('labels.store', $data));
 
@@ -83,7 +82,6 @@ class LabelTest extends TestCase
         $label = Label::all()->first();
 
         $newData = Label::factory()->make()->toArray();
-        $newData['name'] = fake()->word(9);
 
         $res = $this->actingAs($this->user)->patch(route('labels.update', $label->id), $newData);
 
@@ -119,7 +117,6 @@ class LabelTest extends TestCase
         $label = Label::all()->first();
 
         $newData = Label::factory()->make()->toArray();
-        $newData['name'] = fake()->word(9);
 
         $res = $this->patch(route('labels.update', $label->id), $newData);
 

@@ -40,7 +40,6 @@ class TaskTest extends TestCase
         $this->withoutExceptionHandling();
 
         $data = Task::factory()->make()->toArray();
-        $data['name'] = fake()->word(9);
 
         $res = $this->actingAs($this->user)->post(route('tasks.store', $data));
 
@@ -58,7 +57,6 @@ class TaskTest extends TestCase
     public function testStoreByOnlyAuthUser()
     {
         $data = Task::factory()->make()->toArray();
-        $data['name'] = fake()->word(9);
 
         $res = $this->post(route('tasks.store', $data));
 
@@ -138,7 +136,6 @@ class TaskTest extends TestCase
         $user = User::get()->random();
 
         $data = Task::factory()->make()->toArray();
-        $data['name'] = fake()->word(9);
 
         $res = $this->actingAs($user)->patch(route('tasks.update', $task->id), $data);
 
@@ -159,7 +156,6 @@ class TaskTest extends TestCase
         $task = Task::get()->random();
 
         $data = Task::factory()->make()->toArray();
-        $data['name'] = fake()->word(9);
 
         $res = $this->patch(route('tasks.update', $task->id), $data);
 
@@ -171,12 +167,10 @@ class TaskTest extends TestCase
         $this->withoutExceptionHandling();
 
         $data = Task::factory()->make()->toArray();
-        $data['name'] = fake()->word(9);
         $data['created_by_id'] = $this->user->id;
 
         $this->assertDatabaseCount('tasks', 3);
 
-//        $this->actingAs($this->user)->post(route('tasks.store', $data));
         Task::create($data);
 
         $this->assertDatabaseCount('tasks', 4);
@@ -198,11 +192,9 @@ class TaskTest extends TestCase
         $user2 = User::where('id', 2)->first();
 
         $data1 = Task::factory()->make()->toArray();
-        $data1['name'] = fake()->word(9);
         $data1['created_by_id'] = $user1->id;
 
         $data2 = Task::factory()->make()->toArray();
-        $data2['name'] = fake()->word(9);
         $data2['created_by_id'] = $user2->id;
 
         Task::create($data1);
