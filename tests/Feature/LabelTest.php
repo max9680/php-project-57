@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Label;
+use App\Models\Task;
+use App\Models\TaskStatus;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -17,6 +19,7 @@ class LabelTest extends TestCase
         $this->user = User::factory()->create();
 
         Label::factory(5)->create();
+        TaskStatus::factory(1)->create();
     }
 
     public function testStore()
@@ -150,6 +153,33 @@ class LabelTest extends TestCase
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
 
         $res->assertRedirectToRoute('labels.index');
+
+        $res->assertSessionHasNoErrors();
+
+        $this->assertDatabaseCount('labels', 4);
+    }
+
+    public function testDeleteWhenLinkWithTaskExists()
+    {
+        $label = Label::all()->first();
+
+        $task = Task::factory()->create();
+
+        $task->labels()->attach($label);
+
+        $this->assertDatabaseCount('labels', 5);
+
+        $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
+
+        $res->assertSessionHasNoErrors();
+
+        $this->assertDatabaseCount('labels', 5);
+
+        $task->labels()->detach($label);
+
+        $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
+
+        $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseCount('labels', 4);
     }
