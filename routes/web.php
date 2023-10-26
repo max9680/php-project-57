@@ -33,29 +33,8 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-
-Route::resource('task_statuses', TaskStatusController::class)->except([
-    'index'
-])->middleware('auth');
-
-Route::resource('task_statuses', TaskStatusController::class)->only([
-    'index'
-]);
-
-
-Route::resource('tasks', TaskController::class)->except([
-    'index', 'show'
-])->middleware('auth');
-
-Route::resource('tasks', TaskController::class)->only([
-    'index', 'show'
-]);
-
-
-Route::resource('labels', LabelController::class)->except([
-    'index'
-])->middleware('auth');
-
-Route::resource('labels', LabelController::class)->only([
-    'index'
+Route::resources([
+    'task_statuses' => TaskStatusController::class,
+    'tasks' => TaskController::class,
+    'labels' => LabelController::class,
 ]);

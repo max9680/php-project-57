@@ -2,12 +2,12 @@
 
 namespace App\Policies;
 
-use App\Models\Task;
+use App\Models\Label;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
 
-class TaskPolicy
+class LabelPolicy
 {
     use HandlesAuthorization;
 
@@ -26,12 +26,12 @@ class TaskPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(?User $user, Task $task)
+    public function view(User $user, Label $label)
     {
-        return true;
+        //
     }
 
     /**
@@ -49,10 +49,10 @@ class TaskPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Task $task)
+    public function update(User $user, Label $label)
     {
         return Auth::check();
     }
@@ -61,22 +61,22 @@ class TaskPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Task $task)
+    public function delete(User $user, Label $label)
     {
-        return $task->created_by_id === $user->id;
+        return Auth::check();
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Task $task)
+    public function restore(User $user, Label $label)
     {
         //
     }
@@ -85,10 +85,10 @@ class TaskPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Task  $task
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Task $task)
+    public function forceDelete(User $user, Label $label)
     {
         //
     }

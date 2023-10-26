@@ -15,6 +15,14 @@ use Spatie\QueryBuilder\QueryBuilder;
 class TaskController extends Controller
 {
     /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Task::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -155,8 +163,6 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        $this->authorize('delete', $task);
-
         $task->labels()->detach();
         $task->delete();
 

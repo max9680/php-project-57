@@ -5,12 +5,18 @@ namespace App\Http\Controllers\TaskStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskStatus\StoreRequest;
 use App\Http\Requests\TaskStatus\UpdateRequest;
-use App\Models\Task;
 use App\Models\TaskStatus;
-use Illuminate\Http\Request;
 
 class TaskStatusController extends Controller
 {
+    /**
+     * Create the controller instance.
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(TaskStatus::class);
+    }
+
     /**
      * Display a listing of the resource.
      *

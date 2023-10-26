@@ -60,7 +60,7 @@ class TaskTest extends TestCase
 
         $res = $this->post(route('tasks.store', $data));
 
-        $res->assertRedirectToRoute('login');
+        $res->assertForbidden();
     }
 
     public function testStoreNameRequire()
@@ -159,7 +159,7 @@ class TaskTest extends TestCase
 
         $res = $this->patch(route('tasks.update', $task->id), $data);
 
-        $res->assertRedirectToRoute('login');
+        $res->assertForbidden();
     }
 
     public function testDelete()

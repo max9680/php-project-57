@@ -123,7 +123,7 @@ class LabelTest extends TestCase
 
         $res = $this->patch(route('labels.update', $label->id), $newData);
 
-        $res->assertRedirectToRoute('login');
+        $res->assertForbidden();
 
         $labelFromDB = Label::where('id', $label->id)->first();
 
@@ -148,7 +148,9 @@ class LabelTest extends TestCase
 
         $label = Label::all()->first();
 
-        $this->delete(route('labels.destroy', $label->id));
+        $res = $this->delete(route('labels.destroy', $label->id));
+
+        $res->assertForbidden();
 
         $this->assertDatabaseCount('labels', 5);
 

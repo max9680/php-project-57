@@ -98,7 +98,7 @@ class TaskStatusesTest extends TestCase
 
         $res = $this->patch(route('task_statuses.update', $taskStatus->id), $data);
 
-        $res->assertRedirectToRoute('login');
+        $res->assertForbidden();
 
         $updatedTaskStatus = TaskStatus::where('id', $taskStatus->id)->first();
 
@@ -149,7 +149,7 @@ class TaskStatusesTest extends TestCase
 
         $res = $this->delete(route('task_statuses.destroy', $taskStatus->id));
 
-        $res->assertRedirectToRoute('login');
+        $res->assertForbidden();
 
         $this->assertDatabaseCount('task_statuses', 3);
 
