@@ -134,6 +134,8 @@ class LabelTest extends TestCase
 
         $res->assertRedirectToRoute('labels.index');
 
+        $res->assertSessionHasNoErrors();
+
         $updatedLabel = Label::where('id', $label->id)->first();
 
         $this->assertEquals($updatedLabel->name, $newData['name']);

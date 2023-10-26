@@ -157,6 +157,8 @@ class TaskStatusesTest extends TestCase
 
         $res->assertRedirectToRoute('task_statuses.index');
 
+        $res->assertSessionHasNoErrors();
+
         $this->assertDatabaseCount('task_statuses', 2);
     }
 

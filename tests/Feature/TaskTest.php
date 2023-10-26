@@ -205,11 +205,15 @@ class TaskTest extends TestCase
         $task1 = Task::where('created_by_id', $user1->id)->first();
         $task2 = Task::where('created_by_id', $user2->id)->first();
 
-        $this->actingAs($user1)->delete(route('tasks.destroy', $task1->id));
+        $res = $this->actingAs($user1)->delete(route('tasks.destroy', $task1->id));
+
+        $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseCount('tasks', 4);
 
-        $this->actingAs($user1)->delete(route('tasks.destroy', $task2->id));
+        $res = $this->actingAs($user1)->delete(route('tasks.destroy', $task2->id));
+
+        $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseCount('tasks', 4);
     }
