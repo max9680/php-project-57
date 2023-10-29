@@ -65,7 +65,7 @@ class TaskStatusesTest extends TestCase
 
         $taskStatus = TaskStatus::all()->first();
 
-        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', $taskStatus->id));
+        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', optional($taskStatus)->id));
 
         $res->assertStatus(200);
     }
@@ -78,7 +78,7 @@ class TaskStatusesTest extends TestCase
 
         $data = TaskStatus::factory()->make()->toArray();
 
-        $res = $this->actingAs($this->user)->patch(route('task_statuses.update', $taskStatus->id), $data);
+        $res = $this->actingAs($this->user)->patch(route('task_statuses.update', optional($taskStatus)->id), $data);
 
         $res->assertRedirectToRoute('task_statuses.index');
 
@@ -86,7 +86,7 @@ class TaskStatusesTest extends TestCase
 
         $this->assertDatabaseHas('task_statuses', [
             'name' => $data['name'],
-            'id' => $taskStatus->id,
+            'id' => optional($taskStatus)->id,
         ]);
     }
 
@@ -96,15 +96,15 @@ class TaskStatusesTest extends TestCase
 
         $taskStatus = TaskStatus::all()->first();
 
-        $res = $this->patch(route('task_statuses.update', $taskStatus->id), $data);
+        $res = $this->patch(route('task_statuses.update', optional($taskStatus)->id), $data);
 
         $res->assertForbidden();
 
-        $updatedTaskStatus = TaskStatus::where('id', $taskStatus->id)->first();
+        $updatedTaskStatus = TaskStatus::where('id', optional($taskStatus)->id)->first();
 
-        $this->assertNotEquals($updatedTaskStatus->name, $data['name']);
+        $this->assertNotEquals(optional($updatedTaskStatus)->name, $data['name']);
 
-        $this->assertEquals($taskStatus->id, $updatedTaskStatus->id);
+        $this->assertEquals(optional($taskStatus)->id, optional($updatedTaskStatus)->id);
     }
 
     public function testIndex()
@@ -132,7 +132,7 @@ class TaskStatusesTest extends TestCase
 
         $taskStatus = TaskStatus::all()->first();
 
-        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus->id));
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
         $res->assertRedirectToRoute('task_statuses.index');
 
@@ -147,13 +147,13 @@ class TaskStatusesTest extends TestCase
 
         $taskStatus = TaskStatus::all()->first();
 
-        $res = $this->delete(route('task_statuses.destroy', $taskStatus->id));
+        $res = $this->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
         $res->assertForbidden();
 
         $this->assertDatabaseCount('task_statuses', 3);
 
-        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus->id));
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
         $res->assertRedirectToRoute('task_statuses.index');
 
@@ -169,22 +169,22 @@ class TaskStatusesTest extends TestCase
 
         $data = Task::factory()->make()->toArray();
 
-        $data['status_id'] = $taskStatus1->id;
+        $data['status_id'] = optional($taskStatus1)->id;
 
         $task = Task::create($data);
 
         $this->assertDatabaseCount('task_statuses', 3);
 
-        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus1->id));
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus1)->id));
 
         $this->assertDatabaseCount('task_statuses', 3);
 
         $res->assertSessionHasNoErrors();
 
-        $task->status_id = $taskStatus2->id;
+        $task->status_id = optional($taskStatus2)->id;
         $task->save();
 
-        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', $taskStatus1->id));
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus1)->id));
 
         $res->assertSessionHasNoErrors();
 
