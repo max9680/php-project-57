@@ -64,9 +64,6 @@ class TaskStatusesTest extends TestCase
         $this->withoutExceptionHandling();
 
         $taskStatus = TaskStatus::where('id', 1)->first();
-//        $taskStatus = TaskStatus::All()->first();
-
-//        dd($taskStatus->toArray());
 
         $res = $this->actingAs($this->user)->get(route('task_statuses.edit', optional($taskStatus)->id));
 
@@ -77,7 +74,7 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $taskStatus = TaskStatus::all()->first();
+        $taskStatus = TaskStatus::where('id', 1)->first();
 
         $data = TaskStatus::factory()->make()->toArray();
 
@@ -133,7 +130,7 @@ class TaskStatusesTest extends TestCase
 
         $this->assertDatabaseCount('task_statuses', 3);
 
-        $taskStatus = TaskStatus::all()->first();
+        $taskStatus = TaskStatus::where('id', 1)->first();
 
         $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
@@ -148,7 +145,7 @@ class TaskStatusesTest extends TestCase
     {
         $this->assertDatabaseCount('task_statuses', 3);
 
-        $taskStatus = TaskStatus::all()->first();
+        $taskStatus = TaskStatus::where('id', 1)->first();
 
         $res = $this->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
