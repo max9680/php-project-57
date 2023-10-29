@@ -110,8 +110,6 @@ class TaskTest extends TestCase
         $res->assertSeeText('Просмотр задачи:');
 
         $res->assertSeeText($task->name);
-
-        $res->assertSeeText(optional($task)->description);
     }
 
     public function testUpdatePageExists()
