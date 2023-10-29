@@ -86,16 +86,16 @@ class LabelTest extends TestCase
 
         $newData = Label::factory()->make()->toArray();
 
-        $res = $this->actingAs($this->user)->patch(route('labels.update', $label->id), $newData);
+        $res = $this->actingAs($this->user)->patch(route('labels.update', optional($label)->id), $newData);
 
         $res->assertRedirectToRoute('labels.index');
 
         $res->assertSessionHasNoErrors();
 
-        $updatedLabel = Label::where('id', $label->id)->first();
+        $updatedLabel = Label::where('id', optional($label)->id)->first();
 
-        $this->assertEquals($updatedLabel->name, $newData['name']);
-        $this->assertEquals($updatedLabel->description, $newData['description']);
+        $this->assertEquals(optional($updatedLabel)->name, $newData['name']);
+        $this->assertEquals(optional($updatedLabel)->description, $newData['description']);
     }
 
     public function testDelete()
@@ -106,7 +106,7 @@ class LabelTest extends TestCase
 
         $label = Label::all()->first();
 
-        $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
+        $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
         $res->assertRedirectToRoute('labels.index');
 
@@ -121,25 +121,25 @@ class LabelTest extends TestCase
 
         $newData = Label::factory()->make()->toArray();
 
-        $res = $this->patch(route('labels.update', $label->id), $newData);
+        $res = $this->patch(route('labels.update', optional($label)->id), $newData);
 
         $res->assertForbidden();
 
-        $labelFromDB = Label::where('id', $label->id)->first();
+        $labelFromDB = Label::where('id', optional($label)->id)->first();
 
-        $this->assertNotEquals($labelFromDB->name, $newData['name']);
-        $this->assertNotEquals($labelFromDB->description, $newData['description']);
+        $this->assertNotEquals(optional($labelFromDB)->name, $newData['name']);
+        $this->assertNotEquals(optional($labelFromDB)->description, $newData['description']);
 
-        $res = $this->actingAs($this->user)->patch(route('labels.update', $label->id), $newData);
+        $res = $this->actingAs($this->user)->patch(route('labels.update', optional($label)->id), $newData);
 
         $res->assertRedirectToRoute('labels.index');
 
         $res->assertSessionHasNoErrors();
 
-        $updatedLabel = Label::where('id', $label->id)->first();
+        $updatedLabel = Label::where('id', optional($label)->id)->first();
 
-        $this->assertEquals($updatedLabel->name, $newData['name']);
-        $this->assertEquals($updatedLabel->description, $newData['description']);
+        $this->assertEquals(optional($updatedLabel)->name, $newData['name']);
+        $this->assertEquals(optional($updatedLabel)->description, $newData['description']);
     }
 
     public function testDeleteByOnlyAuthUser()
@@ -148,13 +148,13 @@ class LabelTest extends TestCase
 
         $label = Label::all()->first();
 
-        $res = $this->delete(route('labels.destroy', $label->id));
+        $res = $this->delete(route('labels.destroy', optional($label)->id));
 
         $res->assertForbidden();
 
         $this->assertDatabaseCount('labels', 5);
 
-        $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
+        $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
         $res->assertRedirectToRoute('labels.index');
 
@@ -173,7 +173,7 @@ class LabelTest extends TestCase
 
         $this->assertDatabaseCount('labels', 5);
 
-        $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
+        $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
         $res->assertSessionHasNoErrors();
 
@@ -181,7 +181,7 @@ class LabelTest extends TestCase
 
         $task->labels()->detach($label);
 
-        $res = $this->actingAs($this->user)->delete(route('labels.destroy', $label->id));
+        $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
         $res->assertSessionHasNoErrors();
 
