@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Label\StoreRequest;
 use App\Http\Requests\Label\UpdateRequest;
 use App\Models\Label;
-use Illuminate\Http\Request;
 
 class LabelController extends Controller
 {
@@ -43,7 +42,7 @@ class LabelController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Label\StoreRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request)
@@ -55,17 +54,6 @@ class LabelController extends Controller
         flash(__('messages.label.created'), 'success');
 
         return redirect()->route('labels.index');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
