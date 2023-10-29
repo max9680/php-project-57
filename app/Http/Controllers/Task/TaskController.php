@@ -32,7 +32,8 @@ class TaskController extends Controller
         \Log::debug('Test debug message');
 
         $users = User::all()->pluck('name', 'id');
-        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
+//        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
+        $taskStatuses = TaskStatus::select('name', 'id')->pluck('name', 'id');
 
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
