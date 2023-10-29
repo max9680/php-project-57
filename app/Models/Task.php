@@ -10,7 +10,7 @@ class Task extends Model
 {
     use HasFactory;
 
-    private array $labels;
+    protected array $labels;
 
     protected $guarded = false;
 
