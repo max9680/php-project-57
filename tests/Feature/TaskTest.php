@@ -192,26 +192,26 @@ class TaskTest extends TestCase
         $user2 = User::where('id', 2)->first();
 
         $data1 = Task::factory()->make()->toArray();
-        $data1['created_by_id'] = $user1->id;
+        $data1['created_by_id'] = optional($user1)->id;
 
         $data2 = Task::factory()->make()->toArray();
-        $data2['created_by_id'] = $user2->id;
+        $data2['created_by_id'] = optional($user2)->id;
 
         Task::create($data1);
         Task::create($data2);
 
         $this->assertDatabaseCount('tasks', 5);
 
-        $task1 = Task::where('created_by_id', $user1->id)->first();
-        $task2 = Task::where('created_by_id', $user2->id)->first();
+        $task1 = Task::where('created_by_id', optional($user1)->id)->first();
+        $task2 = Task::where('created_by_id', optional($user2)->id)->first();
 
-        $res = $this->actingAs($user1)->delete(route('tasks.destroy', $task1->id));
+        $res = $this->actingAs($user1)->delete(route('tasks.destroy', optional($task1)->id));
 
         $res->assertSessionHasNoErrors();
 
         $this->assertDatabaseCount('tasks', 4);
 
-        $res = $this->actingAs($user1)->delete(route('tasks.destroy', $task2->id));
+        $res = $this->actingAs($user1)->delete(route('tasks.destroy', optional($task2)->id));
 
         $res->assertSessionHasNoErrors();
 
