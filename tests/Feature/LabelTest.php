@@ -117,7 +117,7 @@ class LabelTest extends TestCase
 
     public function testUpdateByOnlyAuthUser()
     {
-        $label = where('id', 1)->first();
+        $label = Label::where('id', 1)->first();
 
         $newData = Label::factory()->make()->toArray();
 
@@ -146,7 +146,7 @@ class LabelTest extends TestCase
     {
         $this->assertDatabaseCount('labels', 5);
 
-        $label = where('id', 1)->first();
+        $label = Label::where('id', 1)->first();
 
         $res = $this->delete(route('labels.destroy', optional($label)->id));
 
@@ -165,7 +165,7 @@ class LabelTest extends TestCase
 
     public function testDeleteWhenLinkWithTaskExists()
     {
-        $label = where('id', 1)->first();
+        $label = Label::where('id', 1)->first();
 
         $task = Task::factory()->create();
 
