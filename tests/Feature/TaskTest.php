@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-    protected $user;
+    protected User $user;
 
     public function setUp(): void
     {
