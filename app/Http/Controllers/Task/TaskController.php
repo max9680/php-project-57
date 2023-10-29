@@ -120,7 +120,7 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $taskStatuses = TaskStatus::all();
-        $users = User::all()->pluck('name', 'id');
+        $users = User::select('name', 'id')->pluck('name', 'id');
         $taskLabels = $task->labels;
         $labels = Label::all()->pluck('name', 'id');
 
@@ -130,7 +130,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Task\UpdateRequest  $request
      * @param  \App\Models\Task  $task
      * @return \Illuminate\Http\Response
      */
