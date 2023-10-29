@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Task extends Model
 {
     use HasFactory;
-
-    protected array $labels;
 
     protected $guarded = false;
 
@@ -29,7 +28,7 @@ class Task extends Model
         return $this->hasOne(User::class, 'id', 'assigned_to_id');
     }
 
-    public function labels()
+    public function labels(): BelongsToMany
     {
         return $this->belongsToMany(Label::class, 'label_tasks', 'task_id', 'label_id');
     }
