@@ -71,7 +71,7 @@ class LabelTest extends TestCase
 
         $label = Label::where('id', random_int(1, 5))->first();
 
-        $res = $this->actingAs($this->user)->get(route('labels.edit', $label->id));
+        $res = $this->actingAs($this->user)->get(route('labels.edit', optional($label)->id));
 
         $res->assertStatus(200);
 
@@ -82,7 +82,7 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $label = Label::all()->first();
+        $label = Label::where('id', 1)->first();
 
         $newData = Label::factory()->make()->toArray();
 
@@ -104,7 +104,7 @@ class LabelTest extends TestCase
 
         $this->assertDatabaseCount('labels', 5);
 
-        $label = Label::all()->first();
+        $label = Label::where('id', 1)->first();
 
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
@@ -117,7 +117,7 @@ class LabelTest extends TestCase
 
     public function testUpdateByOnlyAuthUser()
     {
-        $label = Label::all()->first();
+        $label = where('id', 1)->first();
 
         $newData = Label::factory()->make()->toArray();
 
@@ -146,7 +146,7 @@ class LabelTest extends TestCase
     {
         $this->assertDatabaseCount('labels', 5);
 
-        $label = Label::all()->first();
+        $label = where('id', 1)->first();
 
         $res = $this->delete(route('labels.destroy', optional($label)->id));
 
@@ -165,7 +165,7 @@ class LabelTest extends TestCase
 
     public function testDeleteWhenLinkWithTaskExists()
     {
-        $label = Label::all()->first();
+        $label = where('id', 1)->first();
 
         $task = Task::factory()->create();
 
