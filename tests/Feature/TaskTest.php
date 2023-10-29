@@ -111,7 +111,7 @@ class TaskTest extends TestCase
 
         $res->assertSeeText($task->name);
 
-        $res->assertSeeText($task->description);
+        $res->assertSeeText(optional($task)->description);
     }
 
     public function testUpdatePageExists()
