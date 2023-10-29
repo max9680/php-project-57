@@ -10,6 +10,8 @@ class Task extends Model
 {
     use HasFactory;
 
+    private array $labels;
+
     protected $guarded = false;
 
     public function status(): HasOne

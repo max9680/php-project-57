@@ -65,7 +65,7 @@ class TaskController extends Controller
     {
         $taskStatuses = TaskStatus::select('name', 'id')->pluck('name', 'id');
         $users = User::select('name', 'id')->pluck('name', 'id');
-        $labels = Label::all()->pluck('name', 'id');
+        $labels = Label::select('name', 'id')->pluck('name', 'id');
 
         return view('task.create', compact('taskStatuses', 'users', 'labels'));
     }
@@ -73,13 +73,13 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Task\StoreRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $data['created_by_id'] = auth()->user()->id;
+        $data['created_by_id'] = optional(auth()->user())->id;
 
         if (isset($data['labels'])) {
             $labels = $data['labels'];
