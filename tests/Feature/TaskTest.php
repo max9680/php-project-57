@@ -145,10 +145,10 @@ class TaskTest extends TestCase
 
         $updatedTask = Task::where('id', $task->id)->first();
 
-        $this->assertEquals(optional($updatedTask)->id, optional($task)->id);
+        $this->assertEquals(optional($updatedTask)->id, $task->id);
 
-        $this->assertEquals($updatedTask->name, $data['name']);
-        $this->assertEquals($updatedTask->description, $data['description']);
+        $this->assertEquals(optional($updatedTask)->name, $data['name']);
+        $this->assertEquals(optional($updatedTask)->description, $data['description']);
     }
 
     public function testUpdateByOnlyAuthUser()
@@ -177,7 +177,7 @@ class TaskTest extends TestCase
 
         $task = Task::where('created_by_id', $this->user->id)->first();
 
-        $res = $this->actingAs($this->user)->delete(route('tasks.destroy', $task->id));
+        $res = $this->actingAs($this->user)->delete(route('tasks.destroy', optional($task)->id));
 
         $res->assertSessionHasNoErrors();
 
