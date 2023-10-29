@@ -59,7 +59,7 @@ class LabelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Http\Response
      */
     public function edit(Label $label)
@@ -70,8 +70,8 @@ class LabelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\Label\UpdateRequest  $request
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, Label $label)
@@ -88,7 +88,7 @@ class LabelController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Label  $label
      * @return \Illuminate\Http\Response
      */
     public function destroy(Label $label)
