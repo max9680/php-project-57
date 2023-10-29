@@ -94,7 +94,7 @@ class TaskStatusesTest extends TestCase
     {
         $data = TaskStatus::factory()->make()->toArray();
 
-        $taskStatus = TaskStatus::all()->first();
+        $taskStatus = TaskStatus::where('id', 1)->first();
 
         $res = $this->patch(route('task_statuses.update', optional($taskStatus)->id), $data);
 
