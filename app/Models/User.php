@@ -9,7 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @property int $id
+ * App\Models\User
+ *
+ * @property mixed $id
+ * @property string $name
  */
 class User extends Authenticatable
 {
