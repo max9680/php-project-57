@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class LabelTest extends TestCase
 {
-    protected $user;
+    protected User $user;
 
     public function setUp(): void
     {
