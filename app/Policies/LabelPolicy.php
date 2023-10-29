@@ -23,18 +23,6 @@ class LabelPolicy
     }
 
     /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Label  $label
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function view(User $user, Label $label)
-    {
-        //
-    }
-
-    /**
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
@@ -67,29 +55,5 @@ class LabelPolicy
     public function delete(User $user, Label $label)
     {
         return Auth::check();
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Label  $label
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, Label $label)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Label  $label
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, Label $label)
-    {
-        //
     }
 }
