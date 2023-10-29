@@ -32,8 +32,7 @@ class TaskController extends Controller
         \Log::debug('Test debug message');
 
         $users = User::all()->pluck('name', 'id');
-//        $taskStatuses = TaskStatus::all()->pluck('name', 'id');
-        $taskStatuses = TaskStatus::select('name', 'id')->pluck('name', 'id');
+        $taskStatuses = TaskStatus::select('id', 'name')->pluck('id', 'name');
 
         $tasks = QueryBuilder::for(Task::class)
             ->allowedFilters([
@@ -64,8 +63,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $taskStatuses = TaskStatus::select('id', 'name')->get()->pluck('name', 'id');
-        $users = User::select('id', 'name')->get()->pluck('name', 'id');
+        $taskStatuses = TaskStatus::select('id', 'name')->pluck('id', 'name');
+        $users = User::select('id', 'name')->pluck('id', 'name');
         $labels = Label::all()->pluck('name', 'id');
 
         return view('task.create', compact('taskStatuses', 'users', 'labels'));
