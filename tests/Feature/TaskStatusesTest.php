@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class TaskStatusesTest extends TestCase
 {
-    protected $user;
+    protected User $user;
 
     public function setUp(): void
     {
@@ -63,7 +63,10 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $taskStatus = TaskStatus::all()->first();
+        $taskStatus = TaskStatus::where('id', 1)->first();
+//        $taskStatus = TaskStatus::All()->first();
+
+//        dd($taskStatus->toArray());
 
         $res = $this->actingAs($this->user)->get(route('task_statuses.edit', optional($taskStatus)->id));
 
