@@ -122,7 +122,7 @@ class TaskController extends Controller
         $taskStatuses = TaskStatus::all();
         $users = User::select('name', 'id')->pluck('name', 'id');
         $taskLabels = $task->labels;
-        $labels = Label::all()->pluck('name', 'id');
+        $labels = Label::select('name', 'id')->pluck('name', 'id');
 
         return view('task.edit', compact('task', 'taskStatuses', 'users', 'labels', 'taskLabels'));
     }
