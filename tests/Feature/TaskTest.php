@@ -145,7 +145,7 @@ class TaskTest extends TestCase
 
         $updatedTask = Task::where('id', $task->id)->first();
 
-        $this->assertEquals($updatedTask->id, optional($task)->id);
+        $this->assertEquals(optional($updatedTask)->id, optional($task)->id);
 
         $this->assertEquals($updatedTask->name, $data['name']);
         $this->assertEquals($updatedTask->description, $data['description']);
