@@ -12,6 +12,7 @@ class TaskStatusesTest extends TestCase
 {
     protected User $user;
     protected Collection $taskStatuses;
+    protected const INITIAL_QUANTITY_TASKSTATUSES_IN_DB = 3;
 
     public function setUp(): void
     {
@@ -19,7 +20,7 @@ class TaskStatusesTest extends TestCase
 
         $this->user = User::factory()->create();
 
-        $this->taskStatuses = TaskStatus::factory(3)->create();
+        $this->taskStatuses = TaskStatus::factory(self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB)->create();
     }
 
     public function testCreatePageExists()
@@ -131,7 +132,7 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->assertDatabaseCount('task_statuses', 3);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
 
         $taskStatus = TaskStatus::where('id', 1)->first();
 
@@ -141,12 +142,12 @@ class TaskStatusesTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('task_statuses', 2);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB - 1);
     }
 
     public function testDeleteByOnlyAuthUser()
     {
-        $this->assertDatabaseCount('task_statuses', 3);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
 
         $taskStatus = TaskStatus::where('id', 1)->first();
 
@@ -154,7 +155,7 @@ class TaskStatusesTest extends TestCase
 
         $res->assertForbidden();
 
-        $this->assertDatabaseCount('task_statuses', 3);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
 
         $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
@@ -162,7 +163,7 @@ class TaskStatusesTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('task_statuses', 2);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB - 1);
     }
 
     public function testDeleteWhenLinkExists()
@@ -176,11 +177,11 @@ class TaskStatusesTest extends TestCase
 
         $task = Task::create($data);
 
-        $this->assertDatabaseCount('task_statuses', 3);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
 
         $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus1)->id));
 
-        $this->assertDatabaseCount('task_statuses', 3);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
 
         $res->assertSessionHasNoErrors();
 
@@ -191,6 +192,6 @@ class TaskStatusesTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('task_statuses', 2);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB - 1);
     }
 }

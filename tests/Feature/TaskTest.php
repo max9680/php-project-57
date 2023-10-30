@@ -10,6 +10,9 @@ use Tests\TestCase;
 class TaskTest extends TestCase
 {
     protected User $user;
+    protected const INITIAL_QUANTITY_USERS_IN_DB = 3;
+    protected const INITIAL_QUANTITY_TASKSTATUSES_IN_DB = 3;
+    protected const INITIAL_QUANTITY_TASKS_IN_DB = 3;
 
     public function setUp(): void
     {
@@ -17,11 +20,11 @@ class TaskTest extends TestCase
 
         $this->user = User::factory()->create();
 
-        User::factory(3)->create();
+        User::factory(self::INITIAL_QUANTITY_USERS_IN_DB)->create();
 
-        TaskStatus::factory(3)->create();
+        TaskStatus::factory(self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB)->create();
 
-        Task::factory(3)->create();
+        Task::factory(self::INITIAL_QUANTITY_TASKS_IN_DB)->create();
     }
 
     public function testCreatePageExists()
@@ -47,7 +50,7 @@ class TaskTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('tasks', 4);
+        $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB + 1);
 
         $this->assertDatabaseHas('tasks', [
             'name' => $data['name'],
@@ -167,11 +170,11 @@ class TaskTest extends TestCase
         $data = Task::factory()->make()->toArray();
         $data['created_by_id'] = $this->user->id;
 
-        $this->assertDatabaseCount('tasks', 3);
+        $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB);
 
         Task::create($data);
 
-        $this->assertDatabaseCount('tasks', 4);
+        $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB + 1);
 
         $task = Task::where('created_by_id', $this->user->id)->first();
 
@@ -179,7 +182,7 @@ class TaskTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('tasks', 3);
+        $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB);
 
         $res->assertRedirectToRoute('tasks.index');
     }
@@ -198,7 +201,7 @@ class TaskTest extends TestCase
         Task::create($data1);
         Task::create($data2);
 
-        $this->assertDatabaseCount('tasks', 5);
+        $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB + 2);
 
         $task1 = Task::where('created_by_id', optional($user1)->id)->first();
         $task2 = Task::where('created_by_id', optional($user2)->id)->first();
@@ -207,12 +210,12 @@ class TaskTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('tasks', 4);
+        $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB + 1);
 
         $res = $this->actingAs($user1)->delete(route('tasks.destroy', optional($task2)->id));
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('tasks', 4);
+        $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB + 1);
     }
 }
