@@ -6,10 +6,12 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 
 class TaskStatusesTest extends TestCase
 {
     protected User $user;
+    protected Collection $taskStatuses;
 
     public function setUp(): void
     {
@@ -17,7 +19,7 @@ class TaskStatusesTest extends TestCase
 
         $this->user = User::factory()->create();
 
-        TaskStatus::factory(3)->create();
+        $this->taskStatuses = TaskStatus::factory(3)->create();
     }
 
     public function testCreatePageExists()
@@ -63,9 +65,9 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $taskStatus = TaskStatus::where('id', 1)->first();
+        $taskStatus = $this->taskStatuses->first();
 
-        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', optional($taskStatus)->id));
+        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', $taskStatus->id));
 
         $res->assertStatus(200);
     }
