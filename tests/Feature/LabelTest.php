@@ -11,6 +11,8 @@ use Tests\TestCase;
 class LabelTest extends TestCase
 {
     protected User $user;
+    protected const INITIAL_QUANTITY_LABELS_IN_DB = 5;
+    protected const INITIAL_QUANTITY_TASKSTATUSES_IN_DB = 2;
 
     public function setUp(): void
     {
@@ -18,8 +20,8 @@ class LabelTest extends TestCase
 
         $this->user = User::factory()->create();
 
-        Label::factory(5)->create();
-        TaskStatus::factory(1)->create();
+        Label::factory(Self::INITIAL_QUANTITY_LABELS_IN_DB)->create();
+        TaskStatus::factory(Self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB)->create();
     }
 
     public function testStore()
@@ -102,7 +104,7 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->assertDatabaseCount('labels', 5);
+        $this->assertDatabaseCount('labels', Self::INITIAL_QUANTITY_LABELS_IN_DB);
 
         $label = Label::where('id', 1)->first();
 
@@ -112,7 +114,7 @@ class LabelTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('labels', 4);
+        $this->assertDatabaseCount('labels', Self::INITIAL_QUANTITY_LABELS_IN_DB - 1);
     }
 
     public function testUpdateByOnlyAuthUser()
@@ -144,7 +146,7 @@ class LabelTest extends TestCase
 
     public function testDeleteByOnlyAuthUser()
     {
-        $this->assertDatabaseCount('labels', 5);
+        $this->assertDatabaseCount('labels', Self::INITIAL_QUANTITY_LABELS_IN_DB);
 
         $label = Label::where('id', 1)->first();
 
@@ -152,7 +154,7 @@ class LabelTest extends TestCase
 
         $res->assertForbidden();
 
-        $this->assertDatabaseCount('labels', 5);
+        $this->assertDatabaseCount('labels', Self::INITIAL_QUANTITY_LABELS_IN_DB);
 
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
@@ -160,7 +162,7 @@ class LabelTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('labels', 4);
+        $this->assertDatabaseCount('labels', Self::INITIAL_QUANTITY_LABELS_IN_DB - 1);
     }
 
     public function testDeleteWhenLinkWithTaskExists()
@@ -171,13 +173,13 @@ class LabelTest extends TestCase
 
         $task->labels()->attach($label);
 
-        $this->assertDatabaseCount('labels', 5);
+        $this->assertDatabaseCount('labels', Self::INITIAL_QUANTITY_LABELS_IN_DB);
 
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('labels', 5);
+        $this->assertDatabaseCount('labels', Self::INITIAL_QUANTITY_LABELS_IN_DB);
 
         $task->labels()->detach($label);
 
@@ -185,6 +187,6 @@ class LabelTest extends TestCase
 
         $res->assertSessionHasNoErrors();
 
-        $this->assertDatabaseCount('labels', 4);
+        $this->assertDatabaseCount('labels', Self::INITIAL_QUANTITY_LABELS_IN_DB - 1);
     }
 }
