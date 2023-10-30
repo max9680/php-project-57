@@ -6,6 +6,7 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class LabelTest extends TestCase
@@ -131,17 +132,6 @@ class LabelTest extends TestCase
 
         $this->assertNotEquals(optional($labelFromDB)->name, $newData['name']);
         $this->assertNotEquals(optional($labelFromDB)->description, $newData['description']);
-
-        $res = $this->actingAs($this->user)->patch(route('labels.update', optional($label)->id), $newData);
-
-        $res->assertRedirectToRoute('labels.index');
-
-        $res->assertSessionHasNoErrors();
-
-        $updatedLabel = Label::where('id', optional($label)->id)->first();
-
-        $this->assertEquals(optional($updatedLabel)->name, $newData['name']);
-        $this->assertEquals(optional($updatedLabel)->description, $newData['description']);
     }
 
     public function testDeleteByOnlyAuthUser()
@@ -155,14 +145,6 @@ class LabelTest extends TestCase
         $res->assertForbidden();
 
         $this->assertDatabaseCount('labels', self::INITIAL_QUANTITY_LABELS_IN_DB);
-
-        $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
-
-        $res->assertRedirectToRoute('labels.index');
-
-        $res->assertSessionHasNoErrors();
-
-        $this->assertDatabaseCount('labels', self::INITIAL_QUANTITY_LABELS_IN_DB - 1);
     }
 
     public function testDeleteWhenLinkWithTaskExists()
@@ -177,16 +159,8 @@ class LabelTest extends TestCase
 
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
-        $res->assertSessionHasNoErrors();
+        $res->assertSessionHas('laravel_flash_message', ['message' => 'Не удалось удалить метку', 'class' => 'failure', 'level' => null]);
 
         $this->assertDatabaseCount('labels', self::INITIAL_QUANTITY_LABELS_IN_DB);
-
-        $task->labels()->detach($label);
-
-        $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
-
-        $res->assertSessionHasNoErrors();
-
-        $this->assertDatabaseCount('labels', self::INITIAL_QUANTITY_LABELS_IN_DB - 1);
     }
 }

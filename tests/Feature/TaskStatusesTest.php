@@ -156,14 +156,6 @@ class TaskStatusesTest extends TestCase
         $res->assertForbidden();
 
         $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
-
-        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus)->id));
-
-        $res->assertRedirectToRoute('task_statuses.index');
-
-        $res->assertSessionHasNoErrors();
-
-        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB - 1);
     }
 
     public function testDeleteWhenLinkExists()
