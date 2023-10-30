@@ -65,7 +65,7 @@ class LabelTest extends TestCase
         $res->assertSeeText('Создать метку');
     }
 
-    public function testUpdatePageExists()
+    public function testEditPageExists()
     {
         $this->withoutExceptionHandling();
 

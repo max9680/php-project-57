@@ -59,7 +59,7 @@ class TaskStatusesTest extends TestCase
         ]);
     }
 
-    public function testUpdatePageExists()
+    public function testEditPageExists()
     {
         $this->withoutExceptionHandling();
 

@@ -112,7 +112,7 @@ class TaskTest extends TestCase
         $res->assertSeeText($task->name);
     }
 
-    public function testUpdatePageExists()
+    public function testEditPageExists()
     {
         $this->withoutExceptionHandling();
 
