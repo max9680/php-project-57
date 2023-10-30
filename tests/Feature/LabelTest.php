@@ -159,7 +159,11 @@ class LabelTest extends TestCase
 
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
-        $res->assertSessionHas('laravel_flash_message', ['message' => 'Не удалось удалить метку', 'class' => 'failure', 'level' => null]);
+        $res->assertSessionHas('laravel_flash_message', [
+            'message' => 'Не удалось удалить метку',
+            'class' => 'failure',
+            'level' => null
+        ]);
 
         $this->assertDatabaseCount('labels', self::INITIAL_QUANTITY_LABELS_IN_DB);
     }
