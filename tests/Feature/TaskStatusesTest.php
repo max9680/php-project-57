@@ -65,9 +65,10 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $taskStatus = $this->taskStatuses->first();
+//        $taskStatus = $this->taskStatuses->first();
 
-        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', $taskStatus->id));
+//        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', $taskStatus->id));
+        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', $this->taskStatuses->first()->id));
 
         $res->assertStatus(200);
     }
