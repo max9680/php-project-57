@@ -1,0 +1,26 @@
+<?php
+
+return [
+
+    /*
+        |--------------------------------------------------------------------------
+        | Messages Language Lines
+        |--------------------------------------------------------------------------
+        |
+        | The following language lines are the default lines which match messages
+        | for flash.
+        |
+        */
+
+    'name' => 'Имя',
+    'task manager' => 'Менеджер задач',
+    'log in' => 'Вход',
+    'log out' => 'Выход',
+    'registration' => 'Регистрация',
+    'tasks' => 'Задачи',
+    'statuses' => 'Статусы',
+    'labels' => 'Метки',
+    'this is a simple task manager on Laravel' => 'Это простой менеджер задач на Laravel',
+    'hello from Hexlet' => 'Привет от Хекслета!',
+    'push me' => 'Нажми меня',
+];
