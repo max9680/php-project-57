@@ -10,7 +10,10 @@ class Label extends Model
 {
     use HasFactory;
 
-    protected $guarded = false;
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 
     public function tasks(): BelongsToMany
     {

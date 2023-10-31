@@ -11,7 +11,12 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $guarded = false;
+    protected $fillable = [
+        'name',
+        'description',
+        'status_id',
+        'created_by_id',
+    ];
 
     public function status(): HasOne
     {
