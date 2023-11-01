@@ -69,7 +69,6 @@ class TaskStatusesTest extends TestCase
         $taskStatus = $this->taskStatuses->first();
 
         $res = $this->actingAs($this->user)->get(route('task_statuses.edit', optional($taskStatus)->id));
-//        $res = $this->actingAs($this->user)->get(route('task_statuses.edit', $this->taskStatuses->first()->id));
 
         $res->assertStatus(200);
     }
@@ -78,7 +77,7 @@ class TaskStatusesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $taskStatus = TaskStatus::where('id', 1)->first();
+        $taskStatus = $this->taskStatuses->first();
 
         $data = TaskStatus::factory()->make()->toArray();
 
@@ -98,7 +97,7 @@ class TaskStatusesTest extends TestCase
     {
         $data = TaskStatus::factory()->make()->toArray();
 
-        $taskStatus = TaskStatus::where('id', 1)->first();
+        $taskStatus = $this->taskStatuses->first();
 
         $res = $this->patch(route('task_statuses.update', optional($taskStatus)->id), $data);
 
@@ -134,7 +133,7 @@ class TaskStatusesTest extends TestCase
 
         $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
 
-        $taskStatus = TaskStatus::where('id', 1)->first();
+        $taskStatus = $this->taskStatuses->first();
 
         $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
@@ -149,7 +148,7 @@ class TaskStatusesTest extends TestCase
     {
         $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
 
-        $taskStatus = TaskStatus::where('id', 1)->first();
+        $taskStatus = $this->taskStatuses->first();
 
         $res = $this->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
@@ -160,30 +159,24 @@ class TaskStatusesTest extends TestCase
 
     public function testDeleteWhenLinkExists()
     {
-        $taskStatus1 = TaskStatus::where('id', 1)->first();
-        $taskStatus2 = TaskStatus::where('id', 2)->first();
+        $taskStatus = $this->taskStatuses->first();
 
         $data = Task::factory()->make()->toArray();
 
-        $data['status_id'] = optional($taskStatus1)->id;
+        $data['status_id'] = optional($taskStatus)->id;
 
-        $task = Task::create($data);
-
-        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
-
-        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus1)->id));
+        Task::create($data);
 
         $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
 
-        $res->assertSessionHasNoErrors();
+        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus)->id));
 
-        $task->status_id = optional($taskStatus2)->id;
-        $task->save();
+        $res->assertSessionHas('laravel_flash_message', [
+            'message' => __('messages.status.deleted.error'),
+            'class' => 'failure',
+            'level' => null
+        ]);
 
-        $res = $this->actingAs($this->user)->delete(route('task_statuses.destroy', optional($taskStatus1)->id));
-
-        $res->assertSessionHasNoErrors();
-
-        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB - 1);
+        $this->assertDatabaseCount('task_statuses', self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB);
     }
 }

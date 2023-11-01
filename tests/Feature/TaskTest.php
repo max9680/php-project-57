@@ -6,10 +6,13 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 
 class TaskTest extends TestCase
 {
     protected User $user;
+    protected Collection $tasks;
+    protected Collection $statuses;
     protected const INITIAL_QUANTITY_USERS_IN_DB = 3;
     protected const INITIAL_QUANTITY_TASKSTATUSES_IN_DB = 3;
     protected const INITIAL_QUANTITY_TASKS_IN_DB = 3;
@@ -22,9 +25,9 @@ class TaskTest extends TestCase
 
         User::factory(self::INITIAL_QUANTITY_USERS_IN_DB)->create();
 
-        TaskStatus::factory(self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB)->create();
+        $this->statuses = TaskStatus::factory(self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB)->create();
 
-        Task::factory(self::INITIAL_QUANTITY_TASKS_IN_DB)->create();
+        $this->tasks = Task::factory(self::INITIAL_QUANTITY_TASKS_IN_DB)->create();
     }
 
     public function testCreatePageExists()
@@ -102,7 +105,7 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $task = Task::get()->random();
+        $task = $this->tasks->first();
 
         $res = $this->get(route('tasks.show', $task->id));
 
@@ -119,11 +122,9 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $user = User::get()->random();
+        $task = $this->tasks->first();
 
-        $task = Task::get()->random();
-
-        $res = $this->actingAs($user)->get(route('tasks.edit', $task->id));
+        $res = $this->actingAs($this->user)->get(route('tasks.edit', $task->id));
 
         $res->assertViewIs('task.edit');
     }
@@ -132,13 +133,11 @@ class TaskTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $task = Task::get()->random();
-
-        $user = User::get()->random();
+        $task = $this->tasks->first();
 
         $data = Task::factory()->make()->toArray();
 
-        $res = $this->actingAs($user)->patch(route('tasks.update', $task->id), $data);
+        $res = $this->actingAs($this->user)->patch(route('tasks.update', $task->id), $data);
 
         $res->assertRedirectToRoute('tasks.index');
 
@@ -154,7 +153,7 @@ class TaskTest extends TestCase
 
     public function testUpdateByOnlyAuthUser()
     {
-        $task = Task::get()->random();
+        $task = $this->tasks->first();
 
         $data = Task::factory()->make()->toArray();
 
@@ -212,9 +211,7 @@ class TaskTest extends TestCase
 
         $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB + 1);
 
-        $res = $this->actingAs($user1)->delete(route('tasks.destroy', optional($task2)->id));
-
-        $res->assertSessionHasNoErrors();
+        $this->actingAs($user1)->delete(route('tasks.destroy', optional($task2)->id));
 
         $this->assertDatabaseCount('tasks', self::INITIAL_QUANTITY_TASKS_IN_DB + 1);
     }

@@ -6,12 +6,13 @@ use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
-use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 
 class LabelTest extends TestCase
 {
     protected User $user;
+    protected Collection $labels;
     protected const INITIAL_QUANTITY_LABELS_IN_DB = 5;
     protected const INITIAL_QUANTITY_TASKSTATUSES_IN_DB = 2;
 
@@ -21,7 +22,7 @@ class LabelTest extends TestCase
 
         $this->user = User::factory()->create();
 
-        Label::factory(self::INITIAL_QUANTITY_LABELS_IN_DB)->create();
+        $this->labels = Label::factory(self::INITIAL_QUANTITY_LABELS_IN_DB)->create();
         TaskStatus::factory(self::INITIAL_QUANTITY_TASKSTATUSES_IN_DB)->create();
     }
 
@@ -72,7 +73,7 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $label = Label::where('id', random_int(1, 5))->first();
+        $label = $this->labels->first();
 
         $res = $this->actingAs($this->user)->get(route('labels.edit', optional($label)->id));
 
@@ -85,7 +86,7 @@ class LabelTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $label = Label::where('id', 1)->first();
+        $label = $this->labels->first();
 
         $newData = Label::factory()->make()->toArray();
 
@@ -107,7 +108,7 @@ class LabelTest extends TestCase
 
         $this->assertDatabaseCount('labels', self::INITIAL_QUANTITY_LABELS_IN_DB);
 
-        $label = Label::where('id', 1)->first();
+        $label = $this->labels->first();
 
         $res = $this->actingAs($this->user)->delete(route('labels.destroy', optional($label)->id));
 
@@ -120,7 +121,7 @@ class LabelTest extends TestCase
 
     public function testUpdateByOnlyAuthUser()
     {
-        $label = Label::where('id', 1)->first();
+        $label = $this->labels->first();
 
         $newData = Label::factory()->make()->toArray();
 
@@ -138,7 +139,7 @@ class LabelTest extends TestCase
     {
         $this->assertDatabaseCount('labels', self::INITIAL_QUANTITY_LABELS_IN_DB);
 
-        $label = Label::where('id', 1)->first();
+        $label = $this->labels->first();
 
         $res = $this->delete(route('labels.destroy', optional($label)->id));
 
@@ -149,7 +150,7 @@ class LabelTest extends TestCase
 
     public function testDeleteWhenLinkWithTaskExists()
     {
-        $label = Label::where('id', 1)->first();
+        $label = $this->labels->first();
 
         $task = Task::factory()->create();
 
