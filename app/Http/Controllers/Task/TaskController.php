@@ -81,7 +81,8 @@ class TaskController extends Controller
         $data = $request->except('labels');
         $data['created_by_id'] = optional(auth()->user())->id;
 
-        $labels = $request->input('labels');
+        $labels = collect($request->input('labels'))
+        ->filter(fn($label) => $label !== null);
 
         $task = Task::create($data);
 
@@ -134,7 +135,8 @@ class TaskController extends Controller
 
         $data = $request->except('labels');
 
-        $labels = $request->input('labels');
+        $labels = collect($request->input('labels'))
+            ->filter(fn($label) => $label !== null);
 
         $task->update($data);
 
