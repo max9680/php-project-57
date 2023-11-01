@@ -42,4 +42,7 @@ return [
     'are you sure' => 'Are you sure?',
     'create label' => 'Create label',
     'edit label' => 'Edit label',
+    'label exists' => 'Label with the same name already exists',
+    'task exists' => 'Task with the same name already exists',
+    'status exists' => 'Status with the same name already exists',
 ];

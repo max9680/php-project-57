@@ -32,7 +32,7 @@ class StoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => 'Метка с таким именем уже существует',
+            'name.unique' => __('strings.label exists'),
         ];
     }
 }

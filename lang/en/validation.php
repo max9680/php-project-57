@@ -163,10 +163,14 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'password' => [
+            'min' => [
+                'string' => 'Password must be at least :min symbols',
+            ],
+            'confirmed' => 'Password and confirmed password does not matched',
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

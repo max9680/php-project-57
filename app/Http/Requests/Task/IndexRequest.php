@@ -29,12 +29,4 @@ class IndexRequest extends FormRequest
             'filter[assigned_to_id]' => '',
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'name.required' => 'Это обязательное поле',
-            'status_id.required' => 'Это обязательное поле',
-        ];
-    }
 }

@@ -31,7 +31,7 @@ class UpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => 'Статус с таким именем уже существует',
+            'name.unique' => __('strings.status exists'),
         ];
     }
 }

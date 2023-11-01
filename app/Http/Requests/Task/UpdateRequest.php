@@ -36,9 +36,7 @@ class UpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Это обязательное поле',
-            'name.unique' => 'Задача с таким именем уже существует',
-            'status_id.required' => 'Это обязательное поле',
+            'name.unique' => __('strings.task exists'),
         ];
     }
 }
