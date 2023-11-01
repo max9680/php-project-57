@@ -3,12 +3,12 @@
 @section('content')
 
     <div class="grid col-span-full">
-        <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">Метки</h1>
+        <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">{{ __('strings.labels') }}</h1>
 
         <div>
             @auth
                 <a href="{{ route('labels.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Создать метку
+                    {{ __('strings.create label') }}
                 </a>
             @endauth
         </div>
@@ -17,11 +17,11 @@
             <thead class="border-b-2 border-solid border-black text-left">
             <tr>
                 <th>ID</th>
-                <th>Имя</th>
-                <th>Описание</th>
-                <th>Дата создания</th>
+                <th>{{ __('strings.name') }}</th>
+                <th>{{ __('strings.description') }}</th>
+                <th>{{ __('strings.data created') }}</th>
                 @auth
-                    <th>Действия</th>
+                    <th>{{ __('strings.actions') }}</th>
                 @endauth
             </tr>
             </thead>
@@ -35,9 +35,9 @@
                     <td>{{ $label->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
-                            <a data-method="delete" data-confirm="Вы уверены?" class="text-red-600 hover:text-red-900" href="{{ route('labels.destroy', $label->id) }}">Удалить</a>
+                            <a data-method="delete" data-confirm="{{ __('strings.are you sure') }}" class="text-red-600 hover:text-red-900" href="{{ route('labels.destroy', $label->id) }}">{{ __('strings.delete') }}</a>
 
-                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('labels.edit', $label) }}">Изменить</a>
+                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('labels.edit', $label) }}">{{ __('strings.edit') }}</a>
                         </td>
                     @endauth
                 </tr>

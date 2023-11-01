@@ -40,4 +40,6 @@ return [
     'create status' => 'Создать статус',
     'edit status' => 'Изменение статуса',
     'are you sure' => 'Вы уверены?',
+    'create label' => 'Создать метку',
+    'edit label' => 'Изменение метки',
 ];

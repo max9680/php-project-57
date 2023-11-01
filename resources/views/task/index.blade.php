@@ -82,7 +82,7 @@
                     @auth
                         <td>
                             @can('delete', $task)
-                                <a data-method="delete" data-confirm="Вы уверены?" class="text-red-600 hover:text-red-900" href="{{ route('tasks.destroy', $task->id) }}">{{ __('strings.delete') }}</a>
+                                <a data-method="delete" data-confirm="{{ __('strings.are you sure') }}" class="text-red-600 hover:text-red-900" href="{{ route('tasks.destroy', $task->id) }}">{{ __('strings.delete') }}</a>
                             @endcan
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">{{ __('strings.edit') }}</a>
                         </td>

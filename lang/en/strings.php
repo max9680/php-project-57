@@ -40,4 +40,6 @@ return [
     'create status' => 'Create status',
     'edit status' => 'Edit status',
     'are you sure' => 'Are you sure?',
+    'create label' => 'Create label',
+    'edit label' => 'Edit label',
 ];
