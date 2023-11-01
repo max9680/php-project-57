@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Label;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -72,9 +73,8 @@ class DatabaseSeeder extends Seeder
         $tasks = Task::all();
 
         foreach ($tasks as $task) {
-            \App\Models\LabelTask::factory()->state([
-                'task_id' => $task->id,
-            ])->create();
+            $labels = Label::all()->random(random_int(0, 3))->unique();
+            $task->labels()->attach($labels);
         }
     }
 }
