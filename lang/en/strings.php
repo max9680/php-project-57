@@ -37,4 +37,7 @@ return [
     'delete' => 'Delete',
     'edit' => 'Edit',
     'view task' => 'View task',
+    'create status' => 'Create status',
+    'edit status' => 'Edit status',
+    'are you sure' => 'Are you sure?',
 ];
