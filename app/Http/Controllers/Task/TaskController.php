@@ -76,20 +76,16 @@ class TaskController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $data = $request->validated();
+        $request->validated();
+
+        $data = $request->except('labels');
         $data['created_by_id'] = optional(auth()->user())->id;
 
-        if (isset($data['labels'])) {
-            $labels = $data['labels'];
-            unset($data['labels']);
-            $labels = array_filter($labels);
-        }
+        $labels = $request->only('labels');
 
         $task = Task::create($data);
 
-        if (isset($labels)) {
-            $task->labels()->attach($labels);
-        }
+        $task->labels()->attach($labels);
 
         flash(__('messages.task.created'), 'success');
 
@@ -134,15 +130,11 @@ class TaskController extends Controller
      */
     public function update(updateRequest $request, Task $task)
     {
-        $data = $request->validated();
+        $request->validated();
 
-        if (isset($data['labels'])) {
-            $labels = $data['labels'];
-            unset($data['labels']);
-            $labels = array_filter($labels);
-        } else {
-            $labels = [];
-        }
+        $data = $request->except('labels');
+
+        $labels = $request->only('labels');
 
         $task->update($data);
 
