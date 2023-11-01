@@ -107,7 +107,7 @@ class TaskTest extends TestCase
 
         $task = $this->tasks->first();
 
-        $res = $this->get(route('tasks.show', $task->id));
+        $res = $this->get(route('tasks.show', optional($task)->id));
 
         $res->assertOk();
 
@@ -115,7 +115,7 @@ class TaskTest extends TestCase
 
         $res->assertSeeText(__('strings.view task'));
 
-        $res->assertSeeText($task->name);
+        $res->assertSeeText(optional($task)->name);
     }
 
     public function testEditPageExists()
@@ -124,7 +124,7 @@ class TaskTest extends TestCase
 
         $task = $this->tasks->first();
 
-        $res = $this->actingAs($this->user)->get(route('tasks.edit', $task->id));
+        $res = $this->actingAs($this->user)->get(route('tasks.edit', optional($task)->id));
 
         $res->assertViewIs('task.edit');
     }
@@ -137,15 +137,15 @@ class TaskTest extends TestCase
 
         $data = Task::factory()->make()->toArray();
 
-        $res = $this->actingAs($this->user)->patch(route('tasks.update', $task->id), $data);
+        $res = $this->actingAs($this->user)->patch(route('tasks.update', optional($task)->id), $data);
 
         $res->assertRedirectToRoute('tasks.index');
 
         $res->assertSessionHasNoErrors();
 
-        $updatedTask = Task::where('id', $task->id)->first();
+        $updatedTask = Task::where('id', optional($task)->id)->first();
 
-        $this->assertEquals(optional($updatedTask)->id, $task->id);
+        $this->assertEquals(optional($updatedTask)->id, optional($task)->id);
 
         $this->assertEquals(optional($updatedTask)->name, $data['name']);
         $this->assertEquals(optional($updatedTask)->description, $data['description']);
@@ -157,7 +157,7 @@ class TaskTest extends TestCase
 
         $data = Task::factory()->make()->toArray();
 
-        $res = $this->patch(route('tasks.update', $task->id), $data);
+        $res = $this->patch(route('tasks.update', optional($task)->id), $data);
 
         $res->assertForbidden();
     }
