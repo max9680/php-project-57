@@ -58,7 +58,7 @@ class TaskStatusesTest extends TestCase
         $res = $this->actingAs($this->user)->post(route('task_statuses.store', $data));
 
         $res->assertSessionHasErrors([
-            'name' => 'Это обязательное поле'
+            'name' => __('validation.required'),
         ]);
     }
 
@@ -119,7 +119,7 @@ class TaskStatusesTest extends TestCase
 
         $res->assertViewIs('taskStatus.index');
 
-        $res->assertSeeText('Статусы');
+        $res->assertSeeText(__('strings.statuses'));
 
         $taskStatuses = TaskStatus::all();
 

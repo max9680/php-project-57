@@ -35,7 +35,7 @@ class TaskTest extends TestCase
 
         $res->assertStatus(200);
 
-        $res->assertSeeText('Создать задачу');
+        $res->assertSeeText(__('strings.create task'));
     }
 
     public function testStore()
@@ -87,7 +87,7 @@ class TaskTest extends TestCase
 
         $res->assertStatus(200);
 
-        $res->assertSeeText('Задачи');
+        $res->assertSeeText(__('strings.tasks'));
 
         $res->assertViewIs('task.index');
 
@@ -110,7 +110,7 @@ class TaskTest extends TestCase
 
         $res->assertViewIs('task.show');
 
-        $res->assertSeeText('Просмотр задачи:');
+        $res->assertSeeText(__('strings.view task'));
 
         $res->assertSeeText($task->name);
     }
