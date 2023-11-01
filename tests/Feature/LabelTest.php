@@ -65,7 +65,7 @@ class LabelTest extends TestCase
 
         $res->assertStatus(200);
 
-        $res->assertSeeText('Создать метку');
+        $res->assertSeeText(__('strings.create label'));
     }
 
     public function testEditPageExists()
@@ -78,7 +78,7 @@ class LabelTest extends TestCase
 
         $res->assertStatus(200);
 
-        $res->assertSeeText('Изменение метки');
+        $res->assertSeeText(__('strings.edit label'));
     }
 
     public function testUpdate()
