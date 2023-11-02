@@ -42,17 +42,6 @@ class TaskController extends Controller
             ->orderBy('id')
             ->paginate(10);
 
-//        return view('task.index', [
-//            'tasks' => $tasks,
-//            'users' => $users,
-//            'taskStatuses' => $taskStatuses,
-//            'activeFilter' => request()->get('filter') ?? [
-//                    'status_id' => '',
-//                    'assigned_to_id' => '',
-//                    'created_by_id' => ''
-//                ]
-//            ]);
-
             return view('task.index', [
                 'tasks' => $tasks,
                 'users' => $users,
