@@ -56,4 +56,9 @@ class LabelPolicy
     {
         return Auth::check();
     }
+
+    public function viewActions(User $user)
+    {
+        return Auth::check();
+    }
 }

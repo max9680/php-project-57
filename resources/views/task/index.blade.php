@@ -43,11 +43,11 @@
             </div>
 
         <div class="ml-auto">
-            @auth
+            @can('create', \App\Models\Task::class)
                 <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
                     {{ __('strings.create task') }}
                 </a>
-                @endauth
+            @endcan
         </div>
         </div>
 
@@ -60,9 +60,9 @@
                 <th>{{ __('strings.author') }}</th>
                 <th>{{ __('strings.executor') }}</th>
                 <th>{{ __('strings.data created') }}</th>
-                @auth
+                @can('viewActions', \App\Models\Label::class)
                     <th>{{ __('strings.actions') }}</th>
-                @endauth
+                @endcan
             </tr>
             </thead>
             <tbody>
@@ -75,14 +75,14 @@
                     <td>{{ $task->createdByUser->name }}</td>
                     <td>{{ $task->assignedToUser->name ?? "" }}</td>
                     <td>{{ $task->created_at->format('d.m.Y') }}</td>
-                    @auth
-                        <td>
-                            @can('delete', $task)
-                                <a data-method="delete" data-confirm="{{ __('strings.are you sure') }}" class="text-red-600 hover:text-red-900" href="{{ route('tasks.destroy', $task->id) }}">{{ __('strings.delete') }}</a>
-                            @endcan
+                    <td>
+                        @can('delete', $task)
+                            <a data-method="delete" data-confirm="{{ __('strings.are you sure') }}" class="text-red-600 hover:text-red-900" href="{{ route('tasks.destroy', $task->id) }}">{{ __('strings.delete') }}</a>
+                        @endcan
+                        @can('update', $task)
                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">{{ __('strings.edit') }}</a>
-                        </td>
-                    @endauth
+                        @endcan
+                    </td>
                 </tr>
             @endforeach
 

@@ -56,4 +56,9 @@ class TaskStatusPolicy
     {
         return Auth::check();
     }
+
+    public function viewActions(User $user)
+    {
+        return Auth::check();
+    }
 }

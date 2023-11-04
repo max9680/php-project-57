@@ -6,11 +6,11 @@
         <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">{{ __('strings.labels') }}</h1>
 
         <div>
-            @auth
+            @can('create', \App\Models\Label::class)
                 <a href="{{ route('labels.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     {{ __('strings.create label') }}
                 </a>
-            @endauth
+            @endcan
         </div>
 
         <table class="mt-4">
@@ -20,9 +20,9 @@
                 <th>{{ __('strings.name') }}</th>
                 <th>{{ __('strings.description') }}</th>
                 <th>{{ __('strings.data created') }}</th>
-                @auth
+                @can('viewActions', \App\Models\Label::class)
                     <th>{{ __('strings.actions') }}</th>
-                @endauth
+                @endcan
             </tr>
             </thead>
             <tbody>
@@ -33,13 +33,14 @@
                     <td>{{ $label->name }}</td>
                     <td>{{ $label->description }}</td>
                     <td>{{ $label->created_at->format('d.m.Y') }}</td>
-                    @auth
                         <td>
-                            <a data-method="delete" data-confirm="{{ __('strings.are you sure') }}" class="text-red-600 hover:text-red-900" href="{{ route('labels.destroy', $label->id) }}">{{ __('strings.delete') }}</a>
-
-                            <a class="text-blue-600 hover:text-blue-900" href="{{ route('labels.edit', $label) }}">{{ __('strings.edit') }}</a>
+                            @can('delete', $label)
+                                <a data-method="delete" data-confirm="{{ __('strings.are you sure') }}" class="text-red-600 hover:text-red-900" href="{{ route('labels.destroy', $label->id) }}">{{ __('strings.delete') }}</a>
+                            @endcan
+                            @can('update', $label)
+                                <a class="text-blue-600 hover:text-blue-900" href="{{ route('labels.edit', $label) }}">{{ __('strings.edit') }}</a>
+                            @endcan
                         </td>
-                    @endauth
                 </tr>
             @endforeach
 
