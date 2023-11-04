@@ -73,11 +73,7 @@
                     <td>{{ $task->status->name }}</td>
                     <td><a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.show', $task->id) }}">{{ $task->name }}</a></td>
                     <td>{{ $task->createdByUser->name }}</td>
-                    @if ($task->assignedToUser == null)
-                        <td></td>
-                    @else
-                        <td>{{ $task->assignedToUser->name }}</td>
-                    @endif
+                    <td>{{ $task->assignedToUser->name ?? "" }}</td>
                     <td>{{ $task->created_at->format('d.m.Y') }}</td>
                     @auth
                         <td>
