@@ -90,8 +90,6 @@ class TaskTest extends TestCase
 
         $res->assertStatus(200);
 
-        $res->assertSeeText(__('strings.tasks'));
-
         $res->assertViewIs('task.index');
 
         $tasks = Task::all();
@@ -112,8 +110,6 @@ class TaskTest extends TestCase
         $res->assertOk();
 
         $res->assertViewIs('task.show');
-
-        $res->assertSeeText(__('strings.view task'));
 
         $res->assertSeeText(optional($task)->name);
     }

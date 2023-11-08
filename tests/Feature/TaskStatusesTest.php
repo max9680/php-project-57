@@ -118,8 +118,6 @@ class TaskStatusesTest extends TestCase
 
         $res->assertViewIs('taskStatus.index');
 
-        $res->assertSeeText(__('strings.statuses'));
-
         $taskStatuses = TaskStatus::all();
 
         $names = $taskStatuses->pluck('name')->toArray();

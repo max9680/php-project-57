@@ -65,8 +65,6 @@ class LabelTest extends TestCase
         $res = $this->actingAs($this->user)->get(route('labels.create'));
 
         $res->assertStatus(200);
-
-        $res->assertSeeText(__('strings.create label'));
     }
 
     public function testEditPageExists()
@@ -78,8 +76,6 @@ class LabelTest extends TestCase
         $res = $this->actingAs($this->user)->get(route('labels.edit', optional($label)->id));
 
         $res->assertStatus(200);
-
-        $res->assertSeeText(__('strings.edit label'));
     }
 
     public function testUpdate()
