@@ -1,12 +1,16 @@
 @extends('layouts.main')
 
+@php
+    use \App\Models\Label;
+@endphp
+
 @section('content')
 
     <div class="grid col-span-full">
         <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">{{ __('strings.labels') }}</h1>
 
         <div>
-            @can('create', \App\Models\Label::class)
+            @can('create', Label::class)
                 <a href="{{ route('labels.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     {{ __('strings.create label') }}
                 </a>
@@ -20,7 +24,7 @@
                 <th>{{ __('strings.name') }}</th>
                 <th>{{ __('strings.description') }}</th>
                 <th>{{ __('strings.data created') }}</th>
-                @can('viewActions', \App\Models\Label::class)
+                @can('viewActions', Label::class)
                     <th>{{ __('strings.actions') }}</th>
                 @endcan
             </tr>

@@ -1,11 +1,15 @@
 @extends('layouts.main')
 
+@php
+    use \App\Models\TaskStatus;
+@endphp
+
 @section('content')
 
     <div class="grid col-span-full">
         <h1 class="mb-5 max-w-2xl text-4xl md:text-4xl xl:text-5xl">{{ __('strings.statuses') }}</h1>
 
-        @can('create', \App\Models\TaskStatus::class)
+        @can('create', TaskStatus::class)
             <div>
                 <a href="{{ route('task_statuses.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     {{ __('strings.create status') }}
@@ -19,7 +23,7 @@
                 <th>ID</th>
                 <th>{{ __('strings.name') }}</th>
                 <th>{{ __('strings.data created') }}</th>
-                @can('viewActions', \App\Models\TaskStatus::class)
+                @can('viewActions', TaskStatus::class)
                     <th>{{ __('strings.actions') }}</th>
                 @endcan
             </tr>

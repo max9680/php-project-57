@@ -1,5 +1,10 @@
 @extends('layouts.main')
 
+@php
+    use \App\Models\Task;
+    use \App\Models\Label;
+@endphp
+
 @section('content')
 
     <div class="grid col-span-full">
@@ -43,7 +48,7 @@
             </div>
 
         <div class="ml-auto">
-            @can('create', \App\Models\Task::class)
+            @can('create', Task::class)
                 <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">
                     {{ __('strings.create task') }}
                 </a>
@@ -60,7 +65,7 @@
                 <th>{{ __('strings.author') }}</th>
                 <th>{{ __('strings.executor') }}</th>
                 <th>{{ __('strings.data created') }}</th>
-                @can('viewActions', \App\Models\Label::class)
+                @can('viewActions', Label::class)
                     <th>{{ __('strings.actions') }}</th>
                 @endcan
             </tr>
